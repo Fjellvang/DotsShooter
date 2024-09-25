@@ -126,10 +126,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 17353248861923656, guid: 6a7d4464c9316f747ac708168e32f15c, type: 3}
-      propertyPath: rotationOffset
-      value: -90
-      objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 6a7d4464c9316f747ac708168e32f15c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

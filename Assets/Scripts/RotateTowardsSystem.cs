@@ -8,8 +8,10 @@ namespace DotsShooter
     public partial struct RotateTowardsSystem : ISystem
     {
         [BurstCompile]
-        public void OnUpdate(ref SystemState state) {
+        public void OnUpdate(ref SystemState state)
+        {
 
+            var deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var (movingObject, transform, rotateTowardsComponent) in 
                      SystemAPI.Query<RefRO<MovementComponent>, RefRW<LocalTransform>, RefRO<RotateTowardsComponent>>())
             {
@@ -21,7 +23,9 @@ namespace DotsShooter
 
                 var offset = math.TORADIANS * rotateTowardsComponent.ValueRO.RotationOffset;
                 var angle = math.atan2(direction.y, direction.x);
-                var rotation = quaternion.Euler(0, 0, angle + offset);
+                var targetRotation = quaternion.Euler(0, 0, angle + offset);
+                var speed = rotateTowardsComponent.ValueRO.RotationSpeed;
+                var rotation = math.slerp(transform.ValueRO.Rotation, targetRotation, deltaTime * speed);
                 // TODO: Maybe smoooth it?
                 transform.ValueRW.Rotation = rotation;
             }
