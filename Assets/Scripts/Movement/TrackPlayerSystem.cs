@@ -6,7 +6,7 @@ using Unity.Transforms;
 namespace DotsShooter
 {
     [UpdateBefore(typeof(MovementSystem))]
-    public partial struct TargetPlayerSystem : ISystem
+    public partial struct TrackPlayerSystem : ISystem
     {
         public void OnCreate(ref SystemState state)
         {
@@ -19,7 +19,7 @@ namespace DotsShooter
             var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
             foreach (var (movement, transform) in 
                      SystemAPI.Query<RefRW<MovementComponent>, RefRO<LocalTransform>>()
-                         .WithAll<TargetPlayerComponent>())
+                         .WithAll<TrackPlayerComponent>())
             {
                 var direction = playerPosition - transform.ValueRO.Position;
                 var distance = math.length(direction);
