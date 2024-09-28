@@ -16,7 +16,6 @@ namespace DotsShooter
             RequireForUpdate<PlayerInput>();
             
             _actions = new PlayerControls();
-            Debug.Log("Hello create");
         }
         protected override void OnStartRunning()
         {
@@ -24,7 +23,6 @@ namespace DotsShooter
             _actions.Player.Move.performed += OnMovePerformed;
             _actions.Player.Move.canceled += OnMoveCancelled;
             _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
-            Debug.Log("Hello");
         }
 
         private void OnMoveCancelled(InputAction.CallbackContext obj)

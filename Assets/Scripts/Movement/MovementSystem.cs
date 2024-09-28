@@ -8,7 +8,6 @@ namespace DotsShooter
     {
         [BurstCompile]
         public void OnUpdate(ref SystemState state) {
-
             foreach (var (movingObject, transform) in 
                      SystemAPI.Query<RefRO<MovementComponent>, RefRW<LocalTransform>>())
             {
@@ -18,4 +17,5 @@ namespace DotsShooter
             }
         }
     }
+    
 }
