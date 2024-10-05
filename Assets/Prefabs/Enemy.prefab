@@ -102,7 +102,8 @@ GameObject:
   - component: {fileID: 305077072983973601}
   - component: {fileID: 2738491048862866835}
   - component: {fileID: 5724910561005653839}
-  - component: {fileID: 8305433573437133299}
+  - component: {fileID: 2242956690512276018}
+  - component: {fileID: 9194925557188705681}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -268,7 +269,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 1
+      m_Value: 3
     m_Friction:
       m_Override: 0
       m_Value:
@@ -374,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MotionType: 1
+  m_MotionType: 0
   m_Smoothing: 0
   m_Mass: 1
   m_LinearDamping: 0.01
@@ -387,7 +388,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 1
+  m_GravityFactor: 0
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
@@ -413,7 +414,7 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
---- !u!114 &8305433573437133299
+--- !u!114 &2242956690512276018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,6 +423,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8321688916429615359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781f93284e814038b690dfbe02db5e0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 38dc86f25fac418bb645cfb829c0ffa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9194925557188705681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582dfbaa8516460db45abe067ead4598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100

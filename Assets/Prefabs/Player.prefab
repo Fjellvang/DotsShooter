@@ -103,8 +103,8 @@ GameObject:
   - component: {fileID: 17353248861923656}
   - component: {fileID: 2107488745813279798}
   - component: {fileID: 8703515868535575090}
-  - component: {fileID: 4687005331661357222}
-  - component: {fileID: -8525136161791282311}
+  - component: {fileID: 8250771447183009639}
+  - component: {fileID: 6919299950219275554}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea9ea98e38942e0b0938c27ed1903e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MotionType: 1
+  m_MotionType: 0
   m_Smoothing: 0
   m_Mass: 1
   m_LinearDamping: 0.01
@@ -267,7 +267,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 1
+  m_GravityFactor: 0
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 1
+      m_Value: 3
     m_Friction:
       m_Override: 0
       m_Value:
@@ -436,7 +436,7 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &4687005331661357222
+--- !u!114 &8250771447183009639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -445,10 +445,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8321688916429615359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781f93284e814038b690dfbe02db5e0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 582dfbaa8516460db45abe067ead4598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8525136161791282311
+  health: 100
+--- !u!114 &6919299950219275554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -457,7 +458,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8321688916429615359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a444254202384e4ea55b4fe97742fbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 38dc86f25fac418bb645cfb829c0ffa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CalculateDetails: 0

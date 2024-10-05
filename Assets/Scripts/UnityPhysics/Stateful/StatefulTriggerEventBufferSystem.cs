@@ -3,6 +3,7 @@ using Unity.Jobs;
 using Unity.Physics.Systems;
 using Unity.Collections;
 using Unity.Burst;
+using UnityEngine;
 
 namespace Unity.Physics.Stateful
 {
@@ -53,6 +54,7 @@ namespace Unity.Physics.Stateful
             state.RequireForUpdate(m_TriggerEventQuery);
 
             m_ComponentHandles = new ComponentHandles(ref state);
+            Debug.Log("Running stateful trigger event buffer system");
         }
 
         [BurstCompile]
@@ -80,11 +82,11 @@ namespace Unity.Physics.Stateful
             var currentEvents = m_StateFulEventBuffers.Current;
             var previousEvents = m_StateFulEventBuffers.Previous;
 
-            state.Dependency = new StatefulEventCollectionJobs.CollectTriggerEvents
+            
+state.Dependency = new StatefulEventCollectionJobs.CollectTriggerEvents
             {
                 TriggerEvents = currentEvents
             }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
-
             state.Dependency = new StatefulEventCollectionJobs
                 .ConvertEventStreamToDynamicBufferJob<StatefulTriggerEvent, StatefulTriggerEventExclude>
             {
