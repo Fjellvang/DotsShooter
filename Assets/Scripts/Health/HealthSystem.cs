@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace DotsShooter.Health
@@ -19,6 +20,7 @@ namespace DotsShooter.Health
                 // .WithAll<DynamicBuffer<TriggerEvent>>()
                 ;
             
+            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<HealthComponent>();
             state.RequireForUpdate<SimpleCollisionComponent>();
             
@@ -28,6 +30,9 @@ namespace DotsShooter.Health
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
+            var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true); 
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>().WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
@@ -36,13 +41,34 @@ namespace DotsShooter.Health
                 }
                 
                 var triggerEvents = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
-                Debug.Log($"HealthSystem: Collision detected: {triggerEvents.Length}" );
                 for (int i = 0; i < triggerEvents.Length; i++)
                 {
                     // var triggerEvent = triggerEvents[i];
                     health.ValueRW.Health -= 1;
+                    if (health.ValueRW.Health <= 0)
+                    {
+                        // use ECB to destroy entity
+                        DestroyEntityHierarchy(entity, ecb, childBufferFromEntity);
+                    }
                 }
             }
+        }
+        
+        private void DestroyEntityHierarchy(Entity entity, EntityCommandBuffer ecb, BufferLookup<Child> childBufferFromEntity)
+        {
+            // Destroy all child entities
+            if (childBufferFromEntity.HasBuffer(entity))
+            {
+                var childBuffer = childBufferFromEntity[entity];
+                for (int i = 0; i < childBuffer.Length; i++)
+                {
+                    Entity childEntity = childBuffer[i].Value;
+                    DestroyEntityHierarchy(childEntity, ecb, childBufferFromEntity);
+                }
+            }
+
+            // Destroy the entity itself
+            ecb.DestroyEntity(entity);
         }
     }
 }
