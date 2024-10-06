@@ -105,6 +105,8 @@ GameObject:
   - component: {fileID: 8703515868535575090}
   - component: {fileID: 8250771447183009639}
   - component: {fileID: 6919299950219275554}
+  - component: {fileID: 8816393136907486756}
+  - component: {fileID: 524633817717487512}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -461,3 +463,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38dc86f25fac418bb645cfb829c0ffa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8816393136907486756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c5ee7f253074712938e91beb6c00bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &524633817717487512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460f0da3922b4891a652f1d065f3a6cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 1
+  projectilePrefab: {fileID: 6690577022243745467, guid: 2c671f9574fd68c4b9feb81c84df6465, type: 3}
+  projectileSpeed: 20
+  spawnOffset: 0.5

@@ -62,7 +62,7 @@ namespace DotsShooter.SimpleCollision
         {
             var builder = new EntityQueryBuilder(Allocator.Temp)
                 .WithAllRW<SimpleCollisionEvent>()
-                // .WithAll<SimpleCollisionComponent>()
+                .WithAll<SimpleCollisionComponent>()
                 ;
             
             _triggerEvents = new NativeList<SimpleCollisionEvent>(Allocator.Persistent);
@@ -95,6 +95,7 @@ namespace DotsShooter.SimpleCollision
             state.Dependency = new ClearTriggerEventDynamicBufferJob()
                 .ScheduleParallel(_simpleCollisionQuery, state.Dependency);
             
+            // Clear the trigger events from the previous frame
             _triggerEvents.Clear();
             
             // Collect the trigger events

@@ -17,7 +17,6 @@ namespace DotsShooter.Health
         {
             var builder = new EntityQueryBuilder(Allocator.Temp)
                 .WithAllRW<HealthComponent>()
-                // .WithAll<DynamicBuffer<TriggerEvent>>()
                 ;
             
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
@@ -44,7 +43,9 @@ namespace DotsShooter.Health
                 for (int i = 0; i < triggerEvents.Length; i++)
                 {
                     // var triggerEvent = triggerEvents[i];
+                    // TODO: add a "damage" component
                     health.ValueRW.Health -= 1;
+                    // TODO: add a "dead system"
                     if (health.ValueRW.Health <= 0)
                     {
                         // use ECB to destroy entity
