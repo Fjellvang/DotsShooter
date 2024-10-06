@@ -25,8 +25,13 @@ namespace DotsShooter
             {
                 return;
             }
+
+            var enemiesToSpawn = (int)(SystemAPI.Time.ElapsedTime/2);
             
-            SpawnEnemy(ref state, spawnEnemyData);
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                SpawnEnemy(ref state, spawnEnemyData);
+            }
 
             spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
             
@@ -41,11 +46,11 @@ namespace DotsShooter
             var enemyTransform = SystemAPI.GetComponent<LocalTransform>(enemy);
 
             var spawnTop = _random.NextBool();
-            var x = _random.NextFloat(-10, 10);
+            var x = _random.NextFloat(-spawnEnemyData.ValueRO.MaxX, spawnEnemyData.ValueRO.MaxX);//TODO: Remove magic numbers
             
             enemyTransform.Position = spawnTop 
-                ? new float3(x, 5, 0) 
-                : new float3(x, -5, 0);
+                ? new float3(x, spawnEnemyData.ValueRO.MaxY, 0) 
+                : new float3(x, -spawnEnemyData.ValueRO.MaxY, 0);
             
             SystemAPI.SetComponent(enemy, enemyTransform);
         }

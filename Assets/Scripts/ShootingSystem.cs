@@ -1,10 +1,10 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace DotsShooter
 {
+
     public partial struct ShootingSystem : ISystem
     {
         public void OnCreate(ref SystemState state)

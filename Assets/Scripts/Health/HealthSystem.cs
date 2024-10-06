@@ -49,27 +49,11 @@ namespace DotsShooter.Health
                     if (health.ValueRW.Health <= 0)
                     {
                         // use ECB to destroy entity
-                        DestroyEntityHierarchy(entity, ecb, childBufferFromEntity);
+                        Helpers.DestroyEntityHierarchy(entity, ref ecb, ref childBufferFromEntity);
                     }
                 }
             }
         }
         
-        private void DestroyEntityHierarchy(Entity entity, EntityCommandBuffer ecb, BufferLookup<Child> childBufferFromEntity)
-        {
-            // Destroy all child entities
-            if (childBufferFromEntity.HasBuffer(entity))
-            {
-                var childBuffer = childBufferFromEntity[entity];
-                for (int i = 0; i < childBuffer.Length; i++)
-                {
-                    Entity childEntity = childBuffer[i].Value;
-                    DestroyEntityHierarchy(childEntity, ecb, childBufferFromEntity);
-                }
-            }
-
-            // Destroy the entity itself
-            ecb.DestroyEntity(entity);
-        }
     }
 }

@@ -5,6 +5,8 @@ namespace DotsShooter
 {
     public struct SpawnEnemyData : IComponentData
     {
+        public int MaxX;
+        public int MaxY;
         public Entity Prefab;
         public float SpawnTime;
         public float SpawnTimer;
@@ -14,6 +16,8 @@ namespace DotsShooter
     {
         public GameObject Prefab;
         public float SpawnTime;
+        public int MaxX = 20;
+        public int MaxY = 20;
 
         public class SpawnEnemyDataBaker : Baker<SpawnEnemyDataAuthoring>
         {
@@ -23,6 +27,8 @@ namespace DotsShooter
                 AddComponent(entity,
                     new SpawnEnemyData
                     {
+                        MaxX = authoring.MaxX,
+                        MaxY = authoring.MaxY,
                         Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic),
                         SpawnTime = authoring.SpawnTime
                     });
