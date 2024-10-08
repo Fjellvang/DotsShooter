@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using DotsShooter.Damage;
+using Unity.Entities;
 using UnityEngine;
 
 namespace DotsShooter.Health
@@ -23,6 +24,8 @@ namespace DotsShooter.Health
                     Health = authoring.health,
                     MaxHealth = authoring.health
                 });
+
+                AddBuffer<DamageData>(entity);
             }
         }
     }

@@ -17,6 +17,8 @@ namespace DotsShooter.SimpleCollision
             EntityA = triggerEvent.EntityA;
             EntityB = triggerEvent.EntityB;
         }
+        
+        public Entity GetOtherEntity(Entity entity) => entity == EntityA ? EntityB : EntityA;
     }
     
     [BurstCompile]
