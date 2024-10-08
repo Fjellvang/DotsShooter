@@ -1,0 +1,29 @@
+version: 2
+tpsheetFileNames:
+- Assets/2D Assets/Enemys/Mouthball/Down/Down.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/DownLeft/Dleft.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/Left/Left.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/Right/Right.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/Up/Up.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/UpLeft/UpLeft.tpsheet
+- Assets/2D Assets/Enemys/Mouthball/UpRight/UpRight.tpsheet
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.tpsheet
+textureFileNames:
+- Assets/2D Assets/Enemys/Mouthball/Down/Down.png
+- Assets/2D Assets/Enemys/Mouthball/DownLeft/Dleft.png
+- Assets/2D Assets/Enemys/Mouthball/Left/Left.png
+- Assets/2D Assets/Enemys/Mouthball/Right/Right.png
+- Assets/2D Assets/Enemys/Mouthball/Up/Up.png
+- Assets/2D Assets/Enemys/Mouthball/UpLeft/UpLeft.png
+- Assets/2D Assets/Enemys/Mouthball/UpRight/UpRight.png
+- Assets/codeandweb.com/Example/SpriteSheet/sprites.png
+normalmapFileNames:
+- 
+- 
+- 
+- 
+- 
+- 
+- 
+- Assets/codeandweb.com/Example/SpriteSheet/sprites_n.png
+enableDebugOutput: 0

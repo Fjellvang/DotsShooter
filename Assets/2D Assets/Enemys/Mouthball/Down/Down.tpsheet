@@ -1,0 +1,19 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:cc724cb2047189f369a9a806e7f83b81:b612a193186d8c0139eff1800b053b9d:be33355625983423842766779b40a00e$
+#
+:format=40300
+:texture=Down.png
+:size=256x256
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+TBallF1;86;179;80;76; 0.45;0.6842105263157895; 0;0;0;0
+TBallF2;1;14;82;77; 0.4634146341463415;0.6883116883116883; 0;0;0;0
+TBallF3;1;93;81;81; 0.5185185185185185;0.7037037037037037; 0;0;0;0
+TBallF4;1;176;83;79; 0.5180722891566265;0.7848101265822784; 0;0;0;0
