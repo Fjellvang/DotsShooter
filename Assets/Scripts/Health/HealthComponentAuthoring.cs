@@ -6,6 +6,7 @@ namespace DotsShooter.Health
     public struct HealthComponent : IComponentData
     {
         public int Health;
+        public int MaxHealth;
     }
 
     public class HealthComponentAuthoring : MonoBehaviour
@@ -19,7 +20,8 @@ namespace DotsShooter.Health
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new HealthComponent()
                 {
-                    Health = authoring.health
+                    Health = authoring.health,
+                    MaxHealth = authoring.health
                 });
             }
         }
