@@ -4,6 +4,7 @@ using Unity.Transforms;
 
 namespace DotsShooter
 {
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct MovementSystem : ISystem
     {
         [BurstCompile]
