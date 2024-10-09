@@ -1978,8 +1978,8 @@
     "m_ObjectId": "939cc7a6814942bda3f136dd732e7b08",
     "m_Title": "Animation",
     "m_Position": {
-        "x": -1471.3331298828125,
-        "y": 169.99998474121095
+        "x": -1471.33349609375,
+        "y": 169.99996948242188
     }
 }
 
@@ -2074,7 +2074,7 @@
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
-    "m_RenderFace": 2,
+    "m_RenderFace": 0,
     "m_AlphaClip": false,
     "m_CastShadows": false,
     "m_ReceiveShadows": false,

@@ -27,4 +27,11 @@ MonoBehaviour:
     type: 0
     value: {x: 0.9496855, y: 0.020904869, z: 0.020904869, w: 0}
     instanceOverride: 0
+  - name: _yDirection
+    displayName: _yDirection
+    shaderName: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+    materialName: Shader Graphs_SpriteSheetAnimation
+    type: 3
+    value: {x: 1, y: 0, z: 0, w: 0}
+    instanceOverride: 0
   material: {fileID: 2100000, guid: 9612908707cb95445bbe554a96009034, type: 2}

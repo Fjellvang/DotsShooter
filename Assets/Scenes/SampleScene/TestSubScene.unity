@@ -171,6 +171,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -238,6 +266,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -295,6 +351,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (4)
@@ -351,8 +435,8 @@ Transform:
   m_GameObject: {fileID: 261728352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.9302297, y: -0.47263622, z: -0.033384565}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -404,6 +488,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -472,6 +584,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -534,6 +674,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (6)
@@ -591,6 +759,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -647,6 +843,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -715,6 +939,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -772,6 +1024,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -828,6 +1108,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -906,6 +1214,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -962,6 +1298,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -1030,6 +1394,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (9)
@@ -1086,6 +1478,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -1154,6 +1574,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (5)
@@ -1216,6 +1664,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1272,6 +1748,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -1330,6 +1834,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (10)
@@ -1387,6 +1919,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].instanceOverride
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1443,6 +2007,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
@@ -1555,6 +2147,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1612,6 +2232,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
+      objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy (8)
@@ -1668,6 +2316,34 @@ PrefabInstance:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].name
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].value.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].shaderName
+      value: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].displayName
+      value: _yDirection
+      objectReference: {fileID: 0}
+    - target: {fileID: 4567323595652401075, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: overrideList.Array.data[2].materialName
+      value: Shader Graphs_SpriteSheetAnimation
       objectReference: {fileID: 0}
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
