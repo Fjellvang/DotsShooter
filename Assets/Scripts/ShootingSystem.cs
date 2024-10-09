@@ -39,7 +39,9 @@ namespace DotsShooter
                 var bullet = state.EntityManager.Instantiate(shootingComponent.ProjectilePrefab);
                 var bulletTransform = SystemAPI.GetComponent<LocalTransform>(bullet);
                 var bulletMovement = SystemAPI.GetComponent<MovementComponent>(bullet);
+                
                 bulletTransform.Position = playerPosition + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
+                bulletTransform.Rotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x)); 
                 bulletMovement.Direction = targetEnemy.Direction;
                 bulletMovement.Speed = shootingComponent.ProjectileSpeed;
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
