@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_SpriteSheetAnimation
+  m_Name: Player_Animation_Shader
   m_Shader: {fileID: -6465566751694194690, guid: 452bdad60f9a7894abc98411c1cc7619, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -39,23 +39,23 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7383571d18fa37c47b41d50ff7fcc62f, type: 3}
+        m_Texture: {fileID: 2800000, guid: c52f9caa68dec3e47bf22e815f80a0e7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_Down:
-        m_Texture: {fileID: 2800000, guid: f99f88b8fff02394abf71f3ac5cb6dcd, type: 3}
+        m_Texture: {fileID: 2800000, guid: dc4c0aeb29907ba44a14cc7acd5dab18, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_DownRight:
-        m_Texture: {fileID: 2800000, guid: b09ccb816ada5974283a9f789c517821, type: 3}
+        m_Texture: {fileID: 2800000, guid: 883736a685563384f980df89cce2da82, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_Right:
-        m_Texture: {fileID: 2800000, guid: f8f25636d5308404690859ac46872961, type: 3}
+        m_Texture: {fileID: 2800000, guid: fc5060726610a7f4dacde09125974608, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_TopRight:
-        m_Texture: {fileID: 2800000, guid: eb0f18de1c71026418f83955165f499a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 31f090a6fdf7d7d468776e2f91544b2b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -78,19 +78,19 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 10
-    - _Frames: 4
-    - _Height: 3
+    - _Frames: 3
+    - _Height: 2
     - _InitialFrame: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 6
+    - _Speed: 4
     - _SrcBlend: 5
     - _Surface: 1
-    - _Width: 3
+    - _Width: 2
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _yDirection: -0.13
+    - _yDirection: -1
     m_Colors:
     - _Direction: {r: 1, g: 0, b: 0, a: 0}
     - _Tint: {r: 1, g: 1, b: 1, a: 0}

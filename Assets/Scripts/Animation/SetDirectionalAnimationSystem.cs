@@ -18,6 +18,12 @@ namespace Unity.Rendering
                 if (!SystemAPI.HasComponent<MovementComponent>(parent.ValueRO.Value)) continue;
                 
                 var movementComponent = SystemAPI.GetComponent<MovementComponent>(parent.ValueRO.Value);
+
+                if (movementComponent.Direction.Equals(float3.zero))
+                {
+                    continue;
+                }
+                
                 yDirectionOverride.ValueRW.Value = movementComponent.Direction.y;
 
                 if (movementComponent.Direction.x < 0 && !isFlipped.ValueRO.Flipped)
