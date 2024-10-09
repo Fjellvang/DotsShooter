@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c49a92ef1771844b9c93a4037158cd, type: 3}
+  m_Name: MaterialOverrideAsset
+  m_EditorClassIdentifier: 
+  overrideList:
+  - name: _InitialFrame
+    displayName: _InitialFrame
+    shaderName: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+    materialName: Shader Graphs_SpriteSheetAnimation
+    type: 2
+    value: {x: 1, y: 0, z: 0, w: 0}
+    instanceOverride: 0
+  - name: _Tint
+    displayName: _Tint
+    shaderName: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+    materialName: Shader Graphs_SpriteSheetAnimation
+    type: 0
+    value: {x: 0.9496855, y: 0.020904869, z: 0.020904869, w: 0}
+    instanceOverride: 0
+  material: {fileID: 2100000, guid: 9612908707cb95445bbe554a96009034, type: 2}
