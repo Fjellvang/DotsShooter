@@ -14,11 +14,13 @@ namespace DotsShooter
         public void OnCreate(ref SystemState state)
         {
             _random = new Random(1234);
+            state.RequireForUpdate<EnemyPrefabs>();
         }
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
+            var buffer = SystemAPI.GetSingletonBuffer<EnemyPrefabs>();
             
             spawnEnemyData.ValueRW.SpawnTimer -= SystemAPI.Time.DeltaTime;
             if (spawnEnemyData.ValueRO.SpawnTimer > 0)
@@ -30,7 +32,7 @@ namespace DotsShooter
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                SpawnEnemy(ref state, spawnEnemyData);
+                SpawnEnemy(ref state, spawnEnemyData, buffer);
             }
 
             spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
@@ -40,9 +42,11 @@ namespace DotsShooter
 
         
         [BurstCompile]
-        private void SpawnEnemy(ref SystemState state, RefRW<SpawnEnemyData> spawnEnemyData)
+        private void SpawnEnemy(ref SystemState state, RefRW<SpawnEnemyData> spawnEnemyData, in DynamicBuffer<EnemyPrefabs> enemies)
         {
-            var enemy = state.EntityManager.Instantiate(spawnEnemyData.ValueRO.Prefab);
+            var enemyIndex = GetWeightedRandomEnemyIndex(enemies);
+            var enemyPrefab = enemies[enemyIndex].Prefab;
+            var enemy = state.EntityManager.Instantiate(enemyPrefab);
             var enemyTransform = SystemAPI.GetComponent<LocalTransform>(enemy);
 
             var spawnTop = _random.NextBool();
@@ -54,7 +58,29 @@ namespace DotsShooter
             
             SystemAPI.SetComponent(enemy, enemyTransform);
         }
+        
+        private int GetWeightedRandomEnemyIndex(in DynamicBuffer<EnemyPrefabs> enemies)
+        {
+            int totalWeight = 0;
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                totalWeight += enemies[i].Weight;
+            }
+
+            int randomWeight = _random.NextInt(0, totalWeight);
+            int currentWeight = 0;
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                currentWeight += enemies[i].Weight;
+                if (randomWeight < currentWeight)
+                {
+                    return i;
+                }
+            }
+
+            // Fallback to last enemy (should never happen if weights are positive)
+            return enemies.Length - 1;
+        }
     }
-
-
 }

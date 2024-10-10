@@ -10,7 +10,6 @@ namespace DotsShooter
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-
             var deltaTime = SystemAPI.Time.DeltaTime;
             foreach (var (movingObject, transform, rotateTowardsComponent) in 
                      SystemAPI.Query<RefRO<MovementComponent>, RefRW<LocalTransform>, RefRO<RotateTowardsComponent>>())
