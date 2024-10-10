@@ -32,18 +32,20 @@ namespace DotsShooter.Health
         {
             var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
-            var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true);
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
+            
+            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
+            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())
             {
-                HandleDamage(ref state, entity, health, ref ecb,ref bufferLookup, ref childBufferFromEntity);
+                HandleDamage(ref state, entity, health, ref parallelWriter, ref bufferLookup, EntityType.Enemy);
             }
             
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithAll<PlayerTag>())
             {
-                if (HandleDamage(ref state, entity, health, ref ecb,ref bufferLookup, ref childBufferFromEntity))
+                if (HandleDamage(ref state, entity, health, ref parallelWriter, ref bufferLookup, EntityType.Player))
                 {
                     ecb.AddComponent(entity, new PlayerWasDamaged());
                 }
@@ -56,17 +58,17 @@ namespace DotsShooter.Health
         /// <param name="state"></param>
         /// <param name="entity"></param>
         /// <param name="health"></param>
-        /// <param name="ecb"></param>
+        /// <param name="deadEntities"></param>
         /// <param name="damageBufferFromEntity"></param>
-        /// <param name="childBufferFromEntity"></param>
         /// <returns></returns>
         [BurstCompile]
         private static bool HandleDamage(ref SystemState state, 
             in Entity entity, 
             in RefRW<HealthComponent> health, 
-            ref EntityCommandBuffer ecb,
+            ref NativeQueue<DeadEntity>.ParallelWriter deadEntities,
             ref BufferLookup<DamageData> damageBufferFromEntity,
-            ref BufferLookup<Child> childBufferFromEntity)
+            EntityType entityType  // TODO: This is not super gracfeful, but it's a quick fix
+            )
         {
             if (!damageBufferFromEntity.HasBuffer(entity))
             {
@@ -79,14 +81,15 @@ namespace DotsShooter.Health
             for (int i = 0; i < damage.Length; i++)
             {
                 var damageComponent = damage[i];
-                // TODO: add a "damage" component
                 health.ValueRW.Health -= damageComponent.Damage;
                 didDamage = true;
-                // TODO: add a "dead system"
                 if (health.ValueRW.Health <= 0)
                 {
-                    // use ECB to destroy entity
-                    Helpers.DestroyEntityHierarchy(entity, ref ecb, ref childBufferFromEntity);
+                    deadEntities.Enqueue(new DeadEntity()
+                    {
+                        Entity = entity,
+                        EntityType = entityType
+                    });
                 }
             }
             

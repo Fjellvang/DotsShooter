@@ -31,8 +31,8 @@ namespace DotsShooter.Damage
         {
             _bufferLookup.Update(ref state);
 
-            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
+            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
+            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
 
             // var handleDamageJob = new HandleDamageJob()
             // {
@@ -65,8 +65,7 @@ namespace DotsShooter.Damage
 
                     if (damage.ValueRO.DestroyOnCollision)
                     {
-                        //TODO: This should create a Destroy event instead of destroying the entity directly
-                        ecb.DestroyEntity(entity);
+                        parallelWriter.Enqueue(new DeadEntity() { Entity = entity, EntityType = EntityType.Bullet });
                     }
                 }
             }

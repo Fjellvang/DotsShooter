@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿using System;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
@@ -45,8 +46,16 @@ namespace DotsShooter
             
             while (deadEntities.TryDequeue(out var deadEntity))
             {
-                state.EntityManager.DestroyEntity(deadEntity.Entity);
                 Helpers.DestroyEntityHierarchy(deadEntity.Entity, ref ecb, ref childBufferFromEntity);
+                switch (deadEntity.EntityType)
+                {
+                    case EntityType.Bullet:
+                        break;
+                    case EntityType.Enemy:
+                        break;
+                    case EntityType.Player:
+                        break;
+                }
             }
         }
         
