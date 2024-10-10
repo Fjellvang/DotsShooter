@@ -6,7 +6,7 @@ using UnityEngine;
 using Random = Unity.Mathematics.Random;
 namespace DotsShooter
 {
-    [UpdateInGroup(typeof(InitializationSystemGroup))]
+    [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
     [UpdateBefore(typeof(TargetingSystem))]
     public partial struct SpawnEnemySystem : ISystem
     {
