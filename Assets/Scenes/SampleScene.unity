@@ -163,7 +163,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 7a693214f6f5e244cba6fc672528a8d4, type: 3}
   m_Resource: {fileID: 8300000, guid: 7a693214f6f5e244cba6fc672528a8d4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.538
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -292,7 +292,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -644,6 +644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443568720}
   - component: {fileID: 443568721}
+  - component: {fileID: 443568722}
   m_Layer: 0
   m_Name: DeathScream
   m_TagString: Untagged
@@ -763,6 +764,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &443568722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443568719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ee625b4658446da061c2c2e65b101f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &655136820
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +874,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1168,7 +1181,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1297,7 +1310,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1539,7 +1552,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1862,7 +1875,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_Resource: {fileID: 8300000, guid: 4497de2005bc0704294029391c98ff66, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

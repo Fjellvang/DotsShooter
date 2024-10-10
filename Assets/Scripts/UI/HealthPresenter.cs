@@ -26,7 +26,6 @@ public class HealthPresenter : MonoBehaviour
     {
         // Wait a single frame to ensure the health component has been created
         yield return null;
-        yield return null;
 
         Initialize();
     }
@@ -39,6 +38,7 @@ public class HealthPresenter : MonoBehaviour
         if (healthArray.Length <= 0)
         {
             Debug.LogWarning("No player entity found with HealthComponent");
+            UpdateUI(100,100);
         }
         else
         {
