@@ -422,7 +422,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43f6e993f8444699675798a21678039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+  Enemies:
+  - Prefab: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+    Weight: 70
+  - Prefab: {fileID: 5717518933050959223, guid: 85dc9e4d6b2eee54d9e23317e56c0175, type: 3}
+    Weight: 20
+  - Prefab: {fileID: 3890467185232950674, guid: 55926179b90eec743925f44152ca3454, type: 3}
+    Weight: 10
   SpawnTime: 2
   MaxX: 30
   MaxY: 12
