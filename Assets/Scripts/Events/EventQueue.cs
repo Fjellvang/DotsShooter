@@ -12,13 +12,14 @@ namespace DotsShooter.Events
     // might be too simple, but it's a good starting point
     public struct Event
     {
-        public EventType EntityType;
+        public EventType EventType;
         public float3 Location;
     }
     public enum EventType
     {
         EnemyDied,
         PlayerDied,
-        BulletDied
+        BulletDied,
+        PauseRequested,
     }
 }

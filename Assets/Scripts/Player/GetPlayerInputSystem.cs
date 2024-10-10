@@ -1,6 +1,10 @@
-﻿using Unity.Entities;
+﻿using DotsShooter.Events;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+using Event = DotsShooter.Events.Event;
+using EventType = DotsShooter.Events.EventType;
 
 namespace DotsShooter.Player
 {
@@ -8,9 +12,6 @@ namespace DotsShooter.Player
     public partial class GetPlayerInputSystem : SystemBase
     {
         private PlayerControls _actions;
-        private Entity _playerEntity;
-        private bool _isPaused;//TODO Should not be part of this.
-        
         protected override void OnCreate()
         {
             RequireForUpdate<PlayerTag>();
@@ -24,13 +25,13 @@ namespace DotsShooter.Player
             _actions.Player.Move.performed += OnMovePerformed;
             _actions.Player.Move.canceled += OnMoveCancelled;
             _actions.Player.Pause.performed += OnPausedPerformed;
-            _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
 
         private void OnPausedPerformed(InputAction.CallbackContext obj)
         {
-            _isPaused = !_isPaused;
-            World.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = !_isPaused;
+            var events = SystemAPI.GetSingletonRW<EventQueue>();
+            var parallelWriter = events.ValueRW.Value.AsParallelWriter();
+            parallelWriter.Enqueue(new Event(){ EventType = EventType.PauseRequested});
         }
 
         private void OnMoveCancelled(InputAction.CallbackContext obj)
@@ -56,7 +57,6 @@ namespace DotsShooter.Player
             _actions.Player.Pause.performed -= OnPausedPerformed;
 
             _actions.Disable();
-            _playerEntity = Entity.Null;
         }
 
         protected override void OnUpdate()

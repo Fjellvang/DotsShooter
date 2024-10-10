@@ -13,6 +13,7 @@ namespace DotsShooter.Events
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnBulletDied; // Do bullets die?
+        public event Action OnPauseRequested;
         
         protected override void OnCreate()
         {
@@ -31,7 +32,7 @@ namespace DotsShooter.Events
             var events = SystemAPI.GetSingletonRW<EventQueue>().ValueRW.Value;
             while (events.TryDequeue(out var e))
             {
-                switch (e.EntityType)
+                switch (e.EventType)
                 {
                     case EventType.EnemyDied:
                         OnEnemyDied?.Invoke();
@@ -41,6 +42,9 @@ namespace DotsShooter.Events
                         break;
                     case EventType.BulletDied:
                         OnBulletDied?.Invoke();
+                        break;
+                    case EventType.PauseRequested:
+                        OnPauseRequested?.Invoke();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
