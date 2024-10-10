@@ -376,6 +376,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &299238717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1799437651990694956, guid: 2cd3dca8dbe7ea84caa3ec79a626da66, type: 3}
+  m_PrefabInstance: {fileID: 6638792234319548010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489abf147f9a45c596ac1e3c6b7d9799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &324970094
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,8 +420,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1696761010}
-  continueButton: {fileID: 442480834}
   quitButton: {fileID: 1246458385}
+  continueButton: {fileID: 442480834}
+  gameManager: {fileID: 299238717}
 --- !u!114 &324970096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11493,7 +11505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1712722975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11647,7 +11659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoiseProfile: {fileID: 11400000, guid: b241f91b9ccf8ff489abf204b30d3112, type: 2}
+  NoiseProfile: {fileID: 0}
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 1
   FrequencyGain: 1

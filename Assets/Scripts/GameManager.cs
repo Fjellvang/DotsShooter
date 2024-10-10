@@ -1,5 +1,4 @@
-﻿using System;
-using DotsShooter.Events;
+﻿using DotsShooter.Events;
 using Unity.Entities;
 using UnityEngine;
 

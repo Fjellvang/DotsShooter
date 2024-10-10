@@ -1,13 +1,16 @@
+using DotsShooter;
+using DotsShooter.Events;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;   // Reference to the Pause Menu UI Panel
-    public Button continueButton;    // Reference to the Continue Button
     public Button quitButton;        // Reference to the Quit Button
-    private bool isPaused = false;   // State to track if the game is paused
+    public Button continueButton;        // Reference to the Quit Button
+    public GameManager gameManager;  // Reference to the GameManager
+    private bool ShowPauseMenu = false;
 
     void Start()
     {
@@ -15,40 +18,27 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
 
         // Add listener to buttons
-        continueButton.onClick.AddListener(ResumeGame);
+        continueButton.onClick.AddListener(ContinueGame);
         quitButton.onClick.AddListener(QuitGame);
     }
 
-    void Update()
+
+    private void OnEnable()
     {
-        // Check if Esc key is pressed
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
+        var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>(); 
+        eventSystem.OnPauseRequested += TogglePauseMenu;
+    }
+    
+    private void ContinueGame()
+    {
+        TogglePauseMenu();
+        gameManager.TogglePause();
     }
 
-    // Function to resume the game
-    public void ResumeGame()
+    public void TogglePauseMenu()
     {
-        pauseMenuUI.SetActive(false);   // Hide the pause menu
-        Time.timeScale = 1f;            // Resume time
-        isPaused = false;
-    }
-
-    // Function to pause the game
-    void PauseGame()
-    {
-        pauseMenuUI.SetActive(true);    // Show the pause menu
-        Time.timeScale = 0f;            // Stop time
-        isPaused = true;
+        ShowPauseMenu = !ShowPauseMenu;
+        pauseMenuUI.SetActive(ShowPauseMenu);   // Hide the pause menu
     }
 
     // Function to quit the game
