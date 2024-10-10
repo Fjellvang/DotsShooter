@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DotsShooter
+namespace DotsShooter.Player
 {
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderLast = true)]
     public partial class GetPlayerInputSystem : SystemBase

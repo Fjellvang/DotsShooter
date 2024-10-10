@@ -1,7 +1,7 @@
 using Unity.Entities;
 using UnityEngine;
 
-namespace DotsShooter
+namespace DotsShooter.Player
 {
     public struct PlayerInput : IComponentData
     {

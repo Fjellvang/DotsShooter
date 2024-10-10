@@ -1,4 +1,5 @@
 ﻿using DotsShooter.Damage;
+using DotsShooter.Player;
 using DotsShooter.SimpleCollision;
 using Unity.Burst;
 using Unity.Collections;
@@ -36,6 +37,7 @@ namespace DotsShooter.Health
             
             var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
             var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
+            // TODO: Refactor this to parallel jobs?
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())
             {

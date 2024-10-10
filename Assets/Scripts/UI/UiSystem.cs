@@ -1,6 +1,7 @@
 ﻿using System;
 using DotsShooter.Damage;
 using DotsShooter.Health;
+using DotsShooter.Player;
 using Unity.Collections;
 using Unity.Entities;
 

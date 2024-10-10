@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿using DotsShooter.Player;
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
