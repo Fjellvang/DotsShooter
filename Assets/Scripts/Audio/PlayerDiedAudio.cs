@@ -26,7 +26,7 @@ namespace DotsShooter.Audio
         private void OnEnable()
         {
             var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>();
-            eventSystem.OnPlayerDied += Play;
+            eventSystem.OnPlayerDied += (x) => Play();
         }
     }
 }

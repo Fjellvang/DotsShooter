@@ -2,6 +2,7 @@ using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace DotsShooter.Events
@@ -9,7 +10,7 @@ namespace DotsShooter.Events
     [UpdateInGroup(typeof(PresentationSystemGroup))]
     public partial class EventSystem : SystemBase
     {
-        public event Action OnPlayerDied;
+        public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnBulletDied; // Do bullets die?
         
@@ -36,7 +37,7 @@ namespace DotsShooter.Events
                         OnEnemyDied?.Invoke();
                         break;
                     case EventType.PlayerDied:
-                        OnPlayerDied?.Invoke();
+                        OnPlayerDied?.Invoke(e.Location);
                         break;
                     case EventType.BulletDied:
                         OnBulletDied?.Invoke();

@@ -1,5 +1,6 @@
 ﻿using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace DotsShooter.Events
 {
@@ -12,6 +13,7 @@ namespace DotsShooter.Events
     public struct Event
     {
         public EventType EntityType;
+        public float3 Location;
     }
     public enum EventType
     {

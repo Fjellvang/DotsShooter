@@ -60,7 +60,11 @@ namespace DotsShooter
                         parallelWriter.Enqueue(new Event(){EntityType = EventType.EnemyDied});
                         break;
                     case EntityType.Player:
-                        parallelWriter.Enqueue(new Event(){EntityType = EventType.PlayerDied});
+                        parallelWriter.Enqueue(new Event()
+                        {
+                            EntityType = EventType.PlayerDied,
+                            Location = SystemAPI.GetComponent<LocalTransform>(deadEntity.Entity).Position
+                        });
                         break;
                 }
             }

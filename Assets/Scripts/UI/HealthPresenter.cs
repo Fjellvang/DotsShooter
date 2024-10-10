@@ -26,6 +26,7 @@ public class HealthPresenter : MonoBehaviour
     {
         // Wait a single frame to ensure the health component has been created
         yield return null;
+        yield return null;
 
         Initialize();
     }
