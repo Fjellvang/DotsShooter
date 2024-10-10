@@ -17,13 +17,19 @@ namespace DotsShooter.UI
     public partial class UiSystem : SystemBase
     {
         public event Action<HealthEventDetails> PlayerWasDamaged;
-        
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<PlayerWasDamaged>();
+        }
+
         protected override void OnUpdate()
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            foreach (var (damaged, healthComponent, entity) in 
-                     SystemAPI.Query<RefRO<PlayerWasDamaged>, RefRO<HealthComponent>>()
+            foreach (var (healthComponent, entity) in 
+                     SystemAPI.Query<RefRO<HealthComponent>>()
                          .WithAll<PlayerTag>()
+                         .WithAll<PlayerWasDamaged>()
                          .WithEntityAccess())
             {
                 PlayerWasDamaged?.Invoke(new HealthEventDetails

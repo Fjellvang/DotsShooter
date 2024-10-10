@@ -21,5 +21,6 @@ namespace DotsShooter.Events
         PlayerDied,
         BulletDied,
         PauseRequested,
+        IncreaseFireRate,
     }
 }

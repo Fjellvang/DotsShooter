@@ -1,4 +1,5 @@
 using System;
+using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -45,6 +46,13 @@ namespace DotsShooter.Events
                         break;
                     case EventType.PauseRequested:
                         OnPauseRequested?.Invoke();
+                        break;
+                    case EventType.IncreaseFireRate:
+                        //TODO: introduce a system for this
+                        foreach (var p in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithAll<PlayerTag>())
+                        {
+                            p.ValueRW.Cooldown *= 0.9f;
+                        }
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
