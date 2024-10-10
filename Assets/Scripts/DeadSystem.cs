@@ -1,4 +1,5 @@
 ﻿using System;
+using DotsShooter.Events;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -44,16 +45,22 @@ namespace DotsShooter
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true);
             
+            var events = SystemAPI.GetSingletonRW<EventQueue>();
+            var parallelWriter = events.ValueRW.Value.AsParallelWriter();
+            
             while (deadEntities.TryDequeue(out var deadEntity))
             {
                 Helpers.DestroyEntityHierarchy(deadEntity.Entity, ref ecb, ref childBufferFromEntity);
                 switch (deadEntity.EntityType)
                 {
                     case EntityType.Bullet:
+                        parallelWriter.Enqueue(new Event(){EntityType = EventType.BulletDied});
                         break;
                     case EntityType.Enemy:
+                        parallelWriter.Enqueue(new Event(){EntityType = EventType.EnemyDied});
                         break;
                     case EntityType.Player:
+                        parallelWriter.Enqueue(new Event(){EntityType = EventType.PlayerDied});
                         break;
                 }
             }
