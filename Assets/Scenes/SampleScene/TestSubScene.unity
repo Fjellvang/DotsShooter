@@ -2395,7 +2395,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 524633817717487512, guid: 6a7d4464c9316f747ac708168e32f15c, type: 3}
       propertyPath: cooldown
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 6a7d4464c9316f747ac708168e32f15c, type: 3}
       propertyPath: m_LocalPosition.x
