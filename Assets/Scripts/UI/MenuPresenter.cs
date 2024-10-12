@@ -1,6 +1,8 @@
 ﻿using DotsShooter.Events;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 
@@ -13,8 +15,10 @@ public class MenuPresenter : MonoBehaviour
 
     private CustomButton _continueButton;
     private CustomButton _quitButton;
+    private CustomButton _retryButton;
     
     private VisualElement _pauseContainer;
+    private VisualElement _gameOverOverlay;
     
     // TODO: Consider abstracting the event system access
     private EventSystem EventSystem => World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>();
@@ -27,16 +31,25 @@ public class MenuPresenter : MonoBehaviour
         _continueButton = _root.Q<CustomButton>("continue-button");
         _quitButton = _root.Q<CustomButton>("quit-button");
         _pauseContainer = _root.Q<VisualElement>("pause-container");
+        _gameOverOverlay = _root.Q<VisualElement>("game-over-overlay");
+        _retryButton = _gameOverOverlay.Q<CustomButton>("retry-button");
 
         _continueButton.Button.clicked += ResumeGame;
         _quitButton.Button.clicked += QuitGame;
+        _retryButton.Button.clicked += RestartGame;
         EventSystem.OnTogglePause += ToggleMenu;
+        EventSystem.OnPlayerDied += ShowGameOver;
     }
 
+    private void ShowGameOver(float3 _) // TODO: We should abstract some event args..
+    {
+        _gameOverOverlay.RemoveFromClassList("game-over-overlay--hidden");
+    }
 
     private void OnDisable()
     {
         EventSystem.OnTogglePause -= ToggleMenu;
+        EventSystem.OnPlayerDied -= ShowGameOver;
     }
 
     private void ResumeGame()
@@ -53,6 +66,12 @@ public class MenuPresenter : MonoBehaviour
         // Quit the application
         Application.Quit();
 #endif
+    }
+
+    public void RestartGame()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void ToggleMenu()

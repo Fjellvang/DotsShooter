@@ -10,8 +10,28 @@
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     border-bottom-left-radius: 50px;
+    transition-duration: 0.5s;
 }
 
 .pause-container-hidden {
+    display: none;
+    scale: 0.1 0.1;
+}
+
+.game-over-overlay {
+    flex-grow: 1;
+    position: absolute;
+    background-image: url("project://database/Assets/2D%20Assets/GameOverBG.png?fileID=21300000&guid=5f31691914f175b4cb8a00c13e7393e9&type=3#GameOverBG");
+    height: 100%;
+    top: 0;
+    width: 100%;
+    left: 0;
+    bottom: 100%;
+    transition-duration: 2s;
+    justify-content: center;
+}
+
+.game-over-overlay--hidden {
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0);
     display: none;
 }

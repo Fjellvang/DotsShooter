@@ -13,4 +13,7 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement name="game-over-overlay" class="game-over-overlay game-over-overlay--hidden">
+        <CustomButton label="Try Again" name="retry-button" style="top: 35%;" />
+    </engine:VisualElement>
 </engine:UXML>

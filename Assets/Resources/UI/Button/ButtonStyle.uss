@@ -11,6 +11,7 @@
 }
 
 .button-label {
+    -unity-font-definition: url("project://database/Assets/Fonts/pepperoni_pizza.ttf?fileID=12800000&guid=d3acf9dd2e7e89041b52c13582de5c6b&type=3#pepperoni_pizza");
 }
 
 .button {
