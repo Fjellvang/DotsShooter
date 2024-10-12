@@ -1,0 +1,13 @@
+.pause-container {
+    flex-grow: 1;
+    width: 50%;
+    height: 50%;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(106, 97, 97, 0.53);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+}

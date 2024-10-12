@@ -1,6 +1,16 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Main.uss?fileID=7433441132597879392&amp;guid=29481078c4179ec4c80e4eaab2cedef2&amp;type=3#Main" />
     <engine:VisualElement name="health-bar-container" style="position: relative; width: 180px; height: 50px; min-width: 158px; min-height: 46px;">
         <engine:ProgressBar value="64.8" name="health-bar" style="-unity-background-image-tint-color: rgb(255, 255, 255); width: 87%; height: 70%; position: absolute; left: 4.5%; top: 15%;" />
         <engine:Image name="health-bar-image" style="--unity-image: url(&quot;project://database/Assets/2D%20Assets/MainMenu/Healtbar.png?fileID=21300000&amp;guid=68b2abcfc3b963a4cbff73cf00a96533&amp;type=3#Healtbar&quot;); position: absolute; width: 102%; height: 80%; top: 4px; left: 0;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="main-container" style="flex-grow: 1;">
+        <engine:VisualElement name="pause-container" class="pause-container">
+            <engine:Label text="Paused&#10;" name="pause-label" />
+            <engine:VisualElement name="button-container" style="flex-grow: 1; justify-content: center; align-items: auto; align-self: center;">
+                <CustomButton my-string-value="aaaaaaaa" label="@@@@@" name="ContinueButton" />
+                <CustomButton my-string-value="aaaaaaaa" label="@@@@@" name="QuitButton" />
+            </engine:VisualElement>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
