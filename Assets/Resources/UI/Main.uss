@@ -11,3 +11,7 @@
     border-bottom-right-radius: 50px;
     border-bottom-left-radius: 50px;
 }
+
+.pause-container-hidden {
+    display: none;
+}

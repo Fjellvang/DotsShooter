@@ -9,7 +9,7 @@ namespace DotsShooter
         
         private bool _isPaused;
 
-        public void TogglePause()
+        public void ToggleTogglePause()
         {
             _isPaused = !_isPaused;
             World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = !_isPaused;
@@ -18,7 +18,7 @@ namespace DotsShooter
         private void OnEnable()
         {
             var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>(); 
-            eventSystem.OnPauseRequested += TogglePause;
+            eventSystem.OnTogglePause += ToggleTogglePause;
         }
     }
 }

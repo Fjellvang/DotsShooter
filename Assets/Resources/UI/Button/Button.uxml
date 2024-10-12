@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Button/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=d9f05472f718a334d8292c457731b33a&amp;type=3#ButtonStyle" />
+    <Style src="project://database/Assets/Resources/UI/Button/ButtonStyle.uss?fileID=7433441132597879392&amp;guid=d9f05472f718a334d8292c457731b33a&amp;type=3#ButtonStyle" />
     <engine:VisualElement name="ButtonContainer" style="flex-grow: 1;">
-        <engine:Button enable-rich-text="false" enabled="true" parse-escape-sequences="true" selectable="true" class="button">
+        <engine:Button enable-rich-text="false" enabled="true" parse-escape-sequences="true" selectable="true" name="button" class="button">
             <engine:Image name="button-image" class="button-image" />
             <engine:Label text="Button&#10;" name="button-label" class="button-label" />
         </engine:Button>

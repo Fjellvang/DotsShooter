@@ -14,8 +14,8 @@ namespace DotsShooter.Events
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnBulletDied; // Do bullets die?
-        public event Action OnPauseRequested;
-        
+        public event Action OnTogglePause;
+
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -45,7 +45,7 @@ namespace DotsShooter.Events
                         OnBulletDied?.Invoke();
                         break;
                     case EventType.PauseRequested:
-                        OnPauseRequested?.Invoke();
+                        TogglePause();
                         break;
                     case EventType.IncreaseFireRate:
                         //TODO: introduce a system for this
@@ -58,6 +58,11 @@ namespace DotsShooter.Events
                         throw new ArgumentOutOfRangeException();
                 }
             }
+        }
+
+        public void TogglePause()
+        {
+            OnTogglePause?.Invoke();
         }
     }
 }

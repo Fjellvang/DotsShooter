@@ -9,7 +9,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;   // Reference to the Pause Menu UI Panel
     public Button quitButton;        // Reference to the Quit Button
     public Button continueButton;        // Reference to the Quit Button
-    public GameManager gameManager;  // Reference to the GameManager
     private bool ShowPauseMenu = false;
 
     void Start()
@@ -26,16 +25,15 @@ public class PauseMenu : MonoBehaviour
     private void OnEnable()
     {
         var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>(); 
-        eventSystem.OnPauseRequested += TogglePauseMenu;
+        eventSystem.OnTogglePause += ToggleTogglePauseMenu;
     }
     
     private void ContinueGame()
     {
-        TogglePauseMenu();
-        gameManager.TogglePause();
+        ToggleTogglePauseMenu();
     }
 
-    public void TogglePauseMenu()
+    public void ToggleTogglePauseMenu()
     {
         ShowPauseMenu = !ShowPauseMenu;
         pauseMenuUI.SetActive(ShowPauseMenu);   // Hide the pause menu

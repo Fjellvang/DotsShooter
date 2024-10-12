@@ -9,15 +9,9 @@ using UnityEngine.UIElements;
 [UxmlElement("CustomButton")]
 public partial class CustomButton : VisualElement
 {
-    [UxmlAttribute]
-    public string Label
-    {
-        get => _label.text;
-        set => _label.text = value;
-    }
-
 
     private Label _label;
+    private Button _button;
 
     public CustomButton()
     {
@@ -36,6 +30,15 @@ public partial class CustomButton : VisualElement
             Add(_label);
         }
     }
+    
+    [UxmlAttribute]
+    public string Label
+    {
+        get => _label.text;
+        set => _label.text = value;
+    }
+    
+    public Button Button => _button ??= this.Q<Button>("button");
 }
 
 // }
