@@ -1,3 +1,4 @@
+using DotsShooter.Damage;
 using DotsShooter.Player;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -20,7 +21,6 @@ namespace DotsShooter
             var targetEnemy = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRO;
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
             var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
-            // var targetEnemy = SystemAPI.GetComponent<AutoTargetingPlayer>(playerEntity);
 
             foreach (var shooter in SystemAPI.Query<RefRW<AutoShootingComponent>>())
             {
@@ -40,17 +40,19 @@ namespace DotsShooter
                 var bullet = state.EntityManager.Instantiate(shootingComponent.ProjectilePrefab);
                 var bulletTransform = SystemAPI.GetComponent<LocalTransform>(bullet);
                 var bulletMovement = SystemAPI.GetComponent<MovementComponent>(bullet);
+                var bulletDamage = SystemAPI.GetComponent<DamageOnCollision>(bullet);
                 
+                bulletDamage.Damage = shootingComponent.ProjectileDamage;
                 bulletTransform.Position = playerPosition + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
                 bulletTransform.Rotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x)); 
                 bulletMovement.Direction = targetEnemy.Direction;
                 bulletMovement.Speed = shootingComponent.ProjectileSpeed;
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
                 
+                SystemAPI.SetComponent(bullet, bulletDamage); 
                 SystemAPI.SetComponent(bullet, bulletTransform); 
                 SystemAPI.SetComponent(bullet, bulletMovement);
             }
-            
         }
     }
 }

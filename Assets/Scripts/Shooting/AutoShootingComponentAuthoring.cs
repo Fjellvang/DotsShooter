@@ -10,6 +10,7 @@ namespace DotsShooter
         public float CooldownTimer;
         public Entity ProjectilePrefab;
         public float ProjectileSpeed;
+        public float ProjectileDamage;
         public float SpawnOffset;
     }
     public class AutoShootingComponentAuthoring : MonoBehaviour
@@ -23,6 +24,8 @@ namespace DotsShooter
         private float projectileSpeed;
         [SerializeField]
         private float spawnOffset;
+        [SerializeField]
+        private float projectileDamage = 5;
 
         public class AutoShootingComponentBaker : Baker<AutoShootingComponentAuthoring>
         {
@@ -35,7 +38,8 @@ namespace DotsShooter
                         Cooldown = authoring.cooldown,
                         ProjectileSpeed = authoring.projectileSpeed,
                         SpawnOffset = authoring.spawnOffset,
-                        ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic)
+                        ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
+                        ProjectileDamage = authoring.projectileDamage
                     });
             }
         }

@@ -5,13 +5,13 @@ namespace DotsShooter.Damage
 {
     public struct DamageOnCollision : IComponentData
     {
-        public int Damage;
+        public float Damage;
         public bool DestroyOnCollision;
     }
     
     public class DamageOnCollisionAuthoring : MonoBehaviour
     {
-        public int Damage;
+        public float Damage;
         public bool DestroyOnCollision;
 
         public class DamageOnCollisionBaker : Baker<DamageOnCollisionAuthoring>

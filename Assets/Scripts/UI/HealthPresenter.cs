@@ -73,7 +73,7 @@ public class HealthPresenter : MonoBehaviour
     }
 
 
-    private void UpdateUI(int health, int maxHealth)
+    private void UpdateUI(float health, float maxHealth)
     {
         // Calculate percentage health
         float healthRatio = (float)health / maxHealth;

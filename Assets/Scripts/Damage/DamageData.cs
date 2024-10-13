@@ -4,6 +4,6 @@ namespace DotsShooter.Damage
 {
     public struct DamageData : IBufferElementData
     {
-        public int Damage;
+        public float Damage;
     }
 }

@@ -9,8 +9,8 @@ namespace DotsShooter.UI
 {
     public struct HealthEventDetails
     {
-        public int Health;
-        public int MaxHealth;
+        public float Health;
+        public float MaxHealth;
     }
     
     [UpdateInGroup(typeof(PresentationSystemGroup))]

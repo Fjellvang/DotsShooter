@@ -6,14 +6,14 @@ namespace DotsShooter.Health
 {
     public struct HealthComponent : IComponentData
     {
-        public int Health;
-        public int MaxHealth;
+        public float Health;
+        public float MaxHealth;
     }
 
     public class HealthComponentAuthoring : MonoBehaviour
     {
         [SerializeField] 
-        private int health = 100;
+        private float health = 100;
         public class HealthComponentBaker : Baker<HealthComponentAuthoring>
         {
             public override void Bake(HealthComponentAuthoring authoring)

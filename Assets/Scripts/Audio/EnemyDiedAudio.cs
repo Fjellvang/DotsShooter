@@ -57,6 +57,7 @@ namespace DotsShooter.Audio
         
         private void OnDisable()
         {
+            if (!World.DefaultGameObjectInjectionWorld.IsCreated) return;
             var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>();
             eventSystem.OnEnemyDied -= Play;
         }

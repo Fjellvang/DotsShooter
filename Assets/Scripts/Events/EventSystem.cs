@@ -15,6 +15,7 @@ namespace DotsShooter.Events
         public event Action OnEnemyDied;
         public event Action OnBulletDied; // Do bullets die?
         public event Action OnTogglePause;
+        public event Action OnShowPowerUpMenu;
 
         protected override void OnCreate()
         {
@@ -47,12 +48,8 @@ namespace DotsShooter.Events
                     case EventType.PauseRequested:
                         TogglePause();
                         break;
-                    case EventType.IncreaseFireRate:
-                        //TODO: introduce a system for this
-                        foreach (var p in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithAll<PlayerTag>())
-                        {
-                            p.ValueRW.Cooldown *= 0.9f;
-                        }
+                    case EventType.ShowPowerupMenu:
+                        OnShowPowerUpMenu?.Invoke();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

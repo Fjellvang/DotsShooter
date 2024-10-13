@@ -35,3 +35,14 @@
     -unity-background-image-tint-color: rgba(255, 255, 255, 0);
     display: none;
 }
+
+.main-container {
+    flex-grow: 1;
+    align-items: center;
+    align-self: center;
+    justify-content: space-around;
+}
+
+.power-up-conatiner--hidden {
+    display: none;
+}

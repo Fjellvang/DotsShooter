@@ -1,4 +1,5 @@
-﻿using DotsShooter.Events;
+﻿using System;
+using DotsShooter.Events;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -48,6 +49,7 @@ public class MenuPresenter : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!World.DefaultGameObjectInjectionWorld.IsCreated) return;
         EventSystem.OnTogglePause -= ToggleMenu;
         EventSystem.OnPlayerDied -= ShowGameOver;
     }

@@ -24,15 +24,15 @@ namespace DotsShooter.Player
             _actions.Enable();
             _actions.Player.Move.performed += OnMovePerformed;
             _actions.Player.Move.canceled += OnMoveCancelled;
-            _actions.Player.Jump.performed += OnJumpPerformed; //TODO: Remove this once we have a proper skill system
+            _actions.Player.Jump.performed += OnShowpPowerUpMenu; //TODO: Remove this once we have a proper skill system
             _actions.Player.Pause.performed += OnPausedPerformed;
         }
 
-        private void OnJumpPerformed(InputAction.CallbackContext obj)
+        private void OnShowpPowerUpMenu(InputAction.CallbackContext obj)
         {
             var events = SystemAPI.GetSingletonRW<EventQueue>();
             var parallelWriter = events.ValueRW.Value.AsParallelWriter();
-            parallelWriter.Enqueue(new Event(){ EventType = EventType.IncreaseFireRate});
+            parallelWriter.Enqueue(new Event(){ EventType = EventType.ShowPowerupMenu});
         }
 
         private void OnPausedPerformed(InputAction.CallbackContext obj)
@@ -63,7 +63,7 @@ namespace DotsShooter.Player
             _actions.Player.Move.performed -= OnMovePerformed;
             _actions.Player.Move.canceled -= OnMoveCancelled;
             _actions.Player.Pause.performed -= OnPausedPerformed;
-            _actions.Player.Jump.performed -= OnJumpPerformed; //TODO: Remove this once we have a proper skill system
+            _actions.Player.Jump.performed -= OnShowpPowerUpMenu; //TODO: Remove this once we have a proper skill system
 
 
             _actions.Disable();
