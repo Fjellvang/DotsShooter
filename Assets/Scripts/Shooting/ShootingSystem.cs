@@ -1,5 +1,6 @@
 using DotsShooter.Damage;
 using DotsShooter.Player;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -21,38 +22,61 @@ namespace DotsShooter
             var targetEnemy = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRO;
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
             var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
+        
+            float deltaTime = SystemAPI.Time.DeltaTime;
+        
+            var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
-            foreach (var shooter in SystemAPI.Query<RefRW<AutoShootingComponent>>())
+            foreach (var (shooter, entity) in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithEntityAccess())
             {
                 if (targetEnemy.Direction.Equals(float3.zero))
                 {
                     continue;
                 }
-                
-                shooter.ValueRW.CooldownTimer -= SystemAPI.Time.DeltaTime;
+            
+                shooter.ValueRW.CooldownTimer -= deltaTime;
                 if (shooter.ValueRO.CooldownTimer > 0)
                 {
                     continue;
                 }
-                
+            
                 var shootingComponent = shooter.ValueRO;
-                
-                var bullet = state.EntityManager.Instantiate(shootingComponent.ProjectilePrefab);
-                var bulletTransform = SystemAPI.GetComponent<LocalTransform>(bullet);
-                var bulletMovement = SystemAPI.GetComponent<MovementComponent>(bullet);
-                var bulletDamage = SystemAPI.GetComponent<DamageOnCollision>(bullet);
-                
-                bulletDamage.Damage = shootingComponent.ProjectileDamage;
-                bulletTransform.Position = playerPosition + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
-                bulletTransform.Rotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x)); 
-                bulletMovement.Direction = targetEnemy.Direction;
-                bulletMovement.Speed = shootingComponent.ProjectileSpeed;
+            
+                if (shootingComponent.ProjectilePrefab == Entity.Null)
+                {
+                    UnityEngine.Debug.LogError($"ProjectilePrefab is null for entity {entity}");
+                    continue;
+                }
+
+                var bullet = ecb.Instantiate(shootingComponent.ProjectilePrefab);
+            
+                var bulletPosition = playerPosition + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
+                var bulletRotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x));
+            
+                ecb.SetComponent(bullet, new LocalTransform
+                {
+                    Position = bulletPosition,
+                    Rotation = bulletRotation,
+                    Scale = 1
+                });
+            
+                ecb.SetComponent(bullet, new MovementComponent
+                {
+                    Direction = targetEnemy.Direction,
+                    Speed = shootingComponent.ProjectileSpeed
+                });
+
+                ecb.SetComponent(bullet, new DamageOnCollision
+                {
+                    Damage = shootingComponent.ProjectileDamage,
+                    DestroyOnCollision = true, // TODO: we're now overwriting this value, fromn the one chosen in the editor..
+                });
+            
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
-                
-                SystemAPI.SetComponent(bullet, bulletDamage); 
-                SystemAPI.SetComponent(bullet, bulletTransform); 
-                SystemAPI.SetComponent(bullet, bulletMovement);
             }
+        
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
         }
     }
 }
