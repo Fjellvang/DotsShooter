@@ -1,6 +1,8 @@
 ﻿using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace DotsShooter.SpatialPartitioning
@@ -34,19 +36,40 @@ namespace DotsShooter.SpatialPartitioning
             }
             var properties = state.EntityManager.GetComponentData<GridProperties>(entity);
 
-            // Create entities for each grid cell
-            for (int y = 0; y < properties.GridDimensions.y; y++)
+            //TODO: this shit could probably be moved to baking?
+            var gridSingleton = new Grid
             {
-                for (int x = 0; x < properties.GridDimensions.x; x++)
+                GridSize = properties.GridDimensions,
+                CellSize = properties.CellSize,
+                Cells = new NativeArray<GridCell>(properties.GridDimensions.x * properties.GridDimensions.y, Allocator.Persistent)
+            };
+            
+            for (int i = 0; i < gridSingleton.Cells.Length; i++)
+            {
+                gridSingleton.Cells[i] = new GridCell
                 {
-                    var cellEntity = state.EntityManager.CreateEntity();
-                    state.EntityManager.AddComponentData(cellEntity, new GridCell { CellIndex = new int2(x, y) });
-                    state.EntityManager.AddBuffer<GridCellContents>(cellEntity);
-                }
+                    Entities = new NativeList<Entity>(Allocator.Persistent)
+                };
             }
             
+            state.EntityManager.AddComponentData(entity, gridSingleton);
             state.EntityManager.RemoveComponent<GridPropertiesInitializer>(entity);
             state.EntityManager.AddComponentData(entity, new GridPropertiesInitialized());
         }
+        // TODO: Consider adding OnDestroy method to clean up native collections
+        // protected override void OnDestroy()
+        // {
+        //     // Clean up native collections
+        //     if (HasSingleton<GridSingleton>())
+        //     {
+        //         var gridSingleton = GetSingleton<GridSingleton>();
+        //         for (int i = 0; i < gridSingleton.Cells.Length; i++)
+        //         {
+        //             gridSingleton.Cells[i].Entities.Dispose();
+        //         }
+        //         gridSingleton.Cells.Dispose();
+        //     }
+        // }
     }
+
 }

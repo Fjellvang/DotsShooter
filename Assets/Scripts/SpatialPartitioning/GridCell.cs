@@ -1,22 +1,19 @@
-﻿using Unity.Entities;
+﻿using Unity.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 
 namespace DotsShooter.SpatialPartitioning
 {
-    public struct GridCell : IComponentData
+    public struct Grid : IComponentData
     {
-        public int2 CellIndex;
+        public NativeArray<GridCell> Cells;
+        public int2 GridSize;
+        public float2 CellSize;
     }
-    
-    /// <summary>
-    /// Buffer element to store the entity in the grid cell
-    /// </summary>
-    public struct GridCellContents : IBufferElementData
-    {
-        public Entity Value;
 
-        // Implicit conversions for easier use
-        public static implicit operator Entity(GridCellContents e) => e.Value;
-        public static implicit operator GridCellContents(Entity e) => new GridCellContents { Value = e };
+    // Structure to represent a single grid cell
+    public struct GridCell
+    {
+        public NativeList<Entity> Entities;
     }
 }
