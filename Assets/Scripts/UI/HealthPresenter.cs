@@ -63,6 +63,7 @@ public class HealthPresenter : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return;
         var uiSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<UiSystem>();
         uiSystem.PlayerWasDamaged -= HealthChanged;
     }

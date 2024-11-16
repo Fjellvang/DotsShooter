@@ -49,7 +49,7 @@ public class MenuPresenter : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!World.DefaultGameObjectInjectionWorld.IsCreated) return;
+        if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return;
         EventSystem.OnTogglePause -= ToggleMenu;
         EventSystem.OnPlayerDied -= ShowGameOver;
     }

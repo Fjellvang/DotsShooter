@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -532,6 +533,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+--- !u!1 &342576893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342576895}
+  - component: {fileID: 342576894}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &342576894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342576893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3e065e0d924818803691f8bf76d702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CellSize: 10
+  GridDimensions:
+    x: 15
+    y: 10
+  GridColor: {r: 0.2, g: 0.2, b: 1, a: 0.3}
+  ShowCellLabels: 1
+--- !u!4 &342576895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342576893}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &431498045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
@@ -1887,11 +1938,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.930819
+      value: -8.1
       objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.9939342
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1960,6 +2011,10 @@ PrefabInstance:
     - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2066,7 +2121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1735663882
 Transform:
   m_ObjectHideFlags: 0
@@ -2450,3 +2505,4 @@ SceneRoots:
   - {fileID: 1669056607}
   - {fileID: 1735663882}
   - {fileID: 261728354}
+  - {fileID: 342576895}

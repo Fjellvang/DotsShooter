@@ -67,7 +67,7 @@ public class PowerUpPresenter : MonoBehaviour
 
     private void OnDisable()
     {
-        if(!World.DefaultGameObjectInjectionWorld.IsCreated) return;
+        if(!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return;
         EventSystem.OnShowPowerUpMenu -= ShowPowerUpContainer;
     }
 
