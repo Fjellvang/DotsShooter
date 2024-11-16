@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using Unity.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -28,7 +29,6 @@ namespace DotsShooter.SpatialPartitioning
                 AddComponent(entity,
                     new GridProperties { CellSize = authoring.CellSize, GridDimensions = authoring.GridDimensions });
                 AddComponent(entity, new GridPropertiesInitializer());
-                Debug.Log("Baked GridProperties");
             }
         }
     }

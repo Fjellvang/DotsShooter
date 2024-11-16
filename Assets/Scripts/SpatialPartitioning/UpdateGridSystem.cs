@@ -73,6 +73,9 @@ namespace DotsShooter.SpatialPartitioning
                 else
                 {
                     Debug.Log($"Entity {mapping.Entity} is out of bounds");
+                    var localToWorld = SystemAPI.GetComponent<LocalToWorld>(mapping.Entity);
+                    Debug.Log($"Position: {localToWorld.Position}");
+                    // Debug.Break();
                 }
 #endif
             }

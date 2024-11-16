@@ -563,8 +563,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CellSize: 10
   GridDimensions:
-    x: 100
-    y: 100
+    x: 10
+    y: 10
 --- !u!4 &342576895
 Transform:
   m_ObjectHideFlags: 0
