@@ -47,6 +47,10 @@ namespace DotsShooter.SpatialPartitioning
         {
             closestEntity = Entity.Null;
             delta = float3.zero;
+            if (grid.entityCount == 0)
+            {
+                return false;
+            }
             var closestDistanceSq = maxSearchRadius * maxSearchRadius;
 
             // Get the cell containing the search position

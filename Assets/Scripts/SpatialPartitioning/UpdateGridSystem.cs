@@ -33,6 +33,7 @@ namespace DotsShooter.SpatialPartitioning
                 Cells = grid.ValueRW.Cells
             };
             var clearGridJobHandle = clearGridJob.Schedule(grid.ValueRO.Cells.Length, 64);
+            grid.ValueRW.entityCount = 0;
         
             // Populate the grid
             var entityQuery = SystemAPI.QueryBuilder()
@@ -54,7 +55,7 @@ namespace DotsShooter.SpatialPartitioning
             var populateGridJobHandle = populateGridJob.Schedule(populateGridJob.Entities.Length, 64, clearGridJobHandle);
             
             populateGridJobHandle.Complete();
-            
+            grid.ValueRW.entityCount = entities.Length;
 
             // Process the mappings and populate the grid
             // TODO: Refactor this to use a parallel job

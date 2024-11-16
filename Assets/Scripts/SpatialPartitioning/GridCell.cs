@@ -10,6 +10,7 @@ namespace DotsShooter.SpatialPartitioning
         public int2 GridSize;
         public float2 CellSize;
         public float2 GridOrigin;
+        public int entityCount;
     }
 
     // Structure to represent a single grid cell
