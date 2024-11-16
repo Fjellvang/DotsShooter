@@ -9,6 +9,7 @@ namespace DotsShooter
 {
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateAfter(typeof(TargetingSystem))]
+    [UpdateBefore(typeof(TransformSystemGroup))]
     public partial struct ShootingSystem : ISystem
     {
         public void OnCreate(ref SystemState state)
@@ -27,7 +28,6 @@ namespace DotsShooter
             float deltaTime = SystemAPI.Time.DeltaTime;
         
             var ecb = new EntityCommandBuffer(Allocator.TempJob);
-
             foreach (var (shooter, entity) in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithEntityAccess())
             {
                 if (targetEnemy.Direction.Equals(float3.zero))
