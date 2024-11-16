@@ -1,5 +1,4 @@
-﻿using Unity.Collections;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -21,6 +20,7 @@ namespace DotsShooter.SpatialPartitioning
         public float CellSize;
         public int2 GridDimensions;
 
+        [Header("Debug")]
         public Color GridColor = new Color(0.2f, 0.2f, 1f, 0.3f); 
         public bool ShowCellLabels = true;
         

@@ -9,8 +9,6 @@ using UnityEngine;
 
 namespace DotsShooter.SpatialPartitioning
 {
-    
-    
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct UpdateGridSystem : ISystem
     {
@@ -53,23 +51,17 @@ namespace DotsShooter.SpatialPartitioning
             var populateGridJobHandle = populateGridJob.Schedule(populateGridJob.Entities.Length, 64, clearGridJobHandle);
             
             populateGridJobHandle.Complete();
-            state.Dependency.Complete();
             
-            #if UNITY_EDITOR
-            int count = 0;
-            #endif
+
             // Process the mappings and populate the grid
+            // TODO: Refactor this to use a parallel job
             for (int i = 0; i < entityCellMappings.Length; i++)
             {
                 var mapping = entityCellMappings[i];
                 if (mapping.CellIndex != -1)
                 {
-#if UNITY_EDITOR
-                    count++;
-#endif
 
                     grid.ValueRW.Cells[mapping.CellIndex].Entities.Add(mapping.Entity);
-                    Debug.Log($"Entity {mapping.Entity} added to cell {mapping.CellIndex}");
                 }
 #if UNITY_EDITOR
                 else
@@ -80,10 +72,6 @@ namespace DotsShooter.SpatialPartitioning
                 }
 #endif
             }
-#if UNITY_EDITOR
-            // Debug.Log($"Populated {count} entities");
-#endif
-
 
             // state.Dependency = populateGridJobHandle;
             // foreach (var cell in grid.ValueRW.Cells)
