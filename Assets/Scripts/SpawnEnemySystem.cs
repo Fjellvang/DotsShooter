@@ -1,4 +1,5 @@
 ﻿using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -29,36 +30,45 @@ namespace DotsShooter
             {
                 return;
             }
-
+            var ecb = new EntityCommandBuffer(Allocator.Temp);
             var enemiesToSpawn = (int)(SystemAPI.Time.ElapsedTime/2);
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                SpawnEnemy(ref state, spawnEnemyData, buffer);
+                SpawnEnemy(ref state, spawnEnemyData, buffer, ecb);
             }
 
             spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
             
             SystemAPI.SetSingleton(spawnEnemyData.ValueRO);
+            
+            // Playback and dispose ECB
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
         }
 
         
         [BurstCompile]
-        private void SpawnEnemy(ref SystemState state, RefRW<SpawnEnemyData> spawnEnemyData, in DynamicBuffer<EnemyPrefabs> enemies)
+        private void SpawnEnemy(ref SystemState state,
+            RefRW<SpawnEnemyData> spawnEnemyData,
+            in DynamicBuffer<EnemyPrefabs> enemies,
+            EntityCommandBuffer ecb)
         {
             var enemyIndex = GetWeightedRandomEnemyIndex(enemies);
             var enemyPrefab = enemies[enemyIndex].Prefab;
-            var enemy = state.EntityManager.Instantiate(enemyPrefab);
-            var enemyTransform = SystemAPI.GetComponent<LocalTransform>(enemy);
+            var enemy = ecb.Instantiate(enemyPrefab); //state.EntityManager.Instantiate(enemyPrefab);
+            // var enemyTransform = SystemAPI.GetComponent<LocalTransform>(enemy);
+            
 
             var spawnTop = _random.NextBool();
             var x = _random.NextFloat(-spawnEnemyData.ValueRO.MaxX, spawnEnemyData.ValueRO.MaxX);//TODO: Remove magic numbers
             
-            enemyTransform.Position = spawnTop 
+            var position = spawnTop 
                 ? new float3(x, spawnEnemyData.ValueRO.MaxY, 0) 
                 : new float3(x, -spawnEnemyData.ValueRO.MaxY, 0);
             
-            SystemAPI.SetComponent(enemy, enemyTransform);
+            ecb.SetComponent(enemy, LocalTransform.FromPosition(position));
+            // SystemAPI.SetComponent(enemy, enemyTransform);
         }
         
         private int GetWeightedRandomEnemyIndex(in DynamicBuffer<EnemyPrefabs> enemies)

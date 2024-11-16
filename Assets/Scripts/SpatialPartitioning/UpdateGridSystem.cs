@@ -17,6 +17,7 @@ namespace DotsShooter.SpatialPartitioning
             state.RequireForUpdate<Grid>();
             state.RequireForUpdate<GridProperties>();
             state.RequireForUpdate<GridPropertiesInitialized>();
+            state.RequireForUpdate<EnemyTag>();
         }
 
         [BurstCompile]
