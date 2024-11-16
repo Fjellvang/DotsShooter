@@ -46,7 +46,8 @@ namespace DotsShooter.SpatialPartitioning
                 LocalToWorldLookup = SystemAPI.GetComponentLookup<LocalToWorld>(true),
                 EntityCellMappings = entityCellMappings,
                 GridSize = grid.ValueRO.GridSize,
-                CellSize = grid.ValueRO.CellSize
+                CellSize = grid.ValueRO.CellSize,
+                GridOrigin = grid.ValueRO.GridOrigin
             };
 
             var populateGridJobHandle = populateGridJob.Schedule(populateGridJob.Entities.Length, 64, clearGridJobHandle);
@@ -68,6 +69,7 @@ namespace DotsShooter.SpatialPartitioning
 #endif
 
                     grid.ValueRW.Cells[mapping.CellIndex].Entities.Add(mapping.Entity);
+                    Debug.Log($"Entity {mapping.Entity} added to cell {mapping.CellIndex}");
                 }
 #if UNITY_EDITOR
                 else
@@ -75,7 +77,6 @@ namespace DotsShooter.SpatialPartitioning
                     Debug.Log($"Entity {mapping.Entity} is out of bounds");
                     var localToWorld = SystemAPI.GetComponent<LocalToWorld>(mapping.Entity);
                     Debug.Log($"Position: {localToWorld.Position}");
-                    // Debug.Break();
                 }
 #endif
             }
@@ -124,15 +125,22 @@ namespace DotsShooter.SpatialPartitioning
         public NativeArray<EntityCellMapping> EntityCellMappings;
         public int2 GridSize;
         public float2 CellSize;
+        public float2 GridOrigin;
 
         public void Execute(int index)
         {
             Entity entity = Entities[index];
             float3 position = LocalToWorldLookup[entity].Position;
+            
+            // Offset position by grid origin to get local grid coordinates
+            float2 localPosition = new float2(
+                position.x - GridOrigin.x,
+                position.y - GridOrigin.y
+            );
 
             int2 cellIndex = new int2(
-                (int)(position.x / CellSize.x),
-                (int)(position.z / CellSize.y)
+                (int)(localPosition.x / CellSize.x),
+                (int)(localPosition.y / CellSize.y)
             );
 
             // Ensure the entity is within the grid bounds

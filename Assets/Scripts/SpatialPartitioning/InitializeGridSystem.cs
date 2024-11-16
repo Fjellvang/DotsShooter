@@ -35,12 +35,18 @@ namespace DotsShooter.SpatialPartitioning
                 return;
             }
             var properties = state.EntityManager.GetComponentData<GridProperties>(entity);
-
-            //TODO: this shit could probably be moved to baking?
+            
+            // Calculate grid origin (top-left corner of the grid)
+            float2 gridOrigin = new float2(
+                -(properties.GridDimensions.x * properties.CellSize) / 2f,
+                -(properties.GridDimensions.y * properties.CellSize) / 2f
+            );
+            
             var gridSingleton = new Grid
             {
                 GridSize = properties.GridDimensions,
                 CellSize = properties.CellSize,
+                GridOrigin = gridOrigin,
                 Cells = new NativeArray<GridCell>(properties.GridDimensions.x * properties.GridDimensions.y, Allocator.Persistent)
             };
             

@@ -9,7 +9,7 @@ namespace DotsShooter.SpatialPartitioning
         public NativeArray<GridCell> Cells;
         public int2 GridSize;
         public float2 CellSize;
-        
+        public float2 GridOrigin;
     }
 
     // Structure to represent a single grid cell
