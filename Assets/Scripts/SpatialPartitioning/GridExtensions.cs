@@ -87,6 +87,11 @@ namespace DotsShooter.SpatialPartitioning
                         // Check each entity in the current cell
                         foreach (var entity in cell.Entities)
                         {
+                            if (!localToWorldLookup.EntityExists(entity))
+                            {
+                                // Entity no longer exists
+                                continue;
+                            }
                             var entityTransform = localToWorldLookup[entity];
                             var direction = entityTransform.Position - position;
                             var distanceSq = math.lengthsq(direction);

@@ -3,7 +3,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 using Random = Unity.Mathematics.Random;
 namespace DotsShooter
 {
@@ -56,8 +55,7 @@ namespace DotsShooter
         {
             var enemyIndex = GetWeightedRandomEnemyIndex(enemies);
             var enemyPrefab = enemies[enemyIndex].Prefab;
-            var enemy = ecb.Instantiate(enemyPrefab); //state.EntityManager.Instantiate(enemyPrefab);
-            // var enemyTransform = SystemAPI.GetComponent<LocalTransform>(enemy);
+            var enemy = ecb.Instantiate(enemyPrefab); 
             
 
             var spawnTop = _random.NextBool();
@@ -68,7 +66,6 @@ namespace DotsShooter
                 : new float3(x, -spawnEnemyData.ValueRO.MaxY, 0);
             
             ecb.SetComponent(enemy, LocalTransform.FromPosition(position));
-            // SystemAPI.SetComponent(enemy, enemyTransform);
         }
         
         private int GetWeightedRandomEnemyIndex(in DynamicBuffer<EnemyPrefabs> enemies)

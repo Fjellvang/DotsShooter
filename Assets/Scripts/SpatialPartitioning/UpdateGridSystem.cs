@@ -10,6 +10,7 @@ using UnityEngine;
 namespace DotsShooter.SpatialPartitioning
 {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
+    [UpdateBefore(typeof(TargetingSystem))]
     public partial struct UpdateGridSystem : ISystem
     {
         public void OnCreate(ref SystemState state)

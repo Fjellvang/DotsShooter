@@ -562,10 +562,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3e065e0d924818803691f8bf76d702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellSize: 15
+  CellSize: 10
   GridDimensions:
-    x: 8
-    y: 8
+    x: 15
+    y: 10
   GridColor: {r: 0.2, g: 0.2, b: 1, a: 0.3}
   ShowCellLabels: 1
 --- !u!4 &342576895
@@ -2121,7 +2121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1735663882
 Transform:
   m_ObjectHideFlags: 0
