@@ -562,10 +562,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3e065e0d924818803691f8bf76d702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CellSize: 5
+  CellSize: 15
   GridDimensions:
-    x: 15
-    y: 10
+    x: 8
+    y: 8
   GridColor: {r: 0.2, g: 0.2, b: 1, a: 0.3}
   ShowCellLabels: 1
 --- !u!4 &342576895
@@ -1938,11 +1938,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.930819
+      value: -8.1
       objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.9939342
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 1731762247731853004, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalPosition.z
