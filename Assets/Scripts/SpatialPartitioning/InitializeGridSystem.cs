@@ -63,19 +63,18 @@ namespace DotsShooter.SpatialPartitioning
             state.EntityManager.AddComponentData(entity, new GridPropertiesInitialized());
         }
         // TODO: Consider adding OnDestroy method to clean up native collections
-        // protected override void OnDestroy()
-        // {
-        //     // Clean up native collections
-        //     if (HasSingleton<GridSingleton>())
-        //     {
-        //         var gridSingleton = GetSingleton<GridSingleton>();
-        //         for (int i = 0; i < gridSingleton.Cells.Length; i++)
-        //         {
-        //             gridSingleton.Cells[i].Entities.Dispose();
-        //         }
-        //         gridSingleton.Cells.Dispose();
-        //     }
-        // }
+        [BurstCompile]
+        public void OnDestroy(ref SystemState state) 
+        {
+            // Clean up native collections
+            Debug.Log("Cleaning up grid system");
+            var grid= SystemAPI.GetSingletonRW<Grid>().ValueRW;
+            for (int i = 0; i < grid.Cells.Length; i++)
+            {
+                grid.Cells[i].Entities.Dispose();
+            }
+            grid.Cells.Dispose();
+        }
     }
 
 }
