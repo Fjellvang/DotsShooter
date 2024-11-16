@@ -7,7 +7,8 @@ using Unity.Transforms;
 
 namespace DotsShooter
 {
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
+    [UpdateAfter(typeof(TargetingSystem))]
     public partial struct ShootingSystem : ISystem
     {
         public void OnCreate(ref SystemState state)

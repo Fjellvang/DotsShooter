@@ -10,7 +10,8 @@ using Grid = DotsShooter.SpatialPartitioning.Grid;
 namespace DotsShooter
 {
     [UpdateBefore(typeof(ShootingSystem))]
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
+    [UpdateAfter(typeof(UpdateGridSystem))]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct TargetingSystem : ISystem
     {
         [BurstCompile]
@@ -37,6 +38,7 @@ namespace DotsShooter
 
             var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
 
+            // var delta = new float3(1, 0, 0);
             if (grid.FindClosestEntity(playerPosition, localToWorld, out var delta))
             {
                 target.Direction = math.normalize(delta); 
