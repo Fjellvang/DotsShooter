@@ -2,12 +2,12 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 using UnityEngine;
 
 namespace DotsShooter.SpatialPartitioning
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(InitializationSystemGroup), OrderFirst = true)]
     public partial struct InitializeGridSystem : ISystem
     {
         [BurstCompile]
