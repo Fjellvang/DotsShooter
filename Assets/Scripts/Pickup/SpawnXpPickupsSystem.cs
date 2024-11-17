@@ -6,6 +6,7 @@ using Unity.Transforms;
 
 namespace DotsShooter.Pickup
 {
+    [UpdateBefore(typeof(TransformSystemGroup))]
     public partial struct SpawnXpPickupsSystem : ISystem
     {
         [BurstCompile]

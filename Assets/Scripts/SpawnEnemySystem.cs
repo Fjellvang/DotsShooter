@@ -58,12 +58,10 @@ namespace DotsShooter
             var enemy = ecb.Instantiate(enemyPrefab); 
             
 
-            var spawnTop = _random.NextBool();
-            var x = _random.NextFloat(-spawnEnemyData.ValueRO.MaxX, spawnEnemyData.ValueRO.MaxX);//TODO: Remove magic numbers
-            
-            var position = spawnTop 
-                ? new float3(x, spawnEnemyData.ValueRO.MaxY, 0) 
-                : new float3(x, -spawnEnemyData.ValueRO.MaxY, 0);
+            var x = _random.NextFloat(-spawnEnemyData.ValueRO.MaxX, spawnEnemyData.ValueRO.MaxX);
+            var y = _random.NextFloat(-spawnEnemyData.ValueRO.MaxY, spawnEnemyData.ValueRO.MaxY);
+
+            var position = new float3(x, y, 0);
             
             ecb.SetComponent(enemy, LocalTransform.FromPosition(position));
         }

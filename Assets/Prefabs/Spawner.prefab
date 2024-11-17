@@ -52,5 +52,5 @@ MonoBehaviour:
   - Prefab: {fileID: 3890467185232950674, guid: 55926179b90eec743925f44152ca3454, type: 3}
     Weight: 10
   SpawnTime: 2
-  MaxX: 30
-  MaxY: 12
+  MaxX: 50
+  MaxY: 50
