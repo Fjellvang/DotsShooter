@@ -30,7 +30,7 @@ namespace DotsShooter
                 return;
             }
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            var enemiesToSpawn = (int)(SystemAPI.Time.ElapsedTime/2);
+            var enemiesToSpawn = (int)(SystemAPI.Time.ElapsedTime/4);
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {

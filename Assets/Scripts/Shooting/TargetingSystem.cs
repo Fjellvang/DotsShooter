@@ -39,11 +39,12 @@ namespace DotsShooter
             var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
 
             // var delta = new float3(1, 0, 0);
-            if (grid.FindClosestEntity(playerPosition, localToWorld, out var delta))
+            if (grid.FindClosestEntity(playerPosition, localToWorld, delta: out var delta, maxSearchRadius: 50)) //TODO: Introduced maxSearchRadius
             {
                 target.Direction = math.normalize(delta); 
-                SystemAPI.SetSingleton(target);
             }
+            
+            SystemAPI.SetSingleton(target);
         }
     }
 }

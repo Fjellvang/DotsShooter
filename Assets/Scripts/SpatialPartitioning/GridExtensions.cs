@@ -33,17 +33,12 @@ namespace DotsShooter.SpatialPartitioning
         }
 
         public static bool FindClosestEntity(this Grid grid, float3 position,
-            ComponentLookup<LocalToWorld> localToWorldLookup, out float3 delta)
+            ComponentLookup<LocalToWorld> localToWorldLookup, out float3 delta, float maxSearchRadius = 10000)
         {
-            return FindClosestEntity(grid, position, 10000, localToWorldLookup, out _, out delta);
+            return FindClosestEntity(grid, position, localToWorldLookup, out _, out delta, maxSearchRadius);
         }
         public static bool FindClosestEntity(this Grid grid, float3 position,
-            ComponentLookup<LocalToWorld> localToWorldLookup, out Entity closestEntity, out float3 delta)
-        {
-            return FindClosestEntity(grid, position, 10000, localToWorldLookup, out closestEntity, out delta);
-        }
-        public static bool FindClosestEntity(this Grid grid, float3 position, float maxSearchRadius, 
-            ComponentLookup<LocalToWorld> localToWorldLookup, out Entity closestEntity, out float3 delta)
+            ComponentLookup<LocalToWorld> localToWorldLookup, out Entity closestEntity, out float3 delta, float maxSearchRadius = 10000)
         {
             closestEntity = Entity.Null;
             delta = float3.zero;
