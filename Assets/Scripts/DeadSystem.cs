@@ -27,6 +27,7 @@ namespace DotsShooter
         Player,
         XpPickup
     }
+    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     public partial struct DeadSystem : ISystem
     {
         [BurstCompile]
@@ -55,7 +56,6 @@ namespace DotsShooter
             
             while (deadEntities.TryDequeue(out var deadEntity))
             {
-                Helpers.DestroyEntityHierarchy(deadEntity.Entity, ref ecb, ref childBufferFromEntity);
                 switch (deadEntity.EntityType)
                 {
                     case EntityType.XpPickup:
@@ -66,8 +66,13 @@ namespace DotsShooter
                         break;
                     case EntityType.Enemy:
                         parallelWriter.Enqueue(new Event(){EventType = EventType.EnemyDied});
-                        var position = localTransformLookup.GetRefRO(deadEntity.Entity).ValueRO.Position;
-                        xpQueueParallelWriter.Enqueue(position);
+                        if (localTransformLookup.HasComponent(deadEntity.Entity))
+                        {
+                            var position = localTransformLookup.GetRefRO(deadEntity.Entity).ValueRO.Position;
+                            xpQueueParallelWriter.Enqueue(position);
+                        }
+                            //SystemAPI.GetComponent<LocalTransform>(deadEntity.Entity).Position;
+                            //localTransformLookup.GetRefRO(deadEntity.Entity).ValueRO.Position;
                         break;
                     case EntityType.Player:
                         parallelWriter.Enqueue(new Event()
@@ -78,6 +83,8 @@ namespace DotsShooter
                         });
                         break;
                 }
+                
+                Helpers.DestroyEntityHierarchy(deadEntity.Entity, ref ecb, ref childBufferFromEntity);
             }
         }
         
