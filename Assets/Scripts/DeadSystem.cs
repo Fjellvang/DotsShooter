@@ -1,5 +1,6 @@
 ﻿using System;
 using DotsShooter.Events;
+using DotsShooter.Pickup;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -23,7 +24,8 @@ namespace DotsShooter
     {
         Bullet,
         Enemy,
-        Player
+        Player,
+        XpPickup
     }
     public partial struct DeadSystem : ISystem
     {
@@ -45,25 +47,34 @@ namespace DotsShooter
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true);
             
+            //TODO: this is getting crowded. consider a separate system for each entity type
+            var xpQueueParallelWriter = SystemAPI.GetSingletonRW<SpawnXpPickups>().ValueRW.Locations.AsParallelWriter();
             var events = SystemAPI.GetSingletonRW<EventQueue>();
             var parallelWriter = events.ValueRW.Value.AsParallelWriter();
+            var localTransformLookup = SystemAPI.GetComponentLookup<LocalTransform>(isReadOnly: true);
             
             while (deadEntities.TryDequeue(out var deadEntity))
             {
                 Helpers.DestroyEntityHierarchy(deadEntity.Entity, ref ecb, ref childBufferFromEntity);
                 switch (deadEntity.EntityType)
                 {
+                    case EntityType.XpPickup:
+                        parallelWriter.Enqueue(new Event(){EventType = EventType.XpPickup});
+                        break;
                     case EntityType.Bullet:
                         parallelWriter.Enqueue(new Event(){EventType = EventType.BulletDied});
                         break;
                     case EntityType.Enemy:
                         parallelWriter.Enqueue(new Event(){EventType = EventType.EnemyDied});
+                        var position = localTransformLookup.GetRefRO(deadEntity.Entity).ValueRO.Position;
+                        xpQueueParallelWriter.Enqueue(position);
                         break;
                     case EntityType.Player:
                         parallelWriter.Enqueue(new Event()
                         {
                             EventType = EventType.PlayerDied,
-                            Location = SystemAPI.GetComponent<LocalTransform>(deadEntity.Entity).Position
+                            Location = localTransformLookup.GetRefRO(deadEntity.Entity).ValueRO.Position
+                                // SystemAPI.GetComponent<LocalTransform>(deadEntity.Entity).Position
                         });
                         break;
                 }

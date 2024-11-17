@@ -20,6 +20,7 @@ namespace DotsShooter.Events
         EnemyDied,
         PlayerDied,
         BulletDied,
+        XpPickup,
         PauseRequested,
         ShowPowerupMenu,
     }

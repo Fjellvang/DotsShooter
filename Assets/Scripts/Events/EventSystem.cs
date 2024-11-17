@@ -16,6 +16,8 @@ namespace DotsShooter.Events
         public event Action OnBulletDied; // Do bullets die?
         public event Action OnTogglePause;
         public event Action OnShowPowerUpMenu;
+        
+        public event Action OnXpPickup;
 
         protected override void OnCreate()
         {
@@ -50,6 +52,9 @@ namespace DotsShooter.Events
                         break;
                     case EventType.ShowPowerupMenu:
                         OnShowPowerUpMenu?.Invoke();
+                        break;
+                    case EventType.XpPickup:
+                        OnXpPickup?.Invoke();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
