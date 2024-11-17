@@ -567,7 +567,7 @@ MonoBehaviour:
     x: 15
     y: 10
   GridColor: {r: 0.2, g: 0.2, b: 1, a: 0.3}
-  ShowCellLabels: 1
+  ShowCellLabels: 0
 --- !u!4 &342576895
 Transform:
   m_ObjectHideFlags: 0
