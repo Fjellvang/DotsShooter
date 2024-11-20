@@ -31,8 +31,6 @@ namespace DotsShooter.Health
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
             
             var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
@@ -49,7 +47,7 @@ namespace DotsShooter.Health
             {
                 if (HandleDamage(ref state, entity, health, ref parallelWriter, ref bufferLookup, EntityType.Player))
                 {
-                    ecb.AddComponent(entity, new PlayerWasDamaged());
+                    SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, true);
                 }
             }
         }

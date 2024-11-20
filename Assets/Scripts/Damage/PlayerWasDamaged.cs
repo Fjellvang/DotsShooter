@@ -2,7 +2,7 @@
 
 namespace DotsShooter.Damage
 {
-    public struct PlayerWasDamaged : IComponentData
+    public struct PlayerWasDamaged : IComponentData, IEnableableComponent
     {
         
     }
