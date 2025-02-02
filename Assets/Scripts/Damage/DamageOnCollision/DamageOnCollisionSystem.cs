@@ -1,3 +1,4 @@
+using DotsShooter.Destruction;
 using DotsShooter.SimpleCollision;
 using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
@@ -35,9 +36,9 @@ namespace DotsShooter.Damage
         public void OnUpdate(ref SystemState state)
         {
             _bufferLookup.Update(ref state);
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
 
-            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
-            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
+
             // var handleDamageJob = new HandleDamageJob()
             // {
             //     ECB = ecb.AsParallelWriter(),
@@ -68,7 +69,7 @@ namespace DotsShooter.Damage
 
                     if (damage.ValueRO.DestroyOnCollision)
                     {
-                        parallelWriter.Enqueue(new DeadEntity() { Entity = entity, EntityType = EntityType.Bullet });
+                        markedForDestructionLookup.SetComponentEnabled(entity, true);
                     }
                 }
             }

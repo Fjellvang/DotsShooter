@@ -25,7 +25,6 @@ namespace DotsShooter.UI
 
         protected override void OnUpdate()
         {
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
             foreach (var (healthComponent, entity) in 
                      SystemAPI.Query<RefRO<HealthComponent>>()
                          .WithAll<PlayerTag>()
@@ -37,10 +36,9 @@ namespace DotsShooter.UI
                     Health = healthComponent.ValueRO.Health,
                     MaxHealth = healthComponent.ValueRO.MaxHealth
                 });
-                ecb.RemoveComponent<PlayerWasDamaged>(entity);
+                SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, false);
             }
-            ecb.Playback(EntityManager);
-            ecb.Dispose();
+
         }
     }
 }

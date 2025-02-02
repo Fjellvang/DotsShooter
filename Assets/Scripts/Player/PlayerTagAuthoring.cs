@@ -1,3 +1,4 @@
+using DotsShooter.Damage;
 using Unity.Entities;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace DotsShooter.Player
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent<PlayerTag>(entity);
                 AddComponent<PlayerInput>(entity);
+                AddComponent<PlayerWasDamaged>(entity);
+                SetComponentEnabled<PlayerWasDamaged>(entity, false);
             }
         }
     }

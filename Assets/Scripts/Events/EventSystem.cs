@@ -1,10 +1,11 @@
 using System;
+using DotsShooter.Destruction;
+using DotsShooter.Pickup;
 using DotsShooter.Player;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
+using Unity.Transforms;
 
 namespace DotsShooter.Events
 {
@@ -13,7 +14,6 @@ namespace DotsShooter.Events
     {
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
-        public event Action OnBulletDied; // Do bullets die?
         public event Action OnTogglePause;
         public event Action OnShowPowerUpMenu;
         
@@ -38,27 +38,34 @@ namespace DotsShooter.Events
             {
                 switch (e.EventType)
                 {
-                    case EventType.EnemyDied:
-                        OnEnemyDied?.Invoke();
-                        break;
-                    case EventType.PlayerDied:
-                        OnPlayerDied?.Invoke(e.Location);
-                        break;
-                    case EventType.BulletDied:
-                        OnBulletDied?.Invoke();
-                        break;
                     case EventType.PauseRequested:
                         TogglePause();
                         break;
                     case EventType.ShowPowerupMenu:
                         OnShowPowerUpMenu?.Invoke();
                         break;
-                    case EventType.XpPickup:
-                        OnXpPickup?.Invoke();
-                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
+
+            foreach (var localTransform in SystemAPI.Query<RefRO<LocalTransform>>()
+                         .WithAll<PlayerTag>()
+                         .WithAll<DestroyNextFrame>())
+            {
+                OnPlayerDied?.Invoke(localTransform.ValueRO.Position);
+            }
+
+            foreach (var _ in SystemAPI.Query<RefRO<EnemyTag>>()
+                         .WithAll<DestroyNextFrame>())
+            {
+                OnEnemyDied?.Invoke();
+            }
+
+            foreach (var _ in SystemAPI.Query<RefRO<XpPickupComponent>>()
+                         .WithAll<DestroyNextFrame>())
+            {
+                OnXpPickup?.Invoke();
             }
         }
 

@@ -6,6 +6,6 @@ namespace DotsShooter.Pickup
 {
     public struct SpawnXpPickups : IComponentData
     {
-        public NativeQueue<float3> Locations;
+        // public NativeQueue<float3> Locations;
     }
 }

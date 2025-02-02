@@ -1,4 +1,5 @@
-﻿using DotsShooter.Health;
+﻿using DotsShooter.Destruction;
+using DotsShooter.Health;
 using DotsShooter.SimpleCollision;
 using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
@@ -34,12 +35,10 @@ namespace DotsShooter.Damage.AreaDamage
         {
             _localToWorldLookup.Update(ref state);
             var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
-
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
             _bufferLookup.Update(ref state);
 
-            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
             var grid = SystemAPI.GetSingleton<Grid>();
-            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
             foreach (var (damage, localTransform, entity) in SystemAPI.Query<RefRO<AreaDamage>, RefRO<LocalTransform>>().WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
@@ -61,7 +60,7 @@ namespace DotsShooter.Damage.AreaDamage
                         }
                     }
                     // Destroy the bullet
-                    parallelWriter.Enqueue(new DeadEntity() { Entity = entity, EntityType = EntityType.Bullet });
+                    markedForDestructionLookup.SetComponentEnabled(entity, true);
                 }
             }
         }

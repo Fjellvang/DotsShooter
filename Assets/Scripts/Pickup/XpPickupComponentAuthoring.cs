@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using DotsShooter.Destruction;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,6 +16,10 @@ namespace DotsShooter.Pickup
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new XpPickupComponent { Xp = authoring.xp });
+                AddComponent<MarkedForDestruction>(entity);
+                AddComponent<DestroyNextFrame>(entity);
+                SetComponentEnabled<MarkedForDestruction>(entity, false);
+                SetComponentEnabled<DestroyNextFrame>(entity, false);
             }
         }
     }
