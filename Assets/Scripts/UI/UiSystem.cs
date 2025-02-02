@@ -38,7 +38,6 @@ namespace DotsShooter.UI
                 });
                 SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, false);
             }
-
         }
     }
 }
