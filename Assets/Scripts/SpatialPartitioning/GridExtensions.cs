@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
@@ -48,11 +50,7 @@ namespace DotsShooter.SpatialPartitioning
             }
             var closestDistanceSq = maxSearchRadius * maxSearchRadius;
 
-            // Get the cell containing the search position
-            var centerCell = new int2(
-                (int)((position.x - grid.GridOrigin.x) / grid.CellSize.x),
-                (int)((position.y - grid.GridOrigin.y) / grid.CellSize.y)
-            );
+            var centerCell = GetCenterCell(grid, position);
 
             // Calculate max rings we might need to search
             int maxRings = (int)math.ceil(maxSearchRadius / math.min(grid.CellSize.x, grid.CellSize.y));
@@ -122,6 +120,80 @@ namespace DotsShooter.SpatialPartitioning
             }
 
             return foundAny;
+        }
+
+        private static int2 GetCenterCell(Grid grid, float3 position)
+        {
+            // Get the cell containing the search position
+            var centerCell = new int2(
+                (int)((position.x - grid.GridOrigin.x) / grid.CellSize.x),
+                (int)((position.y - grid.GridOrigin.y) / grid.CellSize.y)
+            );
+            return centerCell;
+        }
+
+        public static NativeList<Entity> GetEntitiesInRadius(this Grid grid, float3 position, float radius,
+            ref ComponentLookup<LocalToWorld> localToWorldLookup)
+        {
+            //TODO: Consider passing this list as a parameter to avoid allocations
+            var entities = new NativeList<Entity>(Allocator.Temp);
+            if (grid.entityCount == 0)
+            {
+                return entities;
+            }
+
+            var radiusSq = radius * radius;
+
+            // Get the cell containing the search position
+            var centerCell = GetCenterCell(grid, position);
+
+            // Calculate max rings we might need to search
+            int maxRings = (int)math.ceil(radius / math.min(grid.CellSize.x, grid.CellSize.y));
+
+            // Search in expanding rings
+            for (int ring = 0; ring <= maxRings; ring++)
+            {
+                // Check all cells in current ring
+                for (int dx = -ring; dx <= ring; dx++)
+                {
+                    for (int dy = -ring; dy <= ring; dy++)
+                    {
+                        // Skip cells that aren't on the ring's edge (except when ring = 0)
+                        if (ring != 0 && math.abs(dx) != ring && math.abs(dy) != ring)
+                            continue;
+
+                        var cellPos = centerCell + new int2(dx, dy);
+
+                        // Skip if outside grid bounds
+                        if (cellPos.x < 0 || cellPos.x >= grid.GridSize.x ||
+                            cellPos.y < 0 || cellPos.y >= grid.GridSize.y)
+                            continue;
+
+                        var cellIndex = cellPos.y * grid.GridSize.x + cellPos.x;
+                        var cell = grid.Cells[cellIndex];
+
+                        // Check each entity in the current cell
+                        foreach (var entity in cell.Entities)
+                        {
+                            if (!localToWorldLookup.EntityExists(entity))
+                            {
+                                // Entity no longer exists
+                                continue;
+                            }
+                            var entityTransform = localToWorldLookup[entity];
+                            var direction = entityTransform.Position - position;
+                            var distanceSq = math.lengthsq(direction);
+
+                            if (distanceSq < radiusSq)
+                            {
+                                entities.Add(entity);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return entities;
         }
     }
 }
