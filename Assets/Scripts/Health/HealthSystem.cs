@@ -1,4 +1,5 @@
 ﻿using DotsShooter.Damage;
+using DotsShooter.Destruction;
 using DotsShooter.Player;
 using DotsShooter.SimpleCollision;
 using Unity.Burst;
@@ -11,41 +12,34 @@ namespace DotsShooter.Health
     [UpdateAfter(typeof(DamageOnCollisionSystem))]
     public partial struct HealthSystem : ISystem
     {
-        EntityQuery _healthQuery;
-        
         
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            var builder = new EntityQueryBuilder(Allocator.Temp)
-                .WithAllRW<HealthComponent>()
-                ;
-            
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<HealthComponent>();
             state.RequireForUpdate<SimpleCollisionComponent>();
-            
-            _healthQuery = state.GetEntityQuery(builder);
         }
         
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
             
-            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
-            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
+            // var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
+            // var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
             // TODO: Refactor this to parallel jobs?
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())
             {
-                HandleDamage(ref state, entity, health, ref parallelWriter, ref bufferLookup, EntityType.Enemy);
+                HandleDamage(ref state, entity, health, ref markedForDestructionLookup, ref bufferLookup);
             }
             
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithAll<PlayerTag>())
             {
-                if (HandleDamage(ref state, entity, health, ref parallelWriter, ref bufferLookup, EntityType.Player))
+                if (HandleDamage(ref state, entity, health, ref markedForDestructionLookup, ref bufferLookup))
                 {
                     SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, true);
                 }
@@ -58,16 +52,15 @@ namespace DotsShooter.Health
         /// <param name="state"></param>
         /// <param name="entity"></param>
         /// <param name="health"></param>
-        /// <param name="deadEntities"></param>
+        /// <param name="markedForDestructionLookup"></param>
         /// <param name="damageBufferFromEntity"></param>
         /// <returns></returns>
         [BurstCompile]
         private static bool HandleDamage(ref SystemState state, 
             in Entity entity, 
             in RefRW<HealthComponent> health, 
-            ref NativeQueue<DeadEntity>.ParallelWriter deadEntities,
-            ref BufferLookup<DamageData> damageBufferFromEntity,
-            EntityType entityType  // TODO: This is not super gracfeful, but it's a quick fix
+            ref ComponentLookup<MarkedForDestruction> markedForDestructionLookup,
+            ref BufferLookup<DamageData> damageBufferFromEntity
             )
         {
             if (!damageBufferFromEntity.HasBuffer(entity))
@@ -85,11 +78,7 @@ namespace DotsShooter.Health
                 didDamage = true;
                 if (health.ValueRW.Health <= 0)
                 {
-                    deadEntities.Enqueue(new DeadEntity()
-                    {
-                        Entity = entity,
-                        EntityType = entityType
-                    });
+                    markedForDestructionLookup.SetComponentEnabled(entity, true);
                 }
             }
             

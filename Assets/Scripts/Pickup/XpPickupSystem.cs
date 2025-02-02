@@ -1,4 +1,5 @@
-﻿using DotsShooter.SimpleCollision;
+﻿using DotsShooter.Destruction;
+using DotsShooter.SimpleCollision;
 using Unity.Burst;
 using Unity.Entities;
 
@@ -9,10 +10,10 @@ namespace DotsShooter.Pickup
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
-            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
-
-            foreach (var (xpPickupComponent, entity) in SystemAPI.Query<RefRO<XpPickupComponent>>().WithEntityAccess())
+            foreach (var (xpPickupComponent, entity) in SystemAPI.Query<RefRO<XpPickupComponent>>()
+                         .WithEntityAccess()
+                         .WithNone<MarkedForDestruction>()
+                     )
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
                 {
@@ -20,14 +21,9 @@ namespace DotsShooter.Pickup
                 }
                 
                 var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
-
-                for (int i = 0; i < simpleCollisionBuffer.Length; i++)
+                if (simpleCollisionBuffer.Length > 0)
                 {
-                    var simpleCollisionEvent = simpleCollisionBuffer[i];
-                    var other = simpleCollisionEvent.GetOtherEntity(entity);
-
-                    // Destroy the pickup.
-                    parallelWriter.Enqueue(new DeadEntity(){Entity = entity, EntityType = EntityType.XpPickup});
+                    SystemAPI.SetComponentEnabled<MarkedForDestruction>(entity, true);
                 }
             }
         }

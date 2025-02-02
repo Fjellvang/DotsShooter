@@ -1,7 +1,13 @@
+using DotsShooter.Destruction;
 using DotsShooter.SimpleCollision;
+using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Transforms;
+using Unity.VisualScripting;
+using UnityEngine;
+using Grid = DotsShooter.SpatialPartitioning.Grid;
 
 namespace DotsShooter.Damage
 {
@@ -30,9 +36,8 @@ namespace DotsShooter.Damage
         public void OnUpdate(ref SystemState state)
         {
             _bufferLookup.Update(ref state);
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
 
-            var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
-            var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
 
             // var handleDamageJob = new HandleDamageJob()
             // {
@@ -45,7 +50,7 @@ namespace DotsShooter.Damage
             //     state.Dependency
             // );
             // var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true); 
-            foreach (var (damage, entity) in SystemAPI.Query<RefRW<DamageOnCollision>>().WithEntityAccess())
+            foreach (var (damage, entity) in SystemAPI.Query<RefRO<DamageOnCollision>>().WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
                 {
@@ -58,14 +63,13 @@ namespace DotsShooter.Damage
                 {
                     var simpleCollisionEvent = simpleCollisionBuffer[i];
                     var other = simpleCollisionEvent.GetOtherEntity(entity);
-                    if (_bufferLookup.HasBuffer(other))
-                    {
+                    if (_bufferLookup.HasBuffer(other)) {
                         _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
                     }
 
                     if (damage.ValueRO.DestroyOnCollision)
                     {
-                        parallelWriter.Enqueue(new DeadEntity() { Entity = entity, EntityType = EntityType.Bullet });
+                        markedForDestructionLookup.SetComponentEnabled(entity, true);
                     }
                 }
             }

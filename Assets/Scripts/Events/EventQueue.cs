@@ -13,14 +13,9 @@ namespace DotsShooter.Events
     public struct Event
     {
         public EventType EventType;
-        public float3 Location;
     }
     public enum EventType
     {
-        EnemyDied,
-        PlayerDied,
-        BulletDied,
-        XpPickup,
         PauseRequested,
         ShowPowerupMenu,
     }

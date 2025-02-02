@@ -384,4 +384,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 5
+  Radius: 5
   DestroyOnCollision: 1

@@ -18,7 +18,7 @@ namespace DotsShooter.Pickup
             {
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity,
-                    new XpPickupSpawner { Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic) });
+                    new XpPickupSpawner { Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Renderable) });
             }
         }
     }

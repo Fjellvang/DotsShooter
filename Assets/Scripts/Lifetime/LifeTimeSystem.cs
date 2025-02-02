@@ -1,3 +1,4 @@
+using DotsShooter.Destruction;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
@@ -16,17 +17,14 @@ namespace DotsShooter
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
-            var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true); 
-            
             var deltaTime = SystemAPI.Time.DeltaTime;
-            foreach (var (lifeTime, entity) in SystemAPI.Query<RefRW<LifeTimeComponent>>().WithEntityAccess())
+            foreach (var (lifeTime, entity) in SystemAPI.Query<RefRW<LifeTimeComponent>>()
+                         .WithEntityAccess())
             {
                 lifeTime.ValueRW.LifeTime -= deltaTime;
                 if (lifeTime.ValueRO.LifeTime <= 0)
                 {
-                    Helpers.DestroyEntityHierarchy(entity, ref ecb, ref childBufferFromEntity);
+                    SystemAPI.SetComponentEnabled<MarkedForDestruction>(entity, true);
                 }
             }
         }

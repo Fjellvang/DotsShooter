@@ -1,4 +1,5 @@
 ﻿using DotsShooter.Damage;
+using DotsShooter.Destruction;
 using Unity.Entities;
 using UnityEngine;
 
@@ -24,6 +25,11 @@ namespace DotsShooter.Health
                     Health = authoring.health,
                     MaxHealth = authoring.health
                 });
+                
+                AddComponent<MarkedForDestruction>(entity);
+                AddComponent<DestroyNextFrame>(entity);
+                SetComponentEnabled<MarkedForDestruction>(entity, false);
+                SetComponentEnabled<DestroyNextFrame>(entity, false);
 
                 AddBuffer<DamageData>(entity);
             }
