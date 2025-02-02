@@ -1,3 +1,4 @@
+using DotsShooter.Destruction;
 using Unity.Entities;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ namespace DotsShooter
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new LifeTimeComponent { LifeTime = authoring.LifeTime });
+                AddComponent<MarkedForDestruction>(entity);
+                AddComponent<DestroyNextFrame>(entity);
+                SetComponentEnabled<MarkedForDestruction>(entity, false);
+                SetComponentEnabled<DestroyNextFrame>(entity, false);
             }
         }
     }

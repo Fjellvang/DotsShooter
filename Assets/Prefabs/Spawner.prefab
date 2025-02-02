@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5617444228752030023}
   - component: {fileID: 1100538569082061793}
+  - component: {fileID: 4027191241803160189}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -54,3 +55,16 @@ MonoBehaviour:
   SpawnTime: 2
   MaxX: 50
   MaxY: 50
+--- !u!114 &4027191241803160189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5424449439806532156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48fb35ab42e4e42aea33284cee7578c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1893516707938013759, guid: c8007b218da1c654988a5583872e09e8, type: 3}
