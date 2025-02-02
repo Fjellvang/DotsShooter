@@ -19,9 +19,6 @@ namespace DotsShooter.Damage
 
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<Grid>();
-            state.RequireForUpdate<GridProperties>();
-            state.RequireForUpdate<GridPropertiesInitialized>();
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
 
             _bufferLookup = state.GetBufferLookup<DamageData>();
@@ -41,9 +38,6 @@ namespace DotsShooter.Damage
 
             var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
             var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
-            var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
-            var grid = SystemAPI.GetSingleton<Grid>();
-
             // var handleDamageJob = new HandleDamageJob()
             // {
             //     ECB = ecb.AsParallelWriter(),
@@ -55,7 +49,7 @@ namespace DotsShooter.Damage
             //     state.Dependency
             // );
             // var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true); 
-            foreach (var (damage, localTransform, entity) in SystemAPI.Query<RefRW<DamageOnCollision>, RefRO<LocalTransform>>().WithEntityAccess())
+            foreach (var (damage, entity) in SystemAPI.Query<RefRO<DamageOnCollision>>().WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
                 {
@@ -66,15 +60,10 @@ namespace DotsShooter.Damage
 
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
-                    // var simpleCollisionEvent = simpleCollisionBuffer[i];
-                    // var other = simpleCollisionEvent.GetOtherEntity(entity);
-                    var entities = grid.GetEntitiesInRadius(localTransform.ValueRO.Position, damage.ValueRO.Radius, ref localToWorld);
-                    Debug.Log($"Entities in radius: {entities.Length}, radius: {damage.ValueRO.Radius}, damage: {damage.ValueRO.Damage}");
-                    foreach (var other in entities)
-                    {
-                        if (_bufferLookup.HasBuffer(other)) {
-                            _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
-                        }
+                    var simpleCollisionEvent = simpleCollisionBuffer[i];
+                    var other = simpleCollisionEvent.GetOtherEntity(entity);
+                    if (_bufferLookup.HasBuffer(other)) {
+                        _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
                     }
 
                     if (damage.ValueRO.DestroyOnCollision)

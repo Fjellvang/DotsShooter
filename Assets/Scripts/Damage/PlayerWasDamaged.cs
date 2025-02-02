@@ -6,6 +6,4 @@ namespace DotsShooter.Damage
     {
         
     }
-    
-
 }

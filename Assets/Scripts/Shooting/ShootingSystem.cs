@@ -67,11 +67,11 @@ namespace DotsShooter
                     Speed = shootingComponent.ProjectileSpeed
                 });
 
-                ecb.SetComponent(bullet, new DamageOnCollision
-                {
-                    Damage = shootingComponent.ProjectileDamage,
-                    DestroyOnCollision = true, // TODO: we're now overwriting this value, fromn the one chosen in the editor..
-                });
+                // ecb.SetComponent(bullet, new DamageOnCollision
+                // {
+                //     Damage = shootingComponent.ProjectileDamage,
+                //     DestroyOnCollision = true, // TODO: we're now overwriting this value, fromn the one chosen in the editor..
+                // });
             
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
             }

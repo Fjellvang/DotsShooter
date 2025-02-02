@@ -6,14 +6,12 @@ namespace DotsShooter.Damage
     public struct DamageOnCollision : IComponentData
     {
         public float Damage;
-        public float Radius;
         public bool DestroyOnCollision;
     }
     
     public class DamageOnCollisionAuthoring : MonoBehaviour
     {
         public float Damage;
-        public float Radius;
         public bool DestroyOnCollision;
 
         public class DamageOnCollisionBaker : Baker<DamageOnCollisionAuthoring>
@@ -25,7 +23,6 @@ namespace DotsShooter.Damage
                     new DamageOnCollision
                     {
                         Damage = authoring.Damage, 
-                        Radius = authoring.Radius,
                         DestroyOnCollision = authoring.DestroyOnCollision
                     });
             }

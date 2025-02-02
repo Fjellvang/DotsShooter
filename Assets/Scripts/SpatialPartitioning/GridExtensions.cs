@@ -133,7 +133,7 @@ namespace DotsShooter.SpatialPartitioning
         }
 
         public static NativeList<Entity> GetEntitiesInRadius(this Grid grid, float3 position, float radius,
-            ref ComponentLookup<LocalToWorld> localToWorldLookup)
+            ComponentLookup<LocalToWorld> localToWorldLookup)
         {
             //TODO: Consider passing this list as a parameter to avoid allocations
             var entities = new NativeList<Entity>(Allocator.Temp);
