@@ -27,8 +27,6 @@ namespace DotsShooter.Health
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
             var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
             
-            // var deadEntities = SystemAPI.GetSingletonRW<DeadEntities>();
-            // var parallelWriter = deadEntities.ValueRW.Value.AsParallelWriter();
             // TODO: Refactor this to parallel jobs?
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())

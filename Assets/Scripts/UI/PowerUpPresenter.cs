@@ -41,11 +41,11 @@ public class PowerUpPresenter : MonoBehaviour
         // Ensure we're on the main thread
         if (World.DefaultGameObjectInjectionWorld.IsCreated)
         {
-            _playerEntity = _entityManager.CreateEntityQuery(typeof(PlayerTag)).GetSingletonEntity();
-            _entityManager.AddComponentData(_playerEntity, new PowerUpComponent
-            {
-                Type = powerupType,
-            });
+            // TODO: this should probably be simplified and at best cached
+            var powerUp = _entityManager.GetComponentDataRW<PowerUpComponent>(World.DefaultGameObjectInjectionWorld.GetExistingSystem<PowerUpSystem>());
+            var writer = powerUp.ValueRW.PendingPowerUps.AsParallelWriter();
+            writer
+                .Enqueue(new PowerUp{ Type = powerupType});
         }
         
         HidePowerUpContainer();
