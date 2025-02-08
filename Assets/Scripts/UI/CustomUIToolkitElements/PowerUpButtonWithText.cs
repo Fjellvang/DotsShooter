@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Globalization;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 [UxmlElement]
@@ -38,7 +39,7 @@ public partial class PowerUpButtonWithText : VisualElement
         set
         {
             _value = value;
-            _label.text = $"Current: {value}"; //TODO: not best to hardcode. but for now it will make do.
+            _label.text = _value.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

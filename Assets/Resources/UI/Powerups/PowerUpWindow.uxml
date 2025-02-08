@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Resources/UI/Powerups/PowerUpWindow.uss?fileID=7433441132597879392&amp;guid=b0b893ef0c3de064bbc712582461c4ba&amp;type=3#PowerUpWindow" />
     <engine:VisualElement name="container" class="container">
         <PowerUpButtonWithText value="1" name="Radius" label="Radius&#10;" />
-        <PowerUpButtonWithText value="0" name="Damage" label="Damage" />
+        <PowerUpButtonWithText value="20" name="Damage" label="Damage" />
         <PowerUpButtonWithText value="1" name="MoveSpeed" label="Move speed" />
         <PowerUpButtonWithText value="1" name="AttackSpeed" label="Attack speed" />
     </engine:VisualElement>
