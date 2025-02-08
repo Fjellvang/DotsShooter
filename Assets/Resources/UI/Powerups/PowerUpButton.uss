@@ -1,12 +1,13 @@
 .container {
     flex-grow: 1;
     justify-content: center;
-    max-height: 100px;
+    max-height: 50px;
     max-width: 200px;
     margin-top: 8px;
     margin-right: 8px;
     margin-bottom: 8px;
     margin-left: 8px;
+    align-self: center;
 }
 
 .button {
@@ -19,8 +20,8 @@
     transition-duration: 0.2s;
     max-width: 300px;
     min-width: 200px;
-    min-height: 100px;
-    max-height: 200px;
+    min-height: 25px;
+    max-height: 50px;
     -unity-font-definition: url("project://database/Assets/Fonts/pepperoni_pizza.ttf?fileID=12800000&guid=d3acf9dd2e7e89041b52c13582de5c6b&type=3#pepperoni_pizza");
     font-size: 20px;
     background-color: rgb(220, 185, 139);
