@@ -8,6 +8,7 @@ namespace DotsShooter.Damage.AreaDamage
         public float Damage;
         public float Radius;
     }
+
     public class AreaDamageAuthoring : MonoBehaviour
     {
         public float Radius = 5;
@@ -22,7 +23,7 @@ namespace DotsShooter.Damage.AreaDamage
                     new AreaDamage
                     {
                         Damage = authoring.Damage, 
-                        Radius = authoring.Radius
+                        Radius = authoring.Radius,
                     });
             }
         }

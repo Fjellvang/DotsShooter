@@ -19,6 +19,7 @@ namespace DotsShooter.PowerUp
     {
         AttackSpeed,
         MovementSpeed,
-        Damage
+        Damage,
+        ExplosionRadius,
     }
 }

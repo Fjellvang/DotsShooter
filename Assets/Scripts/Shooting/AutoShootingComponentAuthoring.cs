@@ -11,6 +11,7 @@ namespace DotsShooter
         public Entity ProjectilePrefab;
         public float ProjectileSpeed;
         public float ProjectileDamage;
+        public float ProjectileRadius;
         public float SpawnOffset;
     }
     public class AutoShootingComponentAuthoring : MonoBehaviour
@@ -26,6 +27,8 @@ namespace DotsShooter
         private float spawnOffset;
         [SerializeField]
         private float projectileDamage = 5;
+        [SerializeField]
+        private float projectileRadius = 0.5f;
 
         public class AutoShootingComponentBaker : Baker<AutoShootingComponentAuthoring>
         {
@@ -39,7 +42,8 @@ namespace DotsShooter
                         ProjectileSpeed = authoring.projectileSpeed,
                         SpawnOffset = authoring.spawnOffset,
                         ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
-                        ProjectileDamage = authoring.projectileDamage
+                        ProjectileDamage = authoring.projectileDamage,
+                        ProjectileRadius = authoring.projectileRadius
                     });
             }
         }

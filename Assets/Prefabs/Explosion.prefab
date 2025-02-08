@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4408090172168121176}
   - component: {fileID: 3308059482812371993}
   - component: {fileID: 5179740516558305447}
+  - component: {fileID: 5857473286318011620}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -100,3 +101,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LifeTime: 0.05
+--- !u!114 &5857473286318011620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893516707938013759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d849f6ed953e947a0ea6954432e1ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideAsset: {fileID: 11400000, guid: a2d23456b95f4ba4da337e03d0dd7ec1, type: 2}
+  overrideList:
+  - name: _Radius
+    displayName: _Radius
+    shaderName: Assets/Shaders/CircleShader.shadergraph
+    materialName: Shader Graphs_CircleShader
+    type: 2
+    value: {x: 5, y: 0, z: 0, w: 0}
+    instanceOverride: 1

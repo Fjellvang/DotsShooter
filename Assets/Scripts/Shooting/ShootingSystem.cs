@@ -1,5 +1,7 @@
 using DotsShooter.Damage;
+using DotsShooter.Damage.AreaDamage;
 using DotsShooter.Player;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -19,6 +21,7 @@ namespace DotsShooter
             state.RequireForUpdate<EnemyTag>();
         }        
         
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var targetEnemy = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRO;
@@ -67,11 +70,12 @@ namespace DotsShooter
                     Speed = shootingComponent.ProjectileSpeed
                 });
 
-                // ecb.SetComponent(bullet, new DamageOnCollision
-                // {
-                //     Damage = shootingComponent.ProjectileDamage,
-                //     DestroyOnCollision = true, // TODO: we're now overwriting this value, fromn the one chosen in the editor..
-                // });
+                // TODO: this system is horrible and highly coupled. We should find another approach
+                ecb.SetComponent(bullet, new AreaDamage()
+                {
+                    Damage = shootingComponent.ProjectileDamage,
+                    Radius = shootingComponent.ProjectileRadius
+                });
             
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
             }

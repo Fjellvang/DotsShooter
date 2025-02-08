@@ -385,3 +385,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 0.5
   Damage: 20
+  Prefab: {fileID: 1893516707938013759, guid: c8007b218da1c654988a5583872e09e8, type: 3}

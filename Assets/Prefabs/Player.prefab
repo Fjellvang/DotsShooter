@@ -450,3 +450,4 @@ MonoBehaviour:
   projectileSpeed: 20
   spawnOffset: 1
   projectileDamage: 5
+  projectileRadius: 0.5

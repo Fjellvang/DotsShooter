@@ -61,6 +61,7 @@ public class PowerUpPresenter : MonoBehaviour
         CreateAndAddPowerUpButton("Attack Speed", PowerUpType.AttackSpeed);
         CreateAndAddPowerUpButton("Damage", PowerUpType.Damage);
         CreateAndAddPowerUpButton("Movement", PowerUpType.MovementSpeed);
+        CreateAndAddPowerUpButton("Explosion Radius", PowerUpType.ExplosionRadius);
         
         EventSystem.OnShowPowerUpMenu += ShowPowerUpContainer;
     }

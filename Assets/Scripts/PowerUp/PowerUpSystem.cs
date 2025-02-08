@@ -1,20 +1,21 @@
-﻿using DotsShooter.Player;
+﻿using DotsShooter.Damage.AreaDamage;
+using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Rendering;
 using UnityEngine;
 
 namespace DotsShooter.PowerUp
 {
     public partial struct PowerUpSystem : ISystem
     {
+        const float AreaDamageRadiusMultiplier = 1.1f;
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             // state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
             // state.RequireForUpdate<PowerUpComponent>();
-            Debug.Log("PowerUpSystem OnCreate");
-            
             var pendingPowerUps = new NativeQueue<PowerUp>(Allocator.Persistent);
             state.EntityManager.AddComponentData(state.SystemHandle, new PowerUpComponent {PendingPowerUps = pendingPowerUps});
         }
@@ -22,11 +23,10 @@ namespace DotsShooter.PowerUp
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var powerUps = SystemAPI.GetSingletonRW<PowerUpComponent>().ValueRO;
-            
+            var powerUps = SystemAPI.GetSingletonRW<PowerUpComponent>().ValueRW;
             while(powerUps.PendingPowerUps.TryDequeue(out var powerUp))
             {
-                // Not really the best way to implement power ups. But it works for now
+                //TODO: This system is not efficient, it should be split into multiple systems and cleaned up.
                 foreach (var (autoShooting, movement, entity) in 
                          SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementComponent>>()
                              .WithAll<PlayerTag>()
@@ -43,18 +43,22 @@ namespace DotsShooter.PowerUp
                         case PowerUpType.MovementSpeed:
                             movement.ValueRW.Speed *= 1.1f;
                             break;
+                        case PowerUpType.ExplosionRadius:
+                            autoShooting.ValueRW.ProjectileRadius *= AreaDamageRadiusMultiplier;
+                            break;
                         default:
                             break;
                     }
                 }
+                
             }
         }
         
         [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
-            var deadEntities = SystemAPI.GetSingletonRW<PowerUpComponent>();
-            deadEntities.ValueRW.PendingPowerUps.Dispose();
+            var powerUps = SystemAPI.GetSingletonRW<PowerUpComponent>();
+            powerUps.ValueRW.PendingPowerUps.Dispose();
         }
     }
 }
