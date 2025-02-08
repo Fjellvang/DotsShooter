@@ -4,3 +4,8 @@ This is a simple grid based spatial partitioning system. It divides the space in
 the approach is quite naive, we could consider using sparse grid to reduce memory usage.
 
 a quadtree was considered, but to reduce random memory access, we decided to go with a grid.
+
+
+## Update
+
+We're currently unsure whether this is the best approach. We should consider comparing with a quadtree implementation.

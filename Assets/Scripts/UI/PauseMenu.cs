@@ -2,6 +2,7 @@ using DotsShooter;
 using DotsShooter.Events;
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour

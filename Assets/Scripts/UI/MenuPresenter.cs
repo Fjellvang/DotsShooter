@@ -62,12 +62,8 @@ public class MenuPresenter : MonoBehaviour
     public void QuitGame()
     {
         // If running in the editor, stop playing
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        // Quit the application
-        Application.Quit();
-#endif
+        
+        SceneManager.LoadScene(0); // TODO: We should not hardcode this. But it is fine for now.
     }
 
     public void RestartGame()
@@ -78,7 +74,6 @@ public class MenuPresenter : MonoBehaviour
 
     private void ToggleMenu()
     {
-        var c = _pauseContainer.GetClasses();
         _pauseContainer.ToggleInClassList("pause-container-hidden");
     }
 }

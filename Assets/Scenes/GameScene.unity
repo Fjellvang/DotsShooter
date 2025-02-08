@@ -11923,7 +11923,7 @@ GameObject:
   - component: {fileID: 2129517964}
   - component: {fileID: 2129517963}
   m_Layer: 0
-  m_Name: New Sub Scene
+  m_Name: GameSubScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
