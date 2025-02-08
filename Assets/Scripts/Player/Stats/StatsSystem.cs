@@ -9,6 +9,7 @@ namespace DotsShooter.Player
 
     }
 
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial class StatsSystem : SystemBase
     {
         private PlayerStats _statsData;
@@ -27,7 +28,6 @@ namespace DotsShooter.Player
                          .WithAll<PlayerTag, StatsNeedsInitialization>()
                          .WithEntityAccess())
             {
-                Debug.Log("StatsSystem OnUpdate");
                 autoShooting.ValueRW.ProjectileDamage = _statsData.Damage;
                 autoShooting.ValueRW.Cooldown = _statsData.AttackSpeed;
                 autoShooting.ValueRW.ProjectileRadius = _statsData.ExplosionRadius;

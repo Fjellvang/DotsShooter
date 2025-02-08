@@ -39,7 +39,6 @@ namespace DotsShooter
             public override void Bake(AutoShootingComponentAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                Debug.Log("Baking AutoShootingComponentAuthoring");
                 AddComponent(entity,
                     new AutoShootingComponent
                     {

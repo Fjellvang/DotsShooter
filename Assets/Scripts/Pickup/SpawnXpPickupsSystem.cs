@@ -14,7 +14,7 @@ namespace DotsShooter.Pickup
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<SpawnXpPickups>();
             state.RequireForUpdate<XpPickupSpawner>();
         }
@@ -23,7 +23,7 @@ namespace DotsShooter.Pickup
         public void OnUpdate(ref SystemState state)
         {
             // var spawnLocations = SystemAPI.GetSingletonRW<SpawnXpPickups>().ValueRW.Locations;
-            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var xpPickupSpawner = SystemAPI.GetSingleton<XpPickupSpawner>();
 

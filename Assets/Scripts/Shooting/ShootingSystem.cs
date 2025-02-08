@@ -16,6 +16,7 @@ namespace DotsShooter
     {
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<PlayerTag>();
             state.RequireForUpdate<AutoTargetingPlayer>();
             state.RequireForUpdate<EnemyTag>();
@@ -29,8 +30,8 @@ namespace DotsShooter
             var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
         
             float deltaTime = SystemAPI.Time.DeltaTime;
-        
-            var ecb = new EntityCommandBuffer(Allocator.TempJob);
+            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             foreach (var (shooter, entity) in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithEntityAccess())
             {
                 if (targetEnemy.Direction.Equals(float3.zero))
@@ -79,9 +80,6 @@ namespace DotsShooter
             
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
             }
-        
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
         }
     }
 }

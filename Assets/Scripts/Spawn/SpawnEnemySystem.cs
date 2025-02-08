@@ -1,13 +1,14 @@
-﻿using Unity.Burst;
+﻿using DotsShooter.Time;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 using Random = Unity.Mathematics.Random;
 namespace DotsShooter
 {
-    [UpdateInGroup(typeof(SimulationSystemGroup), OrderFirst = true)]
-    [UpdateBefore(typeof(TargetingSystem))]
+    [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     public partial struct SpawnEnemySystem : ISystem
     {
         Random _random;
@@ -15,6 +16,8 @@ namespace DotsShooter
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<SimulationTime>();
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             _random = new Random(1234);
             state.RequireForUpdate<EnemyPrefabs>();
         }
@@ -22,6 +25,7 @@ namespace DotsShooter
         public void OnUpdate(ref SystemState state)
         {
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
+            var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
             var buffer = SystemAPI.GetSingletonBuffer<EnemyPrefabs>();
             
             spawnEnemyData.ValueRW.SpawnTimer -= SystemAPI.Time.DeltaTime;
@@ -29,8 +33,9 @@ namespace DotsShooter
             {
                 return;
             }
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
-            var enemiesToSpawn = (int)(SystemAPI.Time.ElapsedTime);
+            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
+            var enemiesToSpawn = 1 + (int)(simulationTime.ElapsedTime);// increase spawn rate over time
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {
@@ -40,10 +45,6 @@ namespace DotsShooter
             spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
             
             SystemAPI.SetSingleton(spawnEnemyData.ValueRO);
-            
-            // Playback and dispose ECB
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
         }
 
         
