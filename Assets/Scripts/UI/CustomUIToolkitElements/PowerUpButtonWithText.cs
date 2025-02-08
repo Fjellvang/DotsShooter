@@ -31,6 +31,8 @@ public partial class PowerUpButtonWithText : VisualElement
         get => _powerupButton.Label;
         set => _powerupButton.Label = value;
     }
+    
+    public Button Button => _powerupButton.Button;
 
     [UxmlAttribute]
     public float Value

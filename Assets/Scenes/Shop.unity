@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 28663613}
+  _playerStats: {fileID: 11400000, guid: c982cc0e14d80354c8db545911a8ae49, type: 2}
 --- !u!1 &1472058403
 GameObject:
   m_ObjectHideFlags: 0

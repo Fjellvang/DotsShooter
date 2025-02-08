@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using DotsShooter.Player;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,16 +26,20 @@ namespace DotsShooter
         private float projectileSpeed;
         [SerializeField]
         private float spawnOffset;
-        [SerializeField]
-        private float projectileDamage = 5;
-        [SerializeField]
-        private float projectileRadius = 0.5f;
+
+        [SerializeField] 
+        private PlayerStats _playerStats;
+        // [SerializeField]
+        // private float projectileDamage = 5;
+        // [SerializeField]
+        // private float projectileRadius = 0.5f;
 
         public class AutoShootingComponentBaker : Baker<AutoShootingComponentAuthoring>
         {
             public override void Bake(AutoShootingComponentAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
+                Debug.Log("Baking AutoShootingComponentAuthoring");
                 AddComponent(entity,
                     new AutoShootingComponent
                     {
@@ -42,8 +47,8 @@ namespace DotsShooter
                         ProjectileSpeed = authoring.projectileSpeed,
                         SpawnOffset = authoring.spawnOffset,
                         ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
-                        ProjectileDamage = authoring.projectileDamage,
-                        ProjectileRadius = authoring.projectileRadius
+                        ProjectileDamage = authoring._playerStats.Damage,
+                        ProjectileRadius = authoring._playerStats.ExplosionRadius
                     });
             }
         }
