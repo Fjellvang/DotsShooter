@@ -1,8 +1,9 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/UI/Powerups/PowerUpWindow.uss?fileID=7433441132597879392&amp;guid=b0b893ef0c3de064bbc712582461c4ba&amp;type=3#PowerUpWindow" />
     <engine:VisualElement name="container" class="container">
-        <PowerupButton style="display: none;" />
-        <PowerupButton label="+MoveSpeed&#10;" style="display: none;" />
-        <PowerupButton style="display: none;" />
+        <PowerupButton name="AttackSpeed" label="Attack Speed" class="power-up-button" style="display: flex;" />
+        <PowerupButton label="Move Speed" name="MoveSpeed" class="power-up-button" style="display: flex;" />
+        <PowerupButton name="Damage" label="Damage" class="power-up-button" style="display: flex;" />
+        <PowerupButton name="Radius" label="Radius" class="power-up-button" style="display: flex;" />
     </engine:VisualElement>
 </engine:UXML>
