@@ -68,8 +68,8 @@ public class MenuPresenter : MonoBehaviour
 
     public void RestartGame()
     {
-        // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Reload the menu
+        SceneManager.LoadScene(0);
     }
 
     private void ToggleMenu()
