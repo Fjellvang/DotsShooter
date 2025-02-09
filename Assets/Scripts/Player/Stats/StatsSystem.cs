@@ -23,8 +23,8 @@ namespace DotsShooter.Player
 
         protected override void OnUpdate()
         {
-            foreach (var (autoShooting, movement, entity) in
-                     SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementComponent>>()
+            foreach (var (autoShooting, movement, autoTargetingPlayer, entity) in
+                     SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementComponent>, RefRW<AutoTargetingPlayer>>()
                          .WithAll<PlayerTag, StatsNeedsInitialization>()
                          .WithEntityAccess())
             {
@@ -32,6 +32,7 @@ namespace DotsShooter.Player
                 autoShooting.ValueRW.Cooldown = _statsData.AttackSpeed;
                 autoShooting.ValueRW.ProjectileRadius = _statsData.ExplosionRadius;
                 movement.ValueRW.Speed = _statsData.MoveSpeed;
+                autoTargetingPlayer.ValueRW.Range = _statsData.Range;
                 
                 SystemAPI.SetComponentEnabled<StatsNeedsInitialization>(entity, false);
             }

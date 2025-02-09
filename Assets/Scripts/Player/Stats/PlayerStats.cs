@@ -10,6 +10,7 @@ namespace DotsShooter.Player
         public float AttackSpeed = 1f;
         public float Damage = 1f;
         public float Health = 100f; //TODO: Implement health system
+        public float Range = 10f;
         public float ExplosionRadius = 0.25f;
     }
 }

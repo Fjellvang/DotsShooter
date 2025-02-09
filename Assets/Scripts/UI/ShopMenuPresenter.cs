@@ -22,6 +22,7 @@ namespace DotsShooter.UI
         private PowerUpButtonWithText _moveSpeedPowerupButton;
         private PowerUpButtonWithText _damagePowerupButton;
         private PowerUpButtonWithText _attackSpeedPowerupButton;
+        private PowerUpButtonWithText _rangePowerupButton;
         
         private void Awake()
         {
@@ -35,6 +36,7 @@ namespace DotsShooter.UI
             _moveSpeedPowerupButton = _root.Q<PowerUpButtonWithText>("MoveSpeed");
             _damagePowerupButton = _root.Q<PowerUpButtonWithText>("Damage");
             _attackSpeedPowerupButton = _root.Q<PowerUpButtonWithText>("AttackSpeed");
+            _rangePowerupButton = _root.Q<PowerUpButtonWithText>("Range");
         }
 
         private void OnEnable()
@@ -46,7 +48,14 @@ namespace DotsShooter.UI
             _moveSpeedPowerupButton.Button.clicked += OnMoveSpeedPowerupButtonClicked;
             _damagePowerupButton.Button.clicked += OnDamagePowerupButtonClicked;
             _attackSpeedPowerupButton.Button.clicked += OnAttackSpeedPowerupButtonClicked;
+            _rangePowerupButton.Button.clicked += OnRangePowerupButtonClicked;
 
+            UpdateLabels();
+        }
+
+        private void OnRangePowerupButtonClicked()
+        {
+            _playerStats.Range += 1f;
             UpdateLabels();
         }
 
@@ -56,6 +65,7 @@ namespace DotsShooter.UI
             _moveSpeedPowerupButton.Value = _playerStats.MoveSpeed;
             _damagePowerupButton.Value = _playerStats.Damage;
             _attackSpeedPowerupButton.Value = _playerStats.AttackSpeed;
+            _rangePowerupButton.Value = _playerStats.Range;
         }
 
         private void OnAttackSpeedPowerupButtonClicked()
