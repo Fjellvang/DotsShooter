@@ -8,13 +8,13 @@ namespace DotsShooter.Pickup
     {
         public Entity Prefab;
     }
-    public class XpPickupSpawnerAuthoring : MonoBehaviour
+    public class GoldPickupSpawnerAuthoring : MonoBehaviour
     {
         public GameObject Prefab;
 
-        public class XpPickupSpawnerBaker : Baker<XpPickupSpawnerAuthoring>
+        public class XpPickupSpawnerBaker : Baker<GoldPickupSpawnerAuthoring>
         {
-            public override void Bake(XpPickupSpawnerAuthoring authoring)
+            public override void Bake(GoldPickupSpawnerAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity,

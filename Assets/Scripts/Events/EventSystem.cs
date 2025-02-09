@@ -62,7 +62,7 @@ namespace DotsShooter.Events
                 OnEnemyDied?.Invoke();
             }
 
-            foreach (var _ in SystemAPI.Query<RefRO<XpPickupComponent>>()
+            foreach (var _ in SystemAPI.Query<RefRO<GoldPickupComponent>>()
                          .WithAll<DestroyNextFrame>())
             {
                 OnXpPickup?.Invoke();

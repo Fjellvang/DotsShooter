@@ -5,17 +5,17 @@ using UnityEngine.Serialization;
 
 namespace DotsShooter.Pickup
 {
-    public class XpPickupComponentAuthoring : MonoBehaviour
+    public class GoldPickupComponentAuthoring : MonoBehaviour
     {
         [SerializeField] 
         private float xp = 5f;
 
-        public class XpPickupComponentBaker : Baker<XpPickupComponentAuthoring>
+        public class GoldPickupComponentBaker : Baker<GoldPickupComponentAuthoring>
         {
-            public override void Bake(XpPickupComponentAuthoring authoring)
+            public override void Bake(GoldPickupComponentAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity, new XpPickupComponent { Xp = authoring.xp });
+                AddComponent(entity, new GoldPickupComponent { Xp = authoring.xp });
                 AddComponent<MarkedForDestruction>(entity);
                 AddComponent<DestroyNextFrame>(entity);
                 SetComponentEnabled<MarkedForDestruction>(entity, false);

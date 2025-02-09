@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6211289272200666987}
   - component: {fileID: 4025952751771196441}
   m_Layer: 0
-  m_Name: XpPickup
+  m_Name: GoldPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

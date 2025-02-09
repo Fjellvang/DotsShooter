@@ -5,12 +5,12 @@ using Unity.Entities;
 
 namespace DotsShooter.Pickup
 {
-    public partial struct XpPickupSystem : ISystem
+    public partial struct GoldPickupSystem : ISystem
     {
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (xpPickupComponent, entity) in SystemAPI.Query<RefRO<XpPickupComponent>>()
+            foreach (var (_, entity) in SystemAPI.Query<RefRO<GoldPickupComponent>>()
                          .WithEntityAccess()
                          .WithNone<MarkedForDestruction>()
                      )

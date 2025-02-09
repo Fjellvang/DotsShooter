@@ -2,7 +2,7 @@
 
 namespace DotsShooter.Pickup
 {
-    public struct XpPickupComponent : IComponentData
+    public struct GoldPickupComponent : IComponentData
     {
         public float Xp;
     }

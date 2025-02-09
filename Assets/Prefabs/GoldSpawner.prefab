@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7003425819139497865}
   - component: {fileID: 1563562028584250466}
   m_Layer: 0
-  m_Name: XpSpawner
+  m_Name: GoldSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

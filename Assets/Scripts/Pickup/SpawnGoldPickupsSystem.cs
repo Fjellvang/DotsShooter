@@ -1,21 +1,18 @@
 ﻿using DotsShooter.Destruction;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace DotsShooter.Pickup
 {
     [UpdateBefore(typeof(TransformSystemGroup))]
-    public partial struct SpawnXpPickupsSystem : ISystem
+    public partial struct SpawnGoldPickupsSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            state.RequireForUpdate<SpawnXpPickups>();
+            state.RequireForUpdate<SpawnGoldPickups>();
             state.RequireForUpdate<XpPickupSpawner>();
         }
 
@@ -27,7 +24,7 @@ namespace DotsShooter.Pickup
             var xpPickupSpawner = SystemAPI.GetSingleton<XpPickupSpawner>();
 
             foreach (var transform in SystemAPI.Query<RefRO<LocalTransform>>()
-                         .WithAll<DestroyNextFrame, SpawnXpPickups>())
+                         .WithAll<DestroyNextFrame, SpawnGoldPickups>())
             {
                 var location = transform.ValueRO.Position;
                 var entity = ecb.Instantiate(xpPickupSpawner.Prefab);

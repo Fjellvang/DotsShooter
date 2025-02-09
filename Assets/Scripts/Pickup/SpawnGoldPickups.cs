@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace DotsShooter.Pickup
 {
-    public struct SpawnXpPickups : IComponentData
+    public struct SpawnGoldPickups : IComponentData
     {
     }
 }
