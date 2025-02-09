@@ -1,25 +1,29 @@
-﻿using System;
-using DotsShooter.Events;
-using Unity.Entities;
+﻿using Unity.Entities;
 using UnityEngine;
 
 namespace DotsShooter
 {
     public class GameManager : MonoBehaviour
     {
-        
         private bool _isPaused;
+        
+        private int _round = 1;
 
         private void Start()
         {
             // could be cleaner, but ensure we are not "paused" when the game starts
-            if (!World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled)
+            EnsureGameUnpaused();
+        }
+
+        private static void EnsureGameUnpaused()
+        {
+            var simulationSystemGroup =
+                World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>();
+            if (!simulationSystemGroup.Enabled)
             {
-                World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = true;
+                simulationSystemGroup.Enabled = true;
             }
         }
-        
-        
 
         public void TogglePause()
         {

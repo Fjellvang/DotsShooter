@@ -1,11 +1,14 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <engine:Template name="PowerUpWindow" src="project://database/Assets/Resources/UI/Powerups/PowerUpWindow.uxml?fileID=9197481963319205126&amp;guid=95910aeace32bf34bb20d5f8056b27e2&amp;type=3#PowerUpWindow" />
     <Style src="project://database/Assets/Resources/UI/Shop.uss?fileID=7433441132597879392&amp;guid=70e72af09a469464b8094b5920c77ec9&amp;type=3#Shop" />
-    <engine:VisualElement name="root" style="flex-grow: 1;">
-        <engine:VisualElement name="shopContainer" style="flex-grow: 1; justify-content: flex-end;">
+    <engine:VisualElement name="root" class="root">
+        <engine:VisualElement name="top-container" class="top-container">
+            <LabelContainer name="gold-label" text="Gold:" />
+        </engine:VisualElement>
+        <engine:VisualElement name="shopContainer" class="shop-container">
             <engine:Instance template="PowerUpWindow" />
         </engine:VisualElement>
-        <engine:VisualElement name="buttonContainer" style="flex-grow: 1; align-content: center; align-items: flex-end; align-self: stretch; justify-content: space-between; flex-direction: row;">
+        <engine:VisualElement name="buttonContainer" class="button-container">
             <CustomButton label="Quit" name="quitButton" />
             <CustomButton name="continueButton" label="Continue" />
         </engine:VisualElement>
