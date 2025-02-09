@@ -1,4 +1,5 @@
-﻿using DotsShooter.Events;
+﻿using System.Diagnostics.CodeAnalysis;
+using DotsShooter.Events;
 using JetBrains.Annotations;
 using Unity.Entities;
 using UnityEngine;
@@ -46,13 +47,6 @@ namespace DotsShooter.Audio
             audioSource.Play();
         } 
         
-        [CanBeNull]
-        protected bool TryGetEventSystem(out EventSystem eventSystem)
-        {
-            eventSystem = null;
-            if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return false;
-            eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>();
-            return eventSystem != null;
-        }
+
     }
 }

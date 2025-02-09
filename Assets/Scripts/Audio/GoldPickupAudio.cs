@@ -1,17 +1,12 @@
-﻿using System;
-using DotsShooter.UI;
-using UnityEngine;
-using UnityEngine.Serialization;
-
-namespace DotsShooter.Audio
+﻿namespace DotsShooter.Audio
 {
-    public class EnemyDiedAudio : AudioClipPlayer
+    public class GoldPickupAudio : AudioClipPlayer
     {
         private void OnEnable()
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
-                eventSystem.OnEnemyDied += Play;
+                eventSystem.OnGoldPickup += Play;
             }
         }
         
@@ -19,7 +14,7 @@ namespace DotsShooter.Audio
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
-                eventSystem.OnEnemyDied -= Play;
+                eventSystem.OnGoldPickup -= Play;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using DotsShooter.Events;
+﻿using System;
+using DotsShooter.Events;
 using Unity.Entities;
 using UnityEngine;
 
@@ -9,7 +10,18 @@ namespace DotsShooter
         
         private bool _isPaused;
 
-        public void ToggleTogglePause()
+        private void Start()
+        {
+            // could be cleaner, but ensure we are not "paused" when the game starts
+            if (!World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled)
+            {
+                World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = true;
+            }
+        }
+        
+        
+
+        public void TogglePause()
         {
             _isPaused = !_isPaused;
             World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = !_isPaused;
@@ -17,8 +29,18 @@ namespace DotsShooter
 
         private void OnEnable()
         {
-            var eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>(); 
-            eventSystem.OnTogglePause += ToggleTogglePause;
+            if (Helpers.TryGetEventSystem(out var eventSystem))
+            {
+                eventSystem.OnTogglePause += TogglePause;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (Helpers.TryGetEventSystem(out var eventSystem))
+            {
+                eventSystem.OnTogglePause -= TogglePause;
+            }
         }
     }
 }

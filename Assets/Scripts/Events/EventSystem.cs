@@ -15,9 +15,7 @@ namespace DotsShooter.Events
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnTogglePause;
-        public event Action OnShowPowerUpMenu;
-        
-        public event Action OnXpPickup;
+        public event Action OnGoldPickup;
 
         protected override void OnCreate()
         {
@@ -41,9 +39,6 @@ namespace DotsShooter.Events
                     case EventType.PauseRequested:
                         TogglePause();
                         break;
-                    case EventType.ShowPowerupMenu:
-                        OnShowPowerUpMenu?.Invoke();
-                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -65,7 +60,7 @@ namespace DotsShooter.Events
             foreach (var _ in SystemAPI.Query<RefRO<GoldPickupComponent>>()
                          .WithAll<DestroyNextFrame>())
             {
-                OnXpPickup?.Invoke();
+                OnGoldPickup?.Invoke();
             }
         }
 

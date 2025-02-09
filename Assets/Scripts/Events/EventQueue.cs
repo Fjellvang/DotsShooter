@@ -17,6 +17,5 @@ namespace DotsShooter.Events
     public enum EventType
     {
         PauseRequested,
-        ShowPowerupMenu,
     }
 }

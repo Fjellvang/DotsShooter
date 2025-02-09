@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿using System.Diagnostics.CodeAnalysis;
+using DotsShooter.Events;
 using Unity.Entities;
 using Unity.Transforms;
 
@@ -28,6 +29,22 @@ namespace DotsShooter
 
             // Destroy the entity itself
             ecb.DestroyEntity(entity);
+        }
+        
+        public static bool TryGetEventSystem([NotNullWhen(true)] out EventSystem eventSystem)
+        {
+            eventSystem = null;
+            if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return false;
+            eventSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<EventSystem>();
+            return eventSystem != null;
+        }
+
+        public static bool TryGetSystem<T>([NotNullWhen(true)] out T system) where T : ComponentSystemBase
+        {
+            system = null;
+            if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return false;
+            system = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<T>();
+            return system != null;
         }
     }
 }
