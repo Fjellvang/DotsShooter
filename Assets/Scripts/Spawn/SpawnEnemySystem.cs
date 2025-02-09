@@ -35,7 +35,7 @@ namespace DotsShooter
             }
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
-            var enemiesToSpawn = 1 + (int)(simulationTime.ElapsedTime);// increase spawn rate over time
+            var enemiesToSpawn = 1 + (int)(simulationTime.ElapsedTime / 5);// increase spawn rate over time, 1 enemy every 5 seconds, TODO: make this configurable
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {
