@@ -1,5 +1,8 @@
-﻿using DotsShooter.State;
+﻿using System;
+using DotsShooter.State;
 using DotsShooter.State.Hierarchical;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace DotsShooter
@@ -7,22 +10,30 @@ namespace DotsShooter
     [CreateAssetMenu(fileName = "GameStateTracker", menuName = "Game/GameStateTracker")]
     public class GameStateTracker : ScriptableObject
     {
-        private GameStateMachine _stateMachine;
-        
-        public void Initialize()
-        {
-            _stateMachine = new GameStateMachine();
-            _stateMachine.Initialize(_stateMachine.GameOverState); // Start in game over state
-        }
-        
-        public void Update()
-        {
-            _stateMachine.Update();
-        }
+        public int Round => _round;
+        private int _round;
         
         public void StartGame()
         {
-            _stateMachine.TransitionTo(_stateMachine.PlayingState);
+            _round = 1;
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("GameStateTracker enabled");
+            if(Helpers.TryGetEventSystem(out var eventSystem))
+            {
+                eventSystem.OnPlayerDied += OnPlayerDied;
+            }
+            else
+            {
+                Debug.LogError("Event system not found");
+            }
+        }
+
+        private void OnPlayerDied(float3 obj)
+        {
+            
         }
     }
 }

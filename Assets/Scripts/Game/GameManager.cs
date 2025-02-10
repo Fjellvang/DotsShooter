@@ -13,7 +13,6 @@ namespace DotsShooter
         {
             // could be cleaner, but ensure we are not "paused" when the game starts
             EnsureGameUnpaused();
-            _gameStateTracker.Initialize();
         }
 
         private static void EnsureGameUnpaused()
