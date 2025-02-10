@@ -2,6 +2,8 @@
 using DotsShooter.Events;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityAtoms.BaseAtoms;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -11,6 +13,11 @@ public class MenuPresenter : MonoBehaviour
 {
     [Tooltip("Reference to the View (UI)")] [SerializeField]
     private UIDocument m_Document;
+
+    [SerializeField] 
+    private VoidEvent _quitGameEvent;
+    [SerializeField] 
+    private SceneAsset _menuScene;
     // Root element of the UI
     private VisualElement _root;
 
@@ -63,13 +70,14 @@ public class MenuPresenter : MonoBehaviour
     {
         // If running in the editor, stop playing
         
-        SceneManager.LoadScene(0); // TODO: We should not hardcode this. But it is fine for now.
+        _quitGameEvent.Raise();
+        SceneManager.LoadScene(_menuScene.name); 
     }
 
     public void RestartGame()
     {
         // Reload the menu
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(_menuScene.name);
     }
 
     private void ToggleMenu()

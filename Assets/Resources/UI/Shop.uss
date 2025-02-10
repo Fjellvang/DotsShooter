@@ -1,0 +1,26 @@
+.shop-container {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.button-container {
+    flex-grow: 1;
+    align-content: center;
+    align-items: flex-end;
+    align-self: stretch;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.top-container {
+    flex-grow: 1;
+    align-items: flex-end;
+}
+
+.root {
+    flex-grow: 1;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}

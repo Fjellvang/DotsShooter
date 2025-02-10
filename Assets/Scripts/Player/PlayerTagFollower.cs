@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using DotsShooter;
 using DotsShooter.Player;
 using Unity.Entities;
 using Unity.Transforms;
@@ -8,20 +10,18 @@ public class PlayerTagFollower : MonoBehaviour
 {
     private EntityQuery _entityQuery;
     private EntityManager _entityManager;
-    IEnumerator Start()
+    private bool _isGameLoaded = false;
+    public void GameLoaded()
     {
-        while (!(World.DefaultGameObjectInjectionWorld?.IsCreated ?? false))
-        {
-            yield return null;
-        }
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         _entityQuery = _entityManager.CreateEntityQuery(typeof(PlayerTag), typeof(LocalTransform));
+        _isGameLoaded = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!World.DefaultGameObjectInjectionWorld?.IsCreated ?? true) return; 
+        if (!_isGameLoaded) return; 
         if (_entityQuery.CalculateEntityCount() == 0)
         {
             Debug.LogWarning("No player entity found with PlayerTag");

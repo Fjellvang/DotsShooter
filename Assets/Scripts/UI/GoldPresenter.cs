@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DotsShooter;
 using DotsShooter.Gold;
@@ -5,7 +6,6 @@ using DotsShooter.Health;
 using DotsShooter.Player;
 using DotsShooter.UI;
 using Unity.Collections;
-using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 
