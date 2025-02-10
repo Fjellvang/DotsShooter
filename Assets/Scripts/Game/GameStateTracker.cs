@@ -16,24 +16,9 @@ namespace DotsShooter
         public void StartGame()
         {
             _round = 1;
+            Debug.Log($"Game started. Round: {_round}");
         }
 
-        private void OnEnable()
-        {
-            Debug.Log("GameStateTracker enabled");
-            if(Helpers.TryGetEventSystem(out var eventSystem))
-            {
-                eventSystem.OnPlayerDied += OnPlayerDied;
-            }
-            else
-            {
-                Debug.LogError("Event system not found");
-            }
-        }
-
-        private void OnPlayerDied(float3 obj)
-        {
-            
-        }
+        public void IncreaseRound() => _round++;
     }
 }

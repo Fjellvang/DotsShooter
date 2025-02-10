@@ -1,5 +1,24 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "NPM Registry",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "com.unity-atoms.unity-atoms-core",
+        "com.unity-atoms.unity-atoms-base-atoms",
+        "com.unity-atoms.unity-atoms-fsm",
+        "com.unity-atoms.unity-atoms-mobile",
+        "com.unity-atoms.unity-atoms-mono-hooks",
+        "com.unity-atoms.unity-atoms-tags",
+        "com.unity-atoms.unity-atoms-scene-mgmt",
+        "com.unity-atoms.unity-atoms-ui",
+        "com.unity-atoms.unity-atoms-input-system"
+      ]
+    }
+  ],
   "dependencies": {
+    "com.unity-atoms.unity-atoms-core": "4.5.0",
+    "com.unity-atoms.unity-atoms-base-atoms": "4.5.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.4",
     "com.unity.cinemachine": "3.1.2",

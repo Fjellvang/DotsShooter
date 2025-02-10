@@ -1,5 +1,8 @@
 ﻿using Unity.Entities;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DotsShooter
 {
@@ -8,12 +11,9 @@ namespace DotsShooter
         private bool _isPaused;
         [SerializeField]
         GameStateTracker _gameStateTracker;
-
-        private void Start()
-        {
-            // could be cleaner, but ensure we are not "paused" when the game starts
-            EnsureGameUnpaused();
-        }
+        
+        [SerializeField]
+        SceneAsset _shopScene;
 
         private static void EnsureGameUnpaused()
         {
@@ -30,20 +30,46 @@ namespace DotsShooter
             _isPaused = !_isPaused;
             World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<SimulationSystemGroup>().Enabled = !_isPaused;
         }
-
-        private void OnEnable()
+        
+        /// <summary>
+        /// Function to subscribe to game related events, when the game is started.
+        /// </summary>
+        public void GameStarted()
         {
+            EnsureGameUnpaused();
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
                 eventSystem.OnTogglePause += TogglePause;
+                eventSystem.OnPlayerDied += GameEnded;
+                eventSystem.OnPlayerWon += PlayerWon;
             }
         }
+        
+        public void PlayerWon()
+        {
+            Debug.Log("Player won!");
+            _gameStateTracker.IncreaseRound();
+            UnsubscribeFromGameRelatedEvents();
+            SceneManager.LoadScene(_shopScene.name);
+        }
+        public void GameEnded(float3 na)
+        {
+            UnsubscribeFromGameRelatedEvents();
+        }
+
 
         private void OnDisable()
+        {
+            UnsubscribeFromGameRelatedEvents();
+        }
+
+        public void UnsubscribeFromGameRelatedEvents()
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
                 eventSystem.OnTogglePause -= TogglePause;
+                eventSystem.OnPlayerDied -= GameEnded;
+                eventSystem.OnPlayerWon -= PlayerWon;
             }
         }
     }

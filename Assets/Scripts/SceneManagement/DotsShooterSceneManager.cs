@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Unity.Scenes;
+using UnityAtoms.BaseAtoms;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace DotsShooter.SceneManagement
 {
-    public class SceneManager : MonoBehaviour
+    public class DotsShooterSceneManager : MonoBehaviour
     {
         [SerializeField]
         SubScene DotsScene;
+        
+        [SerializeField]
+        VoidEvent OnSceneLoaded;
 
         IEnumerator Start()
         {
@@ -18,7 +20,7 @@ namespace DotsShooter.SceneManagement
                 Debug.Log("Dots Scene is not loaded, loading...");
                 yield return null;
             }
-            Debug.Log("Dots Scene is loaded");
+            OnSceneLoaded.Raise();
         }
     }
 }

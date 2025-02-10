@@ -16,6 +16,7 @@ namespace DotsShooter.Events
         public event Action OnEnemyDied;
         public event Action OnTogglePause;
         public event Action OnGoldPickup;
+        public event Action OnPlayerWon;
 
         protected override void OnCreate()
         {
@@ -38,6 +39,9 @@ namespace DotsShooter.Events
                 {
                     case EventType.PauseRequested:
                         TogglePause();
+                        break;
+                    case EventType.PlayerWon:
+                        OnPlayerWon?.Invoke();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

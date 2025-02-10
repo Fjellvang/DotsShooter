@@ -80,6 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Document: {fileID: 7167764491720864106}
+  _quitGameEvent: {fileID: 11400000, guid: cd47d09063ba5cb40a7602d74227cc6b, type: 2}
+  _menuScene: {fileID: 102900000, guid: 580d5c5359f506842b37ebb6d80b372b, type: 3}
 --- !u!114 &2323705378432486647
 MonoBehaviour:
   m_ObjectHideFlags: 0
