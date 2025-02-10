@@ -1,3 +1,5 @@
+using Unity.Mathematics;
+
 namespace DotsShooter
 {
     public class ArenaState : GameBaseState
@@ -20,11 +22,19 @@ namespace DotsShooter
         public override void OnEnter()
         {
             // Subscribe to dead and win events
+            if (Helpers.TryGetEventSystem(out var eventSystem))
+            {
+                eventSystem.OnPlayerDied += TransitionToGameOver;
+            }
         }
         
         public override void OnExit()
         {
             // Unsubscribe from dead and win events
+            if (Helpers.TryGetEventSystem(out var eventSystem))
+            {
+                eventSystem.OnPlayerDied -= TransitionToGameOver;
+            }
         }
         
        
@@ -33,7 +43,7 @@ namespace DotsShooter
             SendMessageToParent(new RoundCompletedMessage());
         }
         
-        private void TransitionToGameOver()
+        private void TransitionToGameOver(float3 position)
         {
             SendMessageToParent(new PlayerDeathMessage());
         }

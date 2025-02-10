@@ -3,16 +3,17 @@ using UnityEngine;
 
 namespace DotsShooter
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
         private bool _isPaused;
-        
-        private int _round = 1;
+        [SerializeField]
+        GameStateTracker _gameStateTracker;
 
         private void Start()
         {
             // could be cleaner, but ensure we are not "paused" when the game starts
             EnsureGameUnpaused();
+            _gameStateTracker.Initialize();
         }
 
         private static void EnsureGameUnpaused()
