@@ -17,7 +17,7 @@ namespace Game.Logic
     /// </summary>
     public static class ActionCodes
     {
-        public const int PlayerClickButton = 5000;
+        public const int PlayerAddGold = 5000;
     }
 
     /// <summary>
@@ -34,15 +34,21 @@ namespace Game.Logic
 
     // Game-specific example action: bump PlayerModel.NumClicked, triggered by button tap
 
-    [ModelAction(ActionCodes.PlayerClickButton)]
-    public class PlayerClickButton : PlayerAction
+    [ModelAction(ActionCodes.PlayerAddGold)]
+    public class PlayerAddGold : PlayerAction
     {
-        public PlayerClickButton() { }
+        public int Amount { get; private set; }
+        public PlayerAddGold() { Amount = 1; }
+        public PlayerAddGold(int amount) //TODO: not very safe to let client set amount
+        {
+            Amount = amount;
+        }
 
         public override MetaActionResult Execute(PlayerModel player, bool commit)
         {
             if (commit)
             {
+                player.Gold += 1;
                 player.Log.Info("Button clicked!");
             }
 

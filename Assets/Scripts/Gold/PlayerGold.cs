@@ -1,4 +1,6 @@
 using System;
+using DotsShooter.Metaplay;
+using Game.Logic;
 using UnityEngine;
 
 namespace DotsShooter.Gold
@@ -8,15 +10,14 @@ namespace DotsShooter.Gold
     {
         public event Action OnGoldChanged;
         
-        [SerializeField] // Serialized, so we can inspect it in the editor. Also, we can set it to a default value.
-        private int _gold;
 
         public int Gold
         {
-            get => _gold;
+            // not sure this is the strongest implementation. but eh, works for now.
+            get => MetaplayClient.PlayerModel.Gold;
             set
             {
-                _gold = value;
+                MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(value));
                 OnGoldChanged?.Invoke();
             }
         }

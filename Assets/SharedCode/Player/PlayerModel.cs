@@ -26,10 +26,13 @@ namespace Game.Logic
         public sealed override EntityId PlayerId { get; set; }
         [MetaMember(101), NoChecksum] 
         public sealed override string PlayerName { get; set; }
+        
         [MetaMember(102)] 
         public sealed override int PlayerLevel { get; set; }
 
         // Game-specific state
+        [MetaMember(200)]
+        public int Gold { get; set; } = 0;  // the amount of gold the player has
 
         protected override void GameInitializeNewPlayerModel(MetaTime now, ISharedGameConfig gameConfig, EntityId playerId, string name)
         {
