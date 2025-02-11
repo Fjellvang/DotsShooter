@@ -1,9 +1,4 @@
-﻿using System;
-using DotsShooter.State;
-using DotsShooter.State.Hierarchical;
-using Unity.Mathematics;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DotsShooter
 {
