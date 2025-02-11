@@ -13,11 +13,7 @@ namespace Game.Logic
     /// </summary>
     [MetaSerializableDerived(1)]
     [SupportedSchemaVersions(1, 1)]
-    public class PlayerModel :
-        PlayerModelBase<
-            PlayerModel,
-            PlayerStatisticsCore
-            >
+    public class PlayerModel : PlayerModelBase<PlayerModel, PlayerStatisticsCore>
     {
         public const int TicksPerSecond = 10;
         protected override int GetTicksPerSecond() => TicksPerSecond;
@@ -26,12 +22,14 @@ namespace Game.Logic
         [IgnoreDataMember] public IPlayerModelClientListener ClientListener { get; set; } = EmptyPlayerModelClientListener.Instance;
 
         // Player profile
-        [MetaMember(100)] public sealed override EntityId           PlayerId    { get; set; }
-        [MetaMember(101), NoChecksum] public sealed override string PlayerName  { get; set; }
-        [MetaMember(102)] public sealed override int                PlayerLevel { get; set; }
+        [MetaMember(100)] 
+        public sealed override EntityId PlayerId { get; set; }
+        [MetaMember(101), NoChecksum] 
+        public sealed override string PlayerName { get; set; }
+        [MetaMember(102)] 
+        public sealed override int PlayerLevel { get; set; }
 
         // Game-specific state
-        [MetaMember(200)] public int                                NumClicks   { get; set; } = 0;  // Number of times the button has been clicked
 
         protected override void GameInitializeNewPlayerModel(MetaTime now, ISharedGameConfig gameConfig, EntityId playerId, string name)
         {

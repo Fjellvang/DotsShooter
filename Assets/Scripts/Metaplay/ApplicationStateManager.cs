@@ -11,20 +11,13 @@ using Metaplay.Unity;
 using Metaplay.Unity.DefaultIntegration;
 using System;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// This file contains Metaplay sample code. It can be adapted to suit your project's needs or you can
-// replace the functionality completely with your own.
-namespace Metaplay.Sample
+namespace DotsShooter.Metaplay
 {
-    /// <summary>
-    /// Declare concrete MetaplayClient class for type-safe access to player context from game code.
-    /// </summary>
-    public class MetaplayClient : MetaplayClientBase<PlayerModel>
-    {
-    }
-
     /// <summary>
     /// Manages the application's lifecycle, including mock loading state, Metaplay server connectivity, and failure states.
     /// This class is a simplified version of a state manager that a real game would have, but in such a manner that the
@@ -57,21 +50,16 @@ namespace Metaplay.Sample
         }
 
         // When connection to server is not established, display connection status.
-        public GameObject       ConnectionStatusCanvas;     // Canvas that contains the connection status info. Shown only when no active connection exists.
-        public Text             ConnectionStatusText;       // Text to display status of connection.
-        public Text             ConnectingSpinner;          // Spinner in connecting state.
-        public GameObject       ConnectionErrorPopup;       // Popup shown when a connection error happens.
-        public Text             ConnectionErrorInfoText;    // Info text within ConnectionErrorPopup describing the error.
-        public GameManager      GameManagerPrefab;          // Prefab for the in-game state, spawned when a session with the server is established.
+        public SceneAsset MenuScene;
 
         // Runtime state
         ApplicationState        _applicationState = ApplicationState.AppStart;  // Begin in the AppStart state.
-        GameManager             _gameManager;                                   // Instance of the GameManager, spawned when the player state is received from the server.
 
         void Awake()
         {
             // When the app starts, make sure the connection error info is hidden.
-            ConnectionErrorPopup.SetActive(false);
+            // ConnectionErrorPopup.SetActive(false);
+            DontDestroyOnLoad(this.gameObject); // Todo: I think we need the statemanager throughout the game, but look into it.
         }
 
         void Start()
@@ -91,9 +79,6 @@ namespace Metaplay.Sample
         {
             // Update Metaplay connections and game logic
             MetaplayClient.Update();
-
-            // Update connection UI (visible when session is not active)
-            UpdateConnectionStatusUI();
         }
 
         /// <summary>
@@ -111,30 +96,25 @@ namespace Metaplay.Sample
                     break;
 
                 case ApplicationState.Initializing:
-                    // Simulate the transition away from the Game scene by destroying the GameManager instance.
-                    // In addition to the Game scene, it's possible to arrive here from Initializing state itself,
-                    // in case the connection fails before a session was started. In that case there is no
-                    // GameManager instance.
-                    if (_gameManager != null)
-                    {
-                        Destroy(_gameManager.gameObject);
-                        _gameManager = null;
-                    }
+                    
+                    // // Simulate the transition away from the Game scene by destroying the GameManager instance.
+                    // // In addition to the Game scene, it's possible to arrive here from Initializing state itself,
+                    // // in case the connection fails before a session was started. In that case there is no
+                    // // GameManager instance.
+                    // if (_gameManager != null)
+                    // {
+                    //     Destroy(_gameManager.gameObject);
+                    //     _gameManager = null;
+                    // }
 
-                    // Make sure connection error info is hidden.
-                    ConnectionErrorPopup.SetActive(false);
+
 
                     // Start connecting to the server.
                     MetaplayClient.Connect();
                     break;
 
                 case ApplicationState.Game:
-                    // Make sure connection error info is hidden.
-                    ConnectionErrorPopup.SetActive(false);
-
-                    // Start the game. Simulate the transition to in-game state by spawning the GameManager.
-                    // You might want to use scene transition instead.
-                    _gameManager = Instantiate(GameManagerPrefab);
+                    SceneManager.LoadScene(MenuScene.name);
                     break;
             }
 
@@ -142,29 +122,6 @@ namespace Metaplay.Sample
             _applicationState = newState;
         }
 
-        /// <summary>
-        /// When connection isn't yet established, show the status of connection.
-        /// </summary>
-        void UpdateConnectionStatusUI()
-        {
-            // Only show connectivity info if we don't have an established connection.
-            ConnectionStatusCanvas.SetActive(MetaplayClient.PlayerContext == null);
-
-            // Show connection status text & progress indicator.
-            ConnectionStatus connectionStatus = MetaplayClient.Connection.State.Status;
-            ConnectionStatusText.text = connectionStatus.ToString();
-            ConnectingSpinner.gameObject.SetActive(connectionStatus == ConnectionStatus.Connecting);
-            ConnectingSpinner.text = "........".Substring(0, (int)(Time.time * 3.0f) % 8);
-        }
-
-        /// <summary>
-        /// Handler for Reconnect button (shown after a connection attempt has failed).
-        /// </summary>
-        public void OnClickReconnect()
-        {
-            // Switch back to initializing state, to start reconnecting.
-            SwitchToState(ApplicationState.Initializing);
-        }
 
         #region IMetaplayLifecycleDelegate
 
@@ -239,8 +196,8 @@ namespace Metaplay.Sample
         /// <param name="connectionLost"></param>
         void ShowConnectionErrorPopup(ConnectionLostEvent connectionLost)
         {
-            ConnectionErrorInfoText.text = CreateConnectionLostInfoText(connectionLost);
-            ConnectionErrorPopup.SetActive(true);
+            //TODO: Implement this
+            Debug.Log($"Connection lost: {CreateConnectionLostInfoText(connectionLost)}");
         }
 
         /// <summary>

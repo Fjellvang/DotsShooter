@@ -43,7 +43,6 @@ namespace Game.Logic
         {
             if (commit)
             {
-                player.NumClicks += 1;
                 player.Log.Info("Button clicked!");
             }
 
