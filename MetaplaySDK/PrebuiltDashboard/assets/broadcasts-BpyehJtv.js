@@ -1,0 +1,1 @@
+import{bj as e,bk as i,bm as o}from"./index-B7jvAjdE.js";function s(){return{permission:"api.broadcasts.view",pollingPolicy:e(5e3),fetcherPolicy:i("/broadcasts"),cacheRetentionPolicy:o(6e4)}}function a(t){return{permission:"api.broadcasts.view",pollingPolicy:e(5e3),fetcherPolicy:i(`/broadcasts/${t}`),cacheRetentionPolicy:o(1e4)}}export{a,s as g};

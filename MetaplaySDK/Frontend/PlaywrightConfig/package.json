@@ -1,0 +1,27 @@
+{
+  "name": "@metaplay/playwright-config",
+  "version": "1.0.0",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "devDependencies": {
+    "@metaplay/eslint-config": "workspace:^",
+    "@metaplay/prettier-config": "workspace:^",
+    "@playwright/test": "1.49.0",
+    "@prettier/plugin-pug": "3.2.0",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "@types/node": "22.10.1",
+    "typescript": "5.6.3",
+    "prettier": "3.4.1",
+    "prettier-plugin-tailwindcss": "0.6.9"
+  },
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "postinstall": "tsc --build"
+  }
+}

@@ -1,0 +1,1 @@
+import{o as t,a as o,a2 as a,l,_ as s}from"./index-B7jvAjdE.js";const n={key:0,class:"tw-mx-auto tw-w-full tw-max-w-3xl"};function r(e,u){return e.$slots.default?(t(),o("div",n,[a(e.$slots,"default")])):l("",!0)}const c={},_=s(c,[["render",r],["__file","MSingleColumnLayout.vue"]]);export{_ as M};

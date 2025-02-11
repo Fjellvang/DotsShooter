@@ -1,0 +1,47 @@
+syntax = "proto2";
+
+option csharp_namespace = "Metaplay.Cloud.Analytics.BigQuery";
+
+message Event {
+
+  message EventParam {
+    required string key = 1; // Name of the event param.
+    oneof value {
+      string string_value = 2; // String value of the event param if param is string.
+      int32 int_value = 3; // Integer value of the event param if param is integer.
+      double double_value = 4; // Floating point value of the event param if param is floating point.
+    }
+  }
+
+  message Experiment {
+    required string experiment = 1; // The Analytics ID of the experiment.
+    required string variant = 2; // The Analytics ID of the experiment variant.
+  }
+
+  message Label {
+    required string name = 1; // The name of the custom label.
+    required string string_value = 2; // The string value of the custom label.
+  }
+
+  message Player {
+    // The (nullable) session number of the player. For the first session of the player, this will be 1, and increase by one for each subsequent session. If there is no session, the value is null.
+    optional int32 session_number = 1;
+    repeated Experiment experiments = 2; // The active experiments of the player. Empty list for non-player events.
+  }
+
+  required string source_id = 1; // EntityId of the source entity. For players, this is for example Player:0a23456789. Can be other entities as well, like Guild:XXX.
+  required string event_id = 2; // An unique ID of the event.
+  required string event_timestamp = 3; // Timestamp of the event.
+  required string event_name = 4; // Name of the event. The name of the analytics event type in server code.
+  required int32 event_schema_version = 5; // Schema version of the event parameter data. Developer bumps this if the event class in code changes shape.
+
+  // Event-specific key-to-value mapping
+  repeated EventParam event_params = 6;
+
+  // The context of the player entity. Null for non-player events.
+  optional Player player = 7;
+
+  // The custom labels assigned by the source entity.
+  repeated Label labels = 8;
+
+}

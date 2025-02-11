@@ -1,0 +1,50 @@
+type: library
+tags:
+  - public-package
+
+project:
+  description: Playwright tests for the frontend.
+  maintainers:
+    - Wenlei
+
+tasks:
+  test-e2e:
+    command: playwright test
+    deps:
+      - lint
+    local: true
+
+  test-e2e-fast:
+    command: playwright test --project=chromium
+    deps:
+      - lint
+    local: true
+
+  test-e2e-ui:
+    command: playwright test --ui
+    deps:
+      - lint
+    local: true
+
+  format-check:
+    command: prettier . --check
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    options:
+      cache: false
+
+  format:
+    command: prettier . --write
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    local: true
+
+  lint:
+    command: eslint . --fix
+    inputs:
+      - 'tests/**/*.ts'
+      - '*.{js,ts,cjs}'
+      - package.json
+      - /MetaplaySDK/Frontend/EslintConfig/baseConfig.js
+      - /MetaplaySDK/Frontend/EslintConfig/package.json
+      - /MetaplaySDK/Frontend/EslintConfig/shared*.js

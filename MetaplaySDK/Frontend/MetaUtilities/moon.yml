@@ -1,0 +1,37 @@
+type: library
+tags:
+  - public-package
+  - prettier-formatted
+
+project:
+  description: General utilities for the Metaplay SDK.
+  maintainers:
+    - Paul
+
+tasks:
+  lint:
+    command: eslint . --fix
+    inputs:
+      - 'src/**/*.ts'
+      - '*.js'
+      - /MetaplaySDK/Frontend/EslintConfig/baseConfig.js
+      - /MetaplaySDK/Frontend/EslintConfig/package.json
+
+  typecheck:
+    command: tsc --build
+    deps:
+      - lint # Don't typecheck if the code doesn't lint.
+      - ^:typecheck
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - '*.{json,ts,d.ts}'
+    outputs:
+      - dist/
+
+  test-unit:
+    command: vitest run
+    deps:
+      - typecheck
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - 'tests/unit/**/*.spec.ts'

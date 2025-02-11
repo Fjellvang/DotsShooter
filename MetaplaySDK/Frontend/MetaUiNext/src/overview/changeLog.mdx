@@ -1,0 +1,143 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Change Log" />
+
+# Change Log
+
+## Release 31 - December 16th, 2024
+
+### Under the hood changes
+
+- **Changed**:The `okButtonDisabled` prop for disabling the `OK` button in modal components (`MActionModal`, `MActionModalButton`) has been removed.
+  To disable the `OK` button, you must now provide a message to the new `okButtonDisabledTooltip` prop explaining why it’s disabled. This message will be
+  displayed as a tooltip when users hover over the button.
+- **Changed**: The inner selection circle in the `MInputSingleSelectRadio` is now only visible when the radio button is selected.
+
+- **Fixed**: A regression where the clear button on an `MInputNumber` number component did not work.
+- **Fixed**: A regression in `MTabLayout` component where the dropdown menu was hidden in mobile view.
+- **Fixed**: A regression in `MTabLayout` where the correct tab would not be selected when navigating backwards to a previously viewed page.
+
+## Release 30 - October 16th, 2024
+
+### Highlights
+
+- **New `MTabLayout` component**: This component provides a tabbed layout for structuring dashboard pages and offers a consistent layout for the page content.
+- **New `MPlot` Component**: A component for creating custom data visualizations using the [Plot library](https://observablehq.com/plot).
+- **New `MTimeseriesBarChart` Component**: A component for rendering timeseries data charts, leveraging the [Plot library](https://observablehq.com/plot).
+
+### Under the hood changes
+
+- **Added**: Permission support for the `MInputSwitch`component. You can now set a required permission string to control who is allowed to interact with the switch.
+- **Added**: The `MInputSingleSelectRadio` component now supports disabling of individual options.
+
+- **Changed**: The `MInputSegmentedSwitch` component has been renamed to `MInputSingleSelectSwitch`.
+- **Changed**: The `MInputSingleSelectSwitch` sizes have been updated to be more consistent with other input components.
+  The old sizes `sm` and `md` have been replaced with `small` and `default`.
+- **Changed**: The `MInputSwitch` component sizes have been updated to be more consistent with other input components.
+  The old sizes `xs`, `sm` and `md` have been replaced with `extraSmall`, `small` and `default`.
+- **Changed**: The `disabled` prop in the `MButton`,`MIconButton` and `MTextButton` components has been replaced by the `disabledTooltip` prop. To disable the button, set the `disabledTooltip` prop with an explanation of why the button is disabled.
+- **Changed**: The `triggerButtonDisabled` prop in the `MActionModalButton` component has been removed in favor of the `triggerButtonDisabledTooltip` prop.
+  To disable the trigger button, set the `triggerButtonDisabledTooltip` prop with an explanation of why the button is disabled.
+
+- **Fixed**: Fixed the overflow issuse in the `MInputSingleSelectSwitch` component.When there are three or more options, t
+  the component switches to a dropdown on smaller screens to prevent overflow.
+- **Fixed**: Fixed the `MTooltip` sometimes having a too small mouse over trigger area.
+- **Fixed**: Fixed issue where `MetaDuration` would not display anything if the duration was less than one second.
+- **Fixed**: Remove support for controlling the number of fraction digits from `MInputNumber` as it was both broken and unused.
+
+## Release 29 - August 25th, 2024
+
+### Highlights
+
+- **New `MButtonGroupLayout` component**: This component makes it easy to create consistent-looking groups of buttons. Notably, it now expands buttons to full width
+  on narrow browsers to keep them legible. We have migrated all our button groups to use this new layout.
+
+### Under the hood changes
+
+- **Added**: A new `MViewContainer` component that provides a container for dashboard pages and offers a consistent layout for the page content.
+- **Added**: A new `MPageOverviewCard` component that provides a high-level overview of a dashboard page and offers quick access to key information and actions.
+- **Added**: The `MTwoColumnLayout` component, which provides a two-column layout for structuring dashboard views and components.
+- **Added**: The `MThreeColumnLayout` component, which offers a three-column layout for structuring dashboard views and components.
+
+## Release 28 - June 7th, 2024
+
+### Highlights
+
+- **New DateTime input**: The `MInputDateTime` component is completely re-engineered from scratch for better usability.
+  It now separates the date and time into two separate inputs. The new input only accepts and shows UTC times.
+- **New MModal:** The new `MModal` component offers a simplified and more intuitive API for displaying read-only modals
+  that do not require user interaction.
+- **MInputDuration improvements**: The `MInputDuration` component now shows preview times in UTC instead of local time
+  and has a new, clearer UX for inputting "empty" durations.
+- **New MInputHintMessage**: A component for consistently styled hint messages across all input components.
+
+### Under the hood changes
+
+- **Added**: New `MInputDate` and `MInputTime` components for picking dates and times separately.
+- **Added**: New `MInputHintMessage` component for consistently styled hint messages in input components.
+- **Added**: `MInputText` now has a `@blur:modelValue` event that can be used to trigger input validation.
+- **Added**: `MInputNumber` has a new `step` prop to control the increment/decrement value.
+- **Added**: `MInputText` and `MInputNumber` now have an optional clear button that can be used to more easily
+  clear the input field. `MInputText` has a new `showClearButton` prop to show the button, while `MInputNumber`
+  uses the already existing `allowUndefined` and `clearOnZero` to show the button.
+
+- **Changed**: Updated the `MCollapse` component to support additional controls for managing the initial state of
+  the collapsible section. Now, you have the option to set the initial state as open or hide the collapsible section entirely.
+- **Changed**: The `MInputDateTime` component is now a wrapper for the new `MInputDate` and `MInputTime` components.
+- **Changed**: `MListItem` and `MErrorCallout` now have a max-height in their main content slots to prevent accidental
+  large strings from breaking the layout.
+- **Changed**: Modals are now wider in the two-column layout to better accommodate wide form inputs like `MInputDateTime`.
+
+- **Fixed**: An issue with the new `MButton` component, where the middle click event within the Live-Ops Dashboard didn't trigger
+  the opening of a new window.
+- **Fixed**: Fixed `MModal` and `MActionModal` not emitting `hide` event when closed by pressing the escape key.
+- **Fixed**: Fixed `MInputNumber` being too aggressive in clamping non-allowed values while typing. Input validation now happens
+  only on focus change instead of on value change.
+
+## Release 27 - March 22, 2024
+
+## Highlights
+
+- **New MButton**: A styled button used for primary actions, such as submitting forms or triggering an event or an action.
+- **New MIconButton**: A icon-only button for triggering events and actions in areas where space is limited.
+- **New MTextButton**: A text-only button used as a link or a button that triggers events and actions within a text or paragraph.
+- **New MetaUiNext components**: Documentation for the new MetaUiNext components has been added: MButton, MIconButton, MTextButton,
+  MActionModal, and MActionModalButton. You can find more information about these components and learn how to use them in your project
+  by running `pnpm storybook` in the MetaplaySDK/NodePackages/MetaUiNext folder.
+
+### Under the hood changes
+
+- **Added**: `MCard` has new `data-testid` props for easier automated testing: `card-loading-indicator`, `card-title`, `card-badge`,
+  `card-subtitle`.
+- **Added**: `MOverviewCard` has new `data-testid` props for easier automated testing: `overviewcard-loading-indicator`, `overviewcard-title`,
+  `overviewcard-subtitle`.
+- **Added**: The `MetaListCard` component now supports generics for better type safety and editor hints when working with list item templates.
+- **Added**: new `MButton, MIconButton, and MTextButton` components. These are styled button elements suitable for creating buttons and links
+  in the Live-Ops Dashboard.
+- **Added**: a new `MActionModal`, designed for actions requiring user confirmation.
+- **Added**: a new `MActionModalButton`, a composite component that connects the functionality of `MButton` and `MActionModal` components.
+
+## Release 26 - December 22nd, 2023
+
+### Highlights
+
+- **New MInputSingleSelectRadio**: A single-select radio button input for number and string values.
+- **New MInputSingleSelectRadio**: A single-select radio button input for number and string values.
+- **New MInputMultiSelectCheckbox**: A multi-select checkbox input for number and string values.
+- **New MInputSingleFile**: A file picker component for selecting individual files.
+- **New MInputSingleFileContents**: A file picker component for selecting individual files that also reads the file contents into a string.
+
+### Under the hood changes
+
+- **Added**: a new `MInputSingleSelectRadio` component. This is a single-select radio button input for number and string values.
+- **Added**: a new `MInputMultiSelectCheckbox` component. This is a multi-select checkbox input for number and string values.
+- **Added**: Added a new `MInputSingleFile` component. This is a file picker component for individual files.
+- **Added**: Added a new `MInputSingleFileContents` component. This is a file picker component for individual files that also reads the contents
+  of the file into a string.
+
+- **Changed**: `MInputSingleCheckbox` has been renamed to `MInputCheckbox` and `MetaInputCheckbox` has been removed. <breaking-change/>
+- **Changed**: `MetaInputNumber` has been removed in favour of `MInputNumber`. <breaking-change/>
+- **Changed**: Bootstrap-Vue's form input plugins have been removed in favour of the `MInput*` components. <breaking-change/>
+- **Changed**: Updated the `MListItem` component styles and overall usability. The new look and feel are more consistent with the rest of the dashboard.
+- **Changed**: Renamed `MInputSingleCheckbox` to just `MInputCheckbox` for consistency. This component now also has a smaller size variant.
+- **Changed**: Removed `MetaInputCheckbox` in favour of `MInputCheckbox`.

@@ -1,0 +1,33 @@
+type: library
+language: javascript
+tags:
+  - public-package
+
+project:
+  name: bootstrap
+  description: Custom version of Bootstrap 4 with LiveOps Dashboard specific additions and defaults.
+  maintainers:
+    - 'Teemu'
+    - 'Peninah'
+
+tasks:
+  format-check:
+    command: prettier . --check
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    options:
+      cache: false
+
+  format:
+    command: prettier . --write
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    local: true
+
+  build:
+    command: sass --load-path=node_modules/ --update meta-bootstrap.sass:dist/meta-bootstrap.css
+    inputs:
+      - '*.sass'
+      - package.json
+    outputs:
+      - dist/

@@ -1,0 +1,22 @@
+{
+  "include": [
+    "vite.config.ts",
+    ".storybook/**/*.ts",
+    "tests/**/*.ts",
+    "src/coreUtils.ts",
+    "src/subscription_options/generalTypes.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "types": ["node"]
+  }
+}

@@ -1,0 +1,13 @@
+# https://moonrepo.dev/docs/config/tasks
+$schema: https://moonrepo.dev/schemas/project.json
+type: application
+tags:
+  - public-sample-dashboard
+  - prettier-formatted
+
+tasks:
+  build-for-sdk:
+    extends: 'build-fast'
+    args: '--outDir ../../PrebuiltDashboard'
+    # don't run as part of CI
+    local: true

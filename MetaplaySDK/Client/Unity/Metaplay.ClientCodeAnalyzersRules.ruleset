@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Default rules for CodeAnalyzers" Description=" " ToolsVersion="10.0">
+  <Rules AnalyzerId="Metaplay.ClientCodeAnalyzers.WebGlBuildAnalyzer" RuleNamespace="Metaplay.ClientCodeAnalyzers">
+    <Rule Id="MP_WGL_00" Action="Warning" />
+  </Rules>
+  <Rules AnalyzerId="Metaplay.CodeAnalyzers.Shared.MetaMemberAnalyzer" RuleNamespace="Metaplay.CodeAnalyzers.Shared">
+    <Rule Id="MP_DMM_00" Action="Error" />
+  </Rules>
+</RuleSet>

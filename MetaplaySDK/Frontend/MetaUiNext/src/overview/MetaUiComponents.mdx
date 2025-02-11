@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Component Libraries/Meta Ui Components" />
+
+# Meta UI Components
+
+The components are organized into four main categories:
+
+- **Primitives**: Basic UI building blocks like badges, buttons and cards.
+- **Inputs**: Input component for creating forms.
+- **Composites**: Complex UI elements that combine multiple components together.
+- **Layouts**: Components that help you structure your content.
+
+Additionally, we have an **unstable** category for components that are still in review and are likely to get API changes in a future release.
+
+### Explore UI Components
+
+Click on any component in the sidebar to explore and learn more about it. Each component includes detailed
+documentation that provides a full list of properties with descriptions and default values, possible actions
+and events that the component can trigger and interactive controls to test different property values and
+see real-time changes.
+
+Use the `Controls` panel at the bottom of each story to interact with the component's arguments and learn
+how each property modifies the component's behavior.
+
+<img src="controls.gif" alt="storybook controls example" />
+
+Use the `toolbar` menu at the top of the page to zoom in to the component and check out the intricate details or render the
+component in different viewports to see the responsiveness of the component.
+
+<img src="toolbar.gif" alt="storybook toolbar example" />
+
+### Use Them
+
+Once you've found the right component for your use case, you can easily integrate it into your project
+by following these steps:
+
+Step 1: Import the component from the `@metaplay/meta-ui-next` component library. This module ships as a part of the Metaplay SDK package and is already available for you locally.
+
+```jsx
+<script lang="ts" setup>
+  import {MButton} from '@metaplay/meta-ui-next'
+</script>
+```
+
+Step 2: Use the component in your Vue template and pass in the required properties.
+
+```jsx
+MButton(
+  variant="neutral"
+  @click="handleClick"
+  ) Action
+```
+
+You can safely use these components in your projects, as we will maintain them and provide a migration path
+for any breaking changes in future SDK updates.
+
+## Known Caveats
+
+Our UI library is still under active development, and some regressions may occur as we continue to refine the components.
+Additionally, we are in the process of migrating our legacy UI components from the older `@metaplay/meta-ui` library
+to the newer `@metaplay/meta-ui-next` version.
+
+When in doubt, only use components from the `@metaplay/meta-ui-next` library to avoid future migration work.
+
+## 💬 Give us feedback
+
+We welcome your feedback! If you find a problem, have a question, or need a new
+feature supported, please let us know.

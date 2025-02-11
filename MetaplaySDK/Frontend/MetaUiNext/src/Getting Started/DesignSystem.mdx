@@ -1,0 +1,143 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Getting Started/Design System" />
+
+# Design System Overview
+
+Metaplay's design system is an opinionated subset of the excellent [Tailwind CSS system](https://tailwindcss.com/), implemented as a Tailwind plugin that ships pre-configured with your custom LiveOps Dashboard project.
+
+As with any design system, you should know about the following choices we've made that affect all component designs:
+
+* Typography
+* Colors
+* Spacing & Information Density
+* Navigation
+* Iconography
+* Interactivity
+
+## Typography
+
+We use the default system UI font on each platform for instant page rendering, maximum coverage of Unicode symbols and avoiding ambiguous characters.
+
+<img src="design-system-monospace.png" alt="Example of monospace font helping with technical IDs" width="500"/>
+
+Specifically, the `monospace` variant of system UI fonts is great at distinguishing letters and numbers as that is important when dealing with technical payloads such as content hashes and device IDs.
+
+This does mean that the dashboard will look slightly different on Windows, MacOS and Linux machines.
+
+<img src="design-system-sm-plus-font.png" alt="Example of using tw-text-sm+ to separate list titles from other content" width="500"/>
+
+We have also added two extra font sizes (`xs+` and `sm+`) to the default list of Tailwind sizes that sit between `xs` and `md` since the dashboard has a lot of dense information and these minor adjustments help separate headings from text and text from metadata.
+
+## Colors
+
+We have chosen to limit the available colors to the following list and their light/dark shades. We ultimately settled on this pattern as more colors tended to increase visual clutter without adding actual information, making the dashboard less legible.
+
+Here are the available colors and their semantic meanings:
+
+{
+  <div class="tw-border tw-border-neutral-300 tw-rounded-md">
+    <ul class="tw-divide-y tw-divide-neutral-300">
+      <li class="tw-flex tw-gap-2">
+        <div class="tw-basis-40 tw-shrink-0 tw-bg-neutral-500 tw-p-3 !tw-text-xs !tw-font-mono tw-text-white">tw-bg-neutral-500</div>
+        <div class="tw-p-2">
+          <div class="tw-font-semibold">Neutral Grays</div>
+          <div class="!tw-text-sm">Full gradient of shades from black to white with no tint. Used to indicate semantically neutral or inactive content.</div>
+        </div>
+      </li>
+      <li class="tw-flex tw-gap-2">
+        <div class="tw-basis-40 tw-shrink-0 tw-bg-blue-500 tw-p-3 !tw-text-xs !tw-font-mono tw-text-white">tw-bg-blue-500</div>
+        <div class="tw-p-2">
+          <div class="tw-font-semibold">Primary Blue</div>
+          <div class="!tw-text-sm">Blue is used to indicate active or actionable elements in the dashboard, such as buttons and links. It is also the primary highlight color. We picked the exact shade of blue used by Bootstrap as something immediately familiar to most users.</div>
+        </div>
+      </li>
+      <li class="tw-flex tw-gap-2">
+        <div class="tw-basis-40 tw-shrink-0 tw-bg-orange-500 tw-p-3 !tw-text-xs !tw-font-mono tw-text-white">tw-bg-orange-500</div>
+        <div class="tw-p-2">
+          <div class="tw-font-semibold">Warning Orange</div>
+          <div class="!tw-text-sm">Orange is used to highlight elements that demand attention and extra consideration, but that are not critical or blocking.</div>
+        </div>
+      </li>
+      <li class="tw-flex tw-gap-2">
+        <div class="tw-basis-40 tw-shrink-0 tw-bg-red-500 tw-p-3 !tw-text-xs !tw-font-mono tw-text-white">tw-bg-red-500</div>
+        <div class="tw-p-2">
+          <div class="tw-font-semibold">Danger Red</div>
+          <div class="!tw-text-sm">Red is used to indicate errors states or actions that should be taken only with due care because of potential data loss or access to sensitive information.</div>
+        </div>
+      </li>
+      <li class="tw-flex tw-gap-2">
+        <div class="tw-basis-40 tw-shrink-0 tw-bg-green-500 tw-p-3 !tw-text-xs !tw-font-mono tw-text-white">tw-bg-green-500</div>
+        <div class="tw-p-2">
+          <div class="tw-font-semibold">Success Green</div>
+          <div class="!tw-text-sm">Green is used to communicate successful action results and systems that are not just active, but in some ideal state.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+}
+
+The first rule of thumb is to not use any colors. Your design should be completely understandable with only the neutral tones. After you have landed on a design, consider adding a carefully selected accent by, for example, using an [MBadge](?path=/docs/primitives-mbadge--overview) component.
+
+Each color has shades from 50 to 950, following the Tailwind CSS' [default color classes](https://tailwindcss.com/docs/customizing-colors).
+
+## Spacing & Information Density
+
+We use the [default scales](https://tailwindcss.com/docs/customizing-spacing) of Tailwind CSS for all widths, margins and paddings. This is a non-linear scale where all available options have been designed to look harmonious together.
+
+The general philosophy is that parent elements define the sizes and spacing of their child elements. This means that our built-in layout elements already set sensible defaults for the spacing between elements so you can avoid styling elements from scratch every time. We generally use the small end of the scale (for example `tw-mb-2` for paragraphs and `tw-mb-4` for bigger elements) to keep the UI dense.
+
+The page layouts have some amount of horizontal padding to keep elements from touching the browsers's edges, and we reduce that on very narrow screen to maximize screen estate.
+
+## Pages and Navigation
+
+![Sidebar navigation in the LiveOps Dashboard](design-system-navigation.png "Sidebar navigation in the LiveOps Dashboard")
+
+All content in the LiveOps Dashboard is organized into pages, which are accessible through the sidebar. Pages can further link to sub-pages, but ideally all pages clearly belong to one of the categories in the sidebar to make navigation easier.
+
+Even though there is no technical difference between pages and components, we suffix all page components with `Page` (for example, `PlayerDetailsPage.vue`) to make it clear that they are meant to be used as full pages, as the use-cases for pages and components are different.
+
+<img src="design-system-link.png" alt="Navigation link is highlighted in blue" width="500"/>
+
+Most navigation elements are either [MButton](#), [MTextButton](#) or [MIconButton](#) components that have consistent styling and behavior for edge cases like missing permissions.
+
+## Iconography
+
+We have designed our components to be icon agnostic, meaning that you can use any icon library you like with them. We prefer using both [FontAwesome](https://fontawesome.com/) and [Heroicons](https://heroicons.com/) for their extensive coverage of common icons and their consistent design language. These libraries are also available with permissive licenses.
+
+<img src="design-system-icons.png" alt="Example of using icons in a component" width="500"/>
+
+Because we expose icons as slots, you can also use SVGs or any other icon library you prefer. Just make sure to use appropriate size classes to keep the icons in line with the rest of the UI.
+
+## Interactivity
+
+We use CSS to give discreet feedback to the user when hovering and clicking on interactive elements. Major interactive elements, like buttons and links, have visual contrast to make them stand out from the rest of the content and appear clickable. Secondary elements, like list items and form inputs, have a more subtle hover effect to indicate that they are interactive. The goal is to make the UI feel as unsurprising and responsive as possible.
+
+<img src="design-system-buttons.png" alt="Buttons with mixed states" width="700"/>
+
+In general, we avoid animations and transitions unless they are necessary to communicate the state change of an element.
+
+# CSS Utilities
+
+The Metaplay design system is built on top of the excellent [Tailwind CSS](https://tailwindcss.com/) utility-first CSS framework. This means that you can use any of the [Tailwind CSS utilities](https://tailwindcss.com/docs/utility-first) in your project and they will work seamlessly with the Metaplay components.
+
+## Usage With the `tw-` Prefix
+
+We have prefixed all Tailwind classes with `tw-` to prevent collisions with other CSS frameworks that you may be using. This means that you can use any of the Tailwind CSS utilities and simply add `tw-` in the front.
+
+Examples:
+
+* Use `tw-text-center` instead of `text-center` to horizontally center the text payload of an element.
+* Use `@md:tw-text-center` instead of `@md:text-center` to conditionally center the text payload of an element, if the width of that element is more than the `md` breakpoint.
+
+## How to Choose the Right Breakpoint/Size/Color
+
+The basic rule of thumb is to start from the middle option (for example, `md` breakpoint, `4` size, `500` color) and then adjust one breakpoint at a time until you feel that it is getting worse instead of better, then go back to the previous breakpoint. This way you can quickly eyeball the right size, color or breakpoint for your use case without having to remember all the available options.
+
+In time, you will start to remember the most common options and can skip the trial-and-error phase.
+
+# Next Steps
+
+* [**Displaying Data**](?path=/docs/getting-started-displaying-data--overview) - Now that you know about the design system, let's put it into use.
+* [**Tailwind CSS docs**](https://tailwindcss.com/) - Tailwind has an excellent resource for documenting their utilities and the underlying CSS rules.
+* [**Refactoring UI**](https://www.refactoringui.com/) - The book by Tailwind's creators that is a great primer for engineers about web design and why Tailwind was designed the way it is.

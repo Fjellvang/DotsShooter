@@ -1,0 +1,24 @@
+type: library
+tags:
+  - public-package
+
+project:
+  description: Reusable ESLint configuration for Metaplay's projects.
+  maintainers:
+    - Teemu
+
+tasks:
+  format-check:
+    command: prettier . --check
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    options:
+      cache: false
+
+  format:
+    command: prettier . --write
+    inputs:
+      - '**/*.{json,ts,js,html,md,yml,yaml}'
+    local: true
+
+  # Note: This package does not have a format task to avoid circular dependencies. The formatter inherits this package for linting the formatting options.

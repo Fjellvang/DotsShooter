@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sb-story {
+  /* Set container query target to the story root in all stories. */
+  container-type: inline-size;
+}
+
+#storybook-root {
+  /* Set container query target to the story root in all stories. */
+  container-type: inline-size;
+}

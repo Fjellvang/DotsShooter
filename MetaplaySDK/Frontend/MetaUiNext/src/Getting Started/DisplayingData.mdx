@@ -1,0 +1,110 @@
+import { Meta, Markdown } from '@storybook/blocks'
+
+<Meta title="Getting Started/Displaying Data" />
+
+# Displaying Data with Meta UI Components
+
+This page gives an overview of, and a practical starting point for, displaying custom data in your LiveOps Dashboard using the Meta UI components.
+
+## Designing for Cards
+
+As a rule of thumb, you should always design for the most limited viewport (mobile and/or narrow browser window) first. Designs that work on narrow screen will also work on wide screens, but not the other way around. Narrow screens can only show one column of content, so ideally you should design for that target.
+
+To make responsive design easier, all content in the LiveOps Dashboard is composed out of cards. A "card" is a visual container that groups related information together under a single headline. We have made an opinionated [MCard](/docs/primitives-mcard--overview) component that you can use as a starting point. The component has been intentionally limited in its styling to make them look consistent across the dashboard.
+
+Cards do not have a pre-set max width, but since they need to work on narrow screens, you should design them to contain a single column of content. Additionally, we usually put cards into column layouts that limit the max width of cards to keep them readable.
+
+<img src="displaying-data-card.png" alt="A card showing playing inventory" width="500"/>
+
+You can intentionally make cards that stretch over multiple columns or even the full width of the screen, but that makes it more complicated for you to make the design work on all screen widths.
+
+![A wide card that will not be great on narrow screens](displaying-data-wide-card.png "A wide card that will not be great on narrow screens")
+
+An additional upside of using cards is that they can be easily rearranged and reordered on pages, separating the content from the layout.
+
+## Designing for Lists
+
+Now that we have decided to use a narrow card, we need to decide how to display the data inside the card. Most data in dashboards is an array of items, so we need to either display them as a list or a table. The difference is that lists are a vertical stack of (potentially complex) items, while tables use a 2D grid to display the data in a tabular format.
+
+Unless you have a specific reason, do not use tables. They are hard to make responsive and are generally harder to read than lists. Instead, use a well-designed list that can display complex items in a single column.
+
+Let's consider this example list of items:
+
+```json
+[
+  {
+    "id": "123456789ABCDEFG",
+    "name": "Master Sword",
+    "description": "The legendary sword that seals the darkness.",
+    "rarity": "legendary",
+    "type": "weapon",
+    "damage": 100,
+    "defense": 0
+  },
+  {
+    "id": "987654321GFEDCBA",
+    "name": "Hylian Shield",
+    "description": "The legendary shield that protects its bearer from all harm.",
+    "rarity": "legendary",
+    "type": "shield",
+    "damage": 0,
+    "defense": 100
+  }
+]
+```
+
+If this data was displayed in a table, it would be too wide to fit on a narrow screen:
+
+<Markdown>
+{`
+  | ID | Name | Description | Rarity | Type | Damage | Defense |
+  | - | - | - | - | - | - | - |
+  | 123456789ABCDEFG | Master Sword | The legendary sword that seals the darkness. | legendary | weapon | 100 | 0 |
+  | 987654321GFEDCBA | Hylian Shield | The legendary shield that protects its bearer from all harm. | legendary | shield | 0 | 100 |
+`}
+</Markdown>
+
+To make lists easier, we have designed our own [MList](/docs/primitives-mlist--overview) and [MListItem](/docs/primitives-mlistitem--overview) components that you can use as a starting point. They handle a lot of the styling boilerplate for you and offer a highly opinionated design for each list item so that they look consistent across the dashboard.
+
+A naive adaptation of the above data to a list would look like this:
+
+<img src="displaying-data-bad-list.png" alt="Long lists without curation are hard to read" width="500"/>
+
+This list is hard to read because it just dumps information on screen without considering the visual hierarchy of the data. To make it more readable, we need to decide what is most important about the data and what can be made less prominent. The [MListItem](/docs/primitives-mlistitem--overview) component has four content slots that you can use to structure the data:
+
+* **Top-left (default)**: The most important information about the item. This is usually the name of the list item. Should be as short as possible.
+* **Top-right**: The most important property of the list item. This is often an [MBadge](/docs/primitives-mbadge--overview) to communicate the rarity or status of the item. Should be as short as possible.
+* **Bottom-left**: The secondary information about the item. This is often a description or any other long-form text.
+* **Bottom-right**: The least important information about the item. This is often a list of properties or a link to more information.
+
+Here is an example of adapting the above data into a list where we decide what to show in each slot to keep it as de-cluttered as possible:
+
+<img src="displaying-data-good-list.png" alt="Curation and adding hierarchy makes lists more legible" width="500"/>
+
+## Designing for Collapsible Sections
+
+Sometimes you still need to expose the user to a lot of information, such as the full technical state of an item. In these cases, you should combine a simple overview with a collapsible section that reveals more information when the user needs it. We have designed an [MCollapse](/docs/primitives-mcollapse--overview) component that you can use as a starting point.
+
+Let's apply a collapsible section to the list item we designed above:
+
+<img src="displaying-data-collapsible-list.png" alt="Collapsible sections can reveal more information when needed" width="500"/>
+
+This way the user can quickly scan the list and only open the items they are interested in.
+
+## About Long Lists of Properties
+
+A common pattern in dashboards is to display a long list of properties, for example the state of some internal system. We often use a simple table layout with two columns to make a condensed list of key/value pairs and then individually consider how each entry should be displayed to make them as glanceable as possible.
+
+For example, consider this list of properties:
+
+<img src="displaying-data-prop-list.png" alt="An overview card with lots of properties" width="600"/>
+
+Notice how some properties have badges or rich text styling to make them easier to digest.
+
+This pattern becomes problematic when the list of properties grows too long and becomes hard to read for us mere humans. In these cases, you should consider breaking the list into separate cards organized by topic or possibly hide some of the less important state behind collapses.
+
+In the end, it is our responsibility as designers to *curate* the information that the user sees, so that they do not have to spend time figuring out what is important and what is not.
+
+# Next Steps
+
+Now that you are thinking with cards and lists, we can organize them into layouts in the next [Organizing Content](?path=/docs/getting-started-organizing-content--overview) page.

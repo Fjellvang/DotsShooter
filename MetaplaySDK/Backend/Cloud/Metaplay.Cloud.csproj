@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <LangVersion>Latest</LangVersion>
+    <RootNamespace>Metaplay.Cloud</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile> <!-- We set GenerateDocumentationFile only in order to get build-time warnings about broken XML docs. We're not currently interested in the generated XML documentation files. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Google.Cloud.BigQuery.V2" Version="3.10.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Akka" Version="1.5.20" />
+    <PackageReference Include="Akka.Logger.Serilog" Version="1.5.12.1" />
+    <PackageReference Include="Akka.Remote" Version="1.5.20" />
+    <PackageReference Include="Akka.Serialization.Hyperion" Version="1.5.20" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.302.20" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.307" />
+    <PackageReference Include="AWSSDK.SecretsManager" Version="3.7.302.34" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.300.60" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
+    <PackageReference Include="Google.Apis.AndroidPublisher.v3" Version="1.67.0.3354" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.67.0.3148" />
+    <PackageReference Include="Google.Cloud.BigQuery.Storage.V1" Version="3.15.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.26.1" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.61.0" />
+    <PackageReference Include="Hyperion" Version="0.12.2" />
+    <PackageReference Include="IronCompress" Version="1.5.1" />
+    <PackageReference Include="JWT" Version="9.0.3" /> <!-- NOTE: 10.x contains subtly breaking changes, deal with this before upgrading: https://www.notion.so/metaplay/Deal-with-JWT-dotnet-8eea3a5affae417192d2b1bad1148b75 -->
+    <PackageReference Include="MaxMind.GeoIP2" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.9.28">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="MySqlConnector" Version="2.3.7" />
+    <PackageReference Include="MySqlConnector.Logging.Serilog" Version="2.0.0" />
+    <PackageReference Include="NBitcoin.Secp256k1" Version="3.1.4" />
+    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="prometheus-net" Version="8.2.1" />
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="SharpCompress" Version="0.36.0" />
+    <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" /> <!-- Explicitly overriding to avoid CVE in 8.0.4 -->
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="YamlDotNet" Version="15.1.2" />
+    <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
+
+    <Compile Include="..\..\Client\Core\**\*.cs" LinkBase="Client\Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Attributes\Metaplay.Attributes.csproj" />
+    <ProjectReference Include="..\CodeAnalyzers.Shared\Metaplay.CodeAnalyzers.Shared.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeAnalyzers\Metaplay.CodeAnalyzers.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <OutputItemType>Analyzer</OutputItemType>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

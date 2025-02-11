@@ -1,0 +1,1 @@
+function m(o,f,d,a){let n,e,i=0,t=!1;const l=r=>{const c=++i;s(),t=!0,n=setTimeout(()=>{n=void 0,e=o.setup(r,u=>{c===i&&(e=void 0,t=!1,f(u))},u=>{c===i&&(e=void 0,t=!1,d(u))})},a)},s=()=>{n!==void 0&&(clearInterval(n),n=void 0),e!==void 0&&(o.cancel(e),e=void 0),t=!1};return{requestAction:l,cancel:s,isRequestOngoing:()=>t}}export{m};

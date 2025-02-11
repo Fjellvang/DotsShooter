@@ -1,0 +1,26 @@
+{
+  "include": [
+    "tests/unit/**/*.spec.ts",
+    "src/utils/*.ts",
+    "src/toasts.ts",
+    "src/components/MetaToast.vue",
+    "src/uiStore.ts",
+    "*.ts"
+  ],
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "types": ["node"]
+  },
+  "vueCompilerOptions": {
+    "plugins": ["@vue/language-plugin-pug"]
+  }
+}

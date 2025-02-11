@@ -1,0 +1,18 @@
+type: library
+tags:
+  - public-package
+  - prettier-formatted
+
+project:
+  description: Re-usable Tailwind CSS plugin.
+  maintainers:
+    - Teemu
+
+tasks:
+  lint:
+    command: eslint . --fix
+    inputs:
+      - '**/*.js'
+      - package.json
+      - /MetaplaySDK/Frontend/EslintConfig/baseConfig.js
+      - /MetaplaySDK/Frontend/EslintConfig/package.json

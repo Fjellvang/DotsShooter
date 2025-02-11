@@ -1,0 +1,44 @@
+# https://moonrepo.dev/docs/config/tasks
+$schema: https://moonrepo.dev/schemas/project.json
+language: dotnet
+type: application
+
+project:
+  name: 'Metaplay SDK'
+  description: 'Metaplay SDK'
+
+tasks:
+  # MetaplaySDK unit tests
+  backend-server-test:
+    command: dotnet test Backend/Cloud.Tests
+    platform: system
+    inputs:
+      # Note: tests add bin and obj folders that don't seem to get ignored by moon even tho they are in the .gitignore
+      # - '!/MetaplaySDK/Backend/**/{bin,obj}/**/*'
+      - /MetaplaySDK/Backend/Cloud/**/*
+      - /MetaplaySDK/Backend/Cloud.Tests/*
+      - /MetaplaySDK/Backend/Cloud.Serialization.Compilation.Tests/*
+      - /MetaplaySDK/Backend/CodeAnalyzers/**/*
+      - /MetaplaySDK/Backend/Server/**/*
+      - /MetaplaySDK/Backend/Server.Tests/*
+      - /MetaplaySDK/Backend/ServerShared/**/*
+      - /MetaplaySDK/Backend/*
+      - /MetaplaySDK/Client/Core/**/*
+      - /MetaplaySDK/Client/*
+    options:
+      runInCI: true
+    # These outputs are byproducts of the tests, but there's no need to actually cache them.
+    # outputs:
+    #   - /MetaplaySDK/Backend/Server.Tests/bin
+    #   - /MetaplaySDK/Backend/Server.Tests/obj
+    #   - /MetaplaySDK/Backend/Cloud.Tests/bin
+    #   - /MetaplaySDK/Backend/Cloud.Tests/obj
+
+  # MetaplaySDK serialization-compilation tests
+  backend-serialization-compilation-test:
+    command: dotnet test Backend/Cloud.Serialization.Compilation.Tests
+    platform: system
+    inputs:
+      - /MetaplaySDK/Backend/Cloud.Serialization.Compilation.Tests/*
+    options:
+      runInCI: true

@@ -1,0 +1,4 @@
+*.min.js binary
+
+# Docker
+Dockerfile        text eol=lf

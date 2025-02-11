@@ -1,0 +1,1 @@
+import{bJ as e,bk as i,bl as t}from"./index-B7jvAjdE.js";function l(n){return{permission:"api.analytics_events.view",pollingPolicy:e(),fetcherPolicy:i(`/analyticsEvents/${n}/bigQueryExample`),cacheRetentionPolicy:t()}}function o(){return{permission:"api.analytics_events.view",pollingPolicy:e(),fetcherPolicy:i("/analyticsEvents"),cacheRetentionPolicy:t()}}export{l as a,o as g};

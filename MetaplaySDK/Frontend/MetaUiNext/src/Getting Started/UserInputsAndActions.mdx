@@ -1,0 +1,94 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Getting Started/User Input and Actions" />
+
+# User Input and Actions
+
+Meta UI has a highly opinionated way to signal actionable elements in the UI and to preview action results before triggering them.
+
+The goal is to find a good balance between playful discovery of the features and safety against both human errors and miss-clicks that might cause production problems.
+
+## Action Modals Design Pattern
+
+The most powerful UI pattern we use is the concept of "action modals", where actions are something the user can do in the system and modals are the way to preview and confirm them. Modality also means that the user's full focus is on the action, and the rest of the UI is dimmed out.
+
+You can think of the action modal flow like this:
+
+- The user clicks on an actionable element to declare intent, such as "ban player".
+- We enter a modal state that now acts like a "mini app" to both explain and confirm the action.
+- The user can now give more inputs and commit the action or cancel it.
+- We back out of the modal state and return to where the user was before.
+
+To make entering and exiting action modal easy, we implemented them as popover dialogs that can overlay any page and maintain a sense of place. There can only be one modal at a time, and modals never open other modals to keep the UI simple and predictable.
+
+<img src="inputs-and-actions-modal.png" alt="Simple modal that explains the action and asks for confirmation" width="500"/>
+
+To make action modals easy to use, we designed an [MActionModal](?path=/docs/composites-mactionmodal--overview) component that implements the modal pattern and takes as many opinions as possible in the visual design and behavior.
+
+<img src="design-system-buttons.png" alt="Action modal buttons in action" width="600"/>
+
+The most used variant of this element is the [MActionModalButton](?path=/docs/composites-mactionmodalbutton--overview) that combines the action modal with a button to trigger it. This component abstracts away the most amount of boilerplate code and is the easiest way to add new actions to the UI.
+
+### Two Column Layout in Modals
+
+<img src="inputs-and-actions-2-columns.png" alt="Two column layout in action modal" width="800"/>
+
+Some complex actions benefit from two separate section of content, such as inputs on the left and a preview on the right. We have added slots to the `MActionModal` to support this layout. The columns collapse into a single column on narrow screens.
+
+### Communicating Action Results
+
+Some actions have non-deterministic output and need a summary of the result. We added a slot to the `MActionModal` that is displayed after the action is completed. You could use the slot to, for example, show a list of items that were created or updated.
+
+<img src="inputs-and-actions-notification.png" alt="Success notification" width="400"/>
+
+For most actions, a simple notification with the `useNotifications` composable is enough to communicate the result.
+
+{/* TODO: notifications have not been documented anywhere */}
+
+<img src="inputs-and-actions-error.png" alt="Actions have a dedicated erros state" width="500"/>
+
+Finally, error handling is also built into the action modal pattern. If an action `throw`s an error, the modal will display it in a pre-formatted way.
+
+## Form Inputs
+
+Forms are a generic term for a collection of inputs that logically combine to create a single input for an action. We have a growing collection of inputs that are commonly needed for dashboard actions and that share the same design language, both visually and in their APIs.
+
+### Titles and Hints
+
+<img src="inputs-and-actions-input.png" alt="Input with title and hint" width="400"/>
+
+Most inputs make the most sense with a discreet title to explain their purpose. We have also implemented a hint message that can be used to explain the implications of the input in more detail.
+
+The hint message is also good for communicating validation errors.
+
+### Disabling Inputs
+
+<img src="inputs-and-actions-disabled.png" alt="Disabled input" width="400"/>
+
+Inputs can be disabled to signal that they are not relevant or available in the current context. A common problem, tho, is how to explain why the input is disabled. Consider using the hint message or placeholder text to explain the reason.
+
+<img src="inputs-and-actions-disabled-tooltip.png" alt="Disabled button with a tooltip" width="300"/>
+
+In most inputs we have also added a (mandatory) tooltip that explains the reason, as no other text is visible.
+
+## Advanced: Safety Lock
+
+<img src="inputs-and-actions-safety-lock.png" alt="Safety lock in action modal" width="500"/>
+
+To increase the sense of safety in production systems, we have added a "safety lock" to the action modal pattern. The safety lock is a simple toggle that the user has to enable before the action can be committed. It is in use by default in the `MActionModal`, but you can skip with the `noSafetyLock` prop.
+
+## Advanced: Permissions
+
+<img src="inputs-and-actions-permission.png" alt="Permission tooltip" width="300"/>
+
+It is common to limit users to only be able to perform certain actions in production environments. We have a per-action permission system that can be used to disable individual actions. By default, all UI elements that can be gated with the `permission` prop also display a tooltip that shows the permission needed to perform the action.
+
+## Advanced: Avoid Hiding Actions
+
+We strongly encourage you to not hide UI elements that the user can't currently use. Instead, disable them and explain why they are disabled. This way, the user can learn about the system and what they could do with it if the action was available.
+
+The exception to this rule is when you specifically want to prevent users from knowing about the existence of certain action, such as hiding information from less trusted company externals that might be using the same UI.
+
+# Next Steps
+
+Action modals and forms are a complicated topic. Please consider exploring our inputs in this interactive documentation and look at the source code of our built-in actions for inspiration!

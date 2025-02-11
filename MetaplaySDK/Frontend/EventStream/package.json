@@ -1,0 +1,40 @@
+{
+  "name": "@metaplay/event-stream",
+  "version": "1.0.0",
+  "description": "Utilities for fetching and displaying large lists of rapidly updating data from the game server.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@metaplay/game-server-api": "workspace:^",
+    "@metaplay/meta-ui-next": "workspace:^",
+    "moment": "2.30.1",
+    "vue": "3.5.13",
+    "@vue/compat": "3.5.13",
+    "luxon": "3.5.0"
+  },
+  "devDependencies": {
+    "@metaplay/eslint-config": "workspace:^",
+    "@metaplay/prettier-config": "workspace:^",
+    "@prettier/plugin-pug": "3.2.0",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "@types/luxon": "3.4.2",
+    "@vue/tsconfig": "0.7.0",
+    "@vue/language-plugin-pug": "2.1.10",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vue-tsc": "2.1.10",
+    "prettier": "3.4.1",
+    "prettier-plugin-tailwindcss": "0.6.9"
+  },
+  "scripts": {
+    "postinstall": "vue-tsc --build",
+    "lint": "eslint . --fix"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true
+}

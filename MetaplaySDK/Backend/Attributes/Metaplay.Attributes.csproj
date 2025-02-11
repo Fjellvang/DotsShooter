@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>Metaplay</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile> <!-- We set GenerateDocumentationFile only in order to get build-time warnings about broken XML docs. We're not currently interested in the generated XML documentation files. -->
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Compile Include="..\..\Client\Attributes\**\*.cs" LinkBase="Client\Attributes" />
+    </ItemGroup>
+
+</Project>

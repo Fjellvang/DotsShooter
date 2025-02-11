@@ -1,0 +1,30 @@
+type: library
+tags:
+  - public-package
+  - prettier-formatted
+
+project:
+  description: Re-usable subscription system for Vue components to fetch and cache data from the game server API.
+  maintainers:
+    - Paul
+
+tasks:
+  lint:
+    command: eslint . --fix
+    inputs:
+      - 'src/**/*.ts'
+      - '*.js'
+      - /MetaplaySDK/Frontend/EslintConfig/baseConfig.js
+      - /MetaplaySDK/Frontend/EslintConfig/package.json
+      - /MetaplaySDK/Frontend/EslintConfig/shared*.js
+
+  typecheck:
+    command: tsc --build
+    deps:
+      - lint # Don't typecheck if the code doesn't lint.
+      - ^:typecheck
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - '*.{json,ts,d.ts}'
+    outputs:
+      - dist/

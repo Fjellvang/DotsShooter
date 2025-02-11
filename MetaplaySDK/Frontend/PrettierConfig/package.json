@@ -1,0 +1,18 @@
+{
+  "name": "@metaplay/prettier-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reusable Prettier configuration for Metaplay's projects.",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "devDependencies": {
+    "@metaplay/eslint-config": "workspace:^",
+    "@prettier/plugin-pug": "3.2.0",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "prettier": "3.4.1",
+    "prettier-plugin-tailwindcss": "0.6.9"
+  }
+}

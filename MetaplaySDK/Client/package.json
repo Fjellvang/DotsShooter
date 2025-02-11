@@ -1,0 +1,20 @@
+{
+  "name": "io.metaplay.unitysdk",
+  "version": "0.0.1",
+  "displayName": "Metaplay Unity SDK",
+  "description": "The Unity SDK for building games using the Metaplay Backend Platform.",
+  "unity": "2021.3",
+  "unityRelease": "4f1",
+  "documentationUrl": "https://docs.metaplay.io/",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json" : "3.0.2",
+    "com.unity.collections": "1.4.0",
+    "com.unity.test-framework": "1.4.4",
+    "com.unity.burst": "1.8.17"
+  },
+  "author": {
+    "name": "Metaplay",
+    "email": "info@metaplay.io",
+    "url": "https://metaplay.io"
+  }
+}

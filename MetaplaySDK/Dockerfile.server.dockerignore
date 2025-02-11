@@ -1,0 +1,23 @@
+# misc
+**/.git
+**/.vs
+**/.vscode
+**/node_modules
+**/*.meta
+.moon
+
+# unity
+**/Library
+**/Packages
+
+# build outputs
+**/out
+**/bin
+**/obj
+**/Debug
+**/Release
+**/dist
+**/.output
+
+# Allow Debug folders in Assets
+!**/Assets/**/Debug

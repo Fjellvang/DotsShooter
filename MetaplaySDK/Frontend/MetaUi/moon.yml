@@ -1,0 +1,47 @@
+type: library
+tags:
+  - public-package
+  - prettier-formatted
+
+project:
+  description: Reusable Vue components for the Metaplay LiveOps Dashboard.
+  maintainers:
+    - Teemu
+    - Paul
+    - Peninah
+
+tasks:
+  lint:
+    command: eslint --fix src/**/*.ts src/**/*.vue
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - '*.{js,ts,cjs}'
+      - /MetaplaySDK/Frontend/EslintConfig/baseConfig.js
+      - /MetaplaySDK/Frontend/EslintConfig/package.json
+      - /MetaplaySDK/Frontend/EslintConfig/shared*.js
+
+  typecheck:
+    command: vue-tsc --build
+    deps:
+      - lint # Don't typecheck if the code doesn't lint.
+      - ^:typecheck
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - '*.{json,ts,d.ts}'
+    outputs:
+      - dist/
+
+  test-unit:
+    command: vitest run
+    deps:
+      - typecheck # Don't unit test if the code doesn't pass TS.
+    inputs:
+      - 'src/**/*.{ts,d.ts,vue}'
+      - 'tests/unit/**/*.{spec}.*'
+      - package.json
+
+  storybook:
+    command: storybook dev -p 6006
+    local: true
+    deps:
+      - typecheck

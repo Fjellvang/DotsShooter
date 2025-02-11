@@ -1,0 +1,29 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "./PlaywrightConfig/tsconfig.json"
+    },
+    {
+      "path": "./GameServerApi/tsconfig.json"
+    },
+    {
+      "path": "./MetaUiNext/tsconfig.json"
+    },
+    {
+      "path": "./EventStream/tsconfig.json"
+    },
+    {
+      "path": "./MetaUi/tsconfig.json"
+    },
+    {
+      "path": "./Subscriptions/tsconfig.json"
+    },
+    {
+      "path": "./Core/tsconfig.json"
+    },
+  ]
+}

@@ -1,0 +1,413 @@
+# syntax=docker/dockerfile:1.9.0
+#----------------------------------------------------------------------
+# Global build arguments
+#----------------------------------------------------------------------
+
+# Directory where MetaplaySDK is located, relative to invocation directory
+ARG SDK_ROOT=MetaplaySDK
+# Directory where the project root is, relative to the invocation directory
+ARG PROJECT_ROOT=.
+# Userland Backend directory, relative to PROJECT_ROOT
+ARG BACKEND_DIR=Backend
+# Directory where shared code is located, relative to PROJECT_ROOT
+ARG SHARED_CODE_DIR=Assets/SharedCode
+# Directory for (low-stakes) server secrets, relative to the invocation directory
+ARG SERVER_SECRETS_DIR=$PROJECT_ROOT/$BACKEND_DIR/Server/Secrets
+# Directory for server game configs, relative to the invocation directory
+ARG SERVER_GAME_CONFIG_DIR=$PROJECT_ROOT/$BACKEND_DIR/Server/GameConfig
+# Directory for pnpm project root. This is where pnpm lockfile and workspace are located.
+ARG PNPM_ROOT=.
+# Base .NET version. To build using .NET 8, set the version to '8.0'.
+ARG DOTNET_VERSION=8.0
+# Use chiseled runtime base image. Set to empty to use non-chiseled image. See https://devblogs.microsoft.com/dotnet/announcing-dotnet-chiseled-containers/
+ARG CHISELED_IMAGE=yes
+# Version of Node base image to use
+ARG NODE_VERSION=22.11.0
+# Version of PNPM to use
+ARG PNPM_VERSION=9.14.4
+# Version of Playwright to use (shared by .NET and TypeScript)
+ARG PLAYWRIGHT_VERSION=1.49.0
+
+#----------------------------------------------------------------------
+# Build the game server and botclient C# projects
+#----------------------------------------------------------------------
+
+# Available versions in: https://hub.docker.com/_/microsoft-dotnet-sdk
+# \note Always using the latest SDK version for building (it can target previous frameworks too, but cannot run the binaries).
+#       See https://github.com/dotnet/sdk/issues/10190 for details on why this must be done like this.
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build-dotnet
+
+# Build arguments
+ARG BUILD_NUMBER=none
+ARG COMMIT_ID=none
+ARG SDK_ROOT
+ARG PROJECT_ROOT
+ARG BACKEND_DIR
+ARG SHARED_CODE_DIR
+ARG DOTNET_VERSION
+ARG SERVER_GAME_CONFIG_DIR
+ARG TARGETARCH
+ARG BUILDARCH
+
+# Configure looser nuget retry policy to reduce build failures due to nuget instability
+# See: https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-environment-variables
+ENV NUGET_ENHANCED_MAX_NETWORK_TRY_COUNT=36
+ENV NUGET_ENHANCED_NETWORK_RETRY_DELAY_MILLISECONDS=5000
+ENV NUGET_MAX_RETRY_AFTER_DELAY_SECONDS=30
+
+ENV TARGET_RID=linux-${TARGETARCH/amd64/x64}
+ENV BUILD_RID=linux-${BUILDARCH/amd64/x64}
+
+ENV SDK_ROOT=$SDK_ROOT
+# Set environment family to local for the build container
+ENV METAPLAY_ENVIRONMENT_FAMILY=Local
+
+# Set default shell options to catch errors
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# Copy files
+COPY $SDK_ROOT/.editorconfig /build/$SDK_ROOT/.editorconfig
+COPY $SDK_ROOT/Backend/global.json /build/$SDK_ROOT/Backend/global.json
+COPY $SDK_ROOT/Backend/Directory.Build.targets /build/$SDK_ROOT/Backend/Directory.Build.targets
+COPY $SDK_ROOT/Backend/Attributes /build/$SDK_ROOT/Backend/Attributes
+COPY $SDK_ROOT/Backend/BotClient /build/$SDK_ROOT/Backend/BotClient
+COPY $SDK_ROOT/Backend/Cloud /build/$SDK_ROOT/Backend/Cloud
+COPY $SDK_ROOT/Backend/CodeAnalyzers /build/$SDK_ROOT/Backend/CodeAnalyzers
+COPY $SDK_ROOT/Backend/CodeAnalyzers.Shared /build/$SDK_ROOT/Backend/CodeAnalyzers.Shared
+COPY $SDK_ROOT/Backend/Server /build/$SDK_ROOT/Backend/Server
+COPY $SDK_ROOT/Backend/ServerShared /build/$SDK_ROOT/Backend/ServerShared
+COPY $SDK_ROOT/Client /build/$SDK_ROOT/Client
+
+# Copy project backend files
+COPY $PROJECT_ROOT/$BACKEND_DIR /build/$PROJECT_ROOT/$BACKEND_DIR
+COPY $PROJECT_ROOT/$SHARED_CODE_DIR /build/$PROJECT_ROOT/$SHARED_CODE_DIR
+COPY $SERVER_GAME_CONFIG_DIR /build/out/gameserver/GameConfig
+
+# Restore dependencies
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages \
+  dotnet restore -r $BUILD_RID /build/$PROJECT_ROOT/$BACKEND_DIR/Server && \
+  dotnet restore -r $BUILD_RID /build/$PROJECT_ROOT/$BACKEND_DIR/BotClient
+
+# Inject build number and commit id into CloudCoreVersions.cs
+RUN <<EOF
+  echo "Updating CloudCoreVersion.cs with BuildNumber=\"$BUILD_NUMBER\" and CommitId=\"$COMMIT_ID\""
+  sed -i "s/BuildNumber = .*;/BuildNumber = \"$BUILD_NUMBER\";/g" /build/$SDK_ROOT/Backend/Cloud/CloudCoreVersion.cs
+  sed -i "s/CommitId = .*;/CommitId = \"$COMMIT_ID\";/g" /build/$SDK_ROOT/Backend/Cloud/CloudCoreVersion.cs
+EOF
+
+## GameServer
+
+# Build the sources (for host architecture)
+WORKDIR /build/$PROJECT_ROOT/$BACKEND_DIR/Server
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages \
+  dotnet build --no-restore --framework=net${DOTNET_VERSION} -c Release -r $BUILD_RID
+
+# Generate serializer DLLs & run server validation steps
+# Note: This assumes that the .net framework version used by the projects is .net8. In the future when dual-targeting for .net9 is added these steps
+# need to be split into a separate build stage that uses a base image matching the .net version of the project, in case it differs from the latest
+# version supported by the SDK.
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayBakeForContainer
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayValidateDatabaseModelChanges
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayValidateRuntimeOptions Config/Options.*.yaml
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayValidateGameConfig /build/out/gameserver/GameConfig/StaticGameConfig.mpa
+
+# Publish the server
+# \note Set PublishDocumentationFiles=false because we set GenerateDocumentationFile=true in the SDK's .csproj files only for the purpose of getting warnings about broken XML docs. We're not currently interested in the generated XML documentation files.
+# \note Ideally we'd like to set this property in the SDK's .csproj files but that didn't seem to work.
+# \note This also builds for target architecture if it doesn't match build architecture
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages \
+  dotnet publish$([ "$TARGET_RID" = "$BUILD_RID" ] && echo " --no-build") --framework=net${DOTNET_VERSION} -r $TARGET_RID -c Release -o /build/out/gameserver /p:PublishDocumentationFiles=false
+
+## BotClient
+
+# Build the sources (for host architecture)
+WORKDIR /build/$PROJECT_ROOT/$BACKEND_DIR/BotClient
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages \
+  dotnet build --no-restore --framework=net${DOTNET_VERSION} -c Release -r $BUILD_RID
+
+## Generate serializer DLLs & validate runtime options
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayBakeForContainer
+RUN dotnet run --no-build -c Release -r $BUILD_RID --MetaplayValidateRuntimeOptions Config/Options.*.yaml
+
+# Publish the botclient
+# \note Set PublishDocumentationFiles=false because we set GenerateDocumentationFile=true in the SDK's .csproj files only for the purpose of getting warnings about broken XML docs. We're not currently interested in the generated XML documentation files.
+# \note Ideally we'd like to set this property in the SDK's .csproj files but that didn't seem to work.
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages \
+  dotnet publish$([ "$TARGET_RID" = "$BUILD_RID" ] && echo " --no-build") --framework=net${DOTNET_VERSION} -r $TARGET_RID -c Release -o /build/out/botclient /p:PublishDocumentationFiles=false
+
+# Copy generated DLLs into build output location(s)
+RUN cp /build/$PROJECT_ROOT/$BACKEND_DIR/Server/bin/Release/net${DOTNET_VERSION}/${BUILD_RID}/Metaplay.Generated.Server.* /build/out/gameserver/ && \
+  cp /build/$PROJECT_ROOT/$BACKEND_DIR/BotClient/bin/Release/net${DOTNET_VERSION}/${BUILD_RID}/Metaplay.Generated.BotClient.* /build/out/botclient/
+
+# Copy runtime options into build output location(s)
+RUN cp -pr /build/$PROJECT_ROOT/$BACKEND_DIR/Server/Config /build/out/gameserver/
+RUN cp -pr /build/$PROJECT_ROOT/$BACKEND_DIR/BotClient/Config /build/out/botclient/
+
+#----------------------------------------------------------------------
+# Build dashboard
+#----------------------------------------------------------------------
+
+FROM node:$NODE_VERSION-bullseye-slim AS build-dashboard
+ARG SDK_ROOT
+ARG PROJECT_ROOT
+ARG BACKEND_DIR
+ARG PNPM_ROOT
+ARG PNPM_VERSION
+
+# Set default shell options to catch errors
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# Install pnpm
+RUN npm i -g pnpm@$PNPM_VERSION
+
+# Copy pnpm files
+COPY $PNPM_ROOT/pnpm-*.yaml /build/$PNPM_ROOT/
+COPY $PNPM_ROOT/.*rc /build/$PNPM_ROOT/
+
+# Copy all dashboard modules
+COPY $SDK_ROOT/Frontend /build/$SDK_ROOT/Frontend
+
+# Copy prebuilt dashboard if it exists (may not exist -- the [d] makes this copy optional)
+COPY $SDK_ROOT/PrebuiltDashboar[d] /build/$SDK_ROOT/PrebuiltDashboard
+
+# Copy project-specific dashboard directories (may not exist -- the [d] makes this copy optional)
+COPY $PROJECT_ROOT/$BACKEND_DIR/Dashboar[d] /build/$PROJECT_ROOT/$BACKEND_DIR/Dashboard
+COPY $PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboar[d] /build/$PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboard
+
+# Run pnpm install, using cache mount to cache the pnpm store across builds.
+#
+# The install is only done if a prebuilt version of the dashboard is not used, see logic below.
+# If a build is required, then the presence of both a pnpm-workspaces.yaml and a pnpm-lock.yaml file is required.
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store <<EOF
+  echo "PNPM Install..."
+  cd /build/$PNPM_ROOT
+  if [ -f /build/$PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboard/index.html ]; then
+    echo "Use game-specific prebuilt dashboard, skip install"
+  elif [ -f /build/$PROJECT_ROOT/$BACKEND_DIR/Dashboard/package.json ]; then
+    echo "Install game-specific dashboard dependencies"
+    pnpm install --frozen-lockfile
+  elif [ -f /build/$SDK_ROOT/PrebuiltDashboard/index.html ]; then
+    echo "Use prebuilt default dashboard, skip install"
+  else
+    echo "Install SDK default dashboard dependencies"
+    pnpm install --frozen-lockfile
+  fi
+EOF
+
+# Generate or copy a built dashboard into /wwwroot, to be included in the final server
+# image for hosting.
+#
+# This supports four different modes:
+# 1. If a prebuilt dashboard exists in project backend folder, then link it into /wwwroot
+# 2. ELSE If a project-specific dashboard exists in Backend/Dashboard, then build it into /wwwroot
+# 3. ELSE If there is a prebuilt dashboard in the MetaplaySDK folder, then link it into /wwwroot
+# 4. ELSE Build the MetaplaySDK provided DefaultDashboard into /wwwroot
+RUN <<EOF
+  echo "Dashboard build..."
+  if [ -f /build/$PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboard/index.html ]; then
+    echo "Using prebuilt dashboard at $PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboard"
+    ln -s /build/$PROJECT_ROOT/$BACKEND_DIR/PrebuiltDashboard /wwwroot
+  elif [ -f /build/$PROJECT_ROOT/$BACKEND_DIR/Dashboard/package.json ]; then
+    echo "Building project dashboard at $PROJECT_ROOT/$BACKEND_DIR/Dashboard"
+    cd /build/$PROJECT_ROOT/$BACKEND_DIR/Dashboard
+    pnpm vue-tsc --build
+    pnpm vite build --outDir /wwwroot
+  elif [ -f /build/$SDK_ROOT/PrebuiltDashboard/index.html ]; then
+    echo "Using prebuilt dashboard at $SDK_ROOT/PrebuiltDashboard"
+    ln -s /build/$SDK_ROOT/PrebuiltDashboard /wwwroot
+  else
+    echo "Building MetaplaySDK default dashboard at $SDK_ROOT/Frontend/DefaultDashboard"
+    cd /build/$SDK_ROOT/Frontend/DefaultDashboard
+    pnpm vue-tsc --build
+    pnpm vite build --outDir /wwwroot
+  fi
+EOF
+
+#----------------------------------------------------------------------
+# Playwright TS images
+#----------------------------------------------------------------------
+
+FROM mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-jammy AS playwright-ts-tests
+ARG SDK_ROOT
+ARG PROJECT_ROOT
+ARG BACKEND_DIR
+ARG PNPM_ROOT
+ARG PNPM_VERSION
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# Install pnpm
+RUN npm i -g pnpm@$PNPM_VERSION
+
+# Copy all files from the dashboard build
+WORKDIR /build
+COPY --from=build-dashboard /build /build
+
+# Run 'pnpm install' for projects that have a game-specific dashboard scaffolded
+# (i.e., pnpm-workspace.yaml exists). In case the pre-built version of the dashboard
+# is used, 'pnpm install' was not run during the build stage.
+RUN --mount=type=cache,id=pnpm-store,target=/root/.local/share/pnpm/store <<EOF
+  if [ -f /build/$PNPM_ROOT/pnpm-workspace.yaml ]; then
+    echo "PNPM Install -- game-specific dashboard exists..."
+    cd /build/$PNPM_ROOT
+    pnpm install --frozen-lockfile
+  fi
+EOF
+
+# Create a script to run the SDK core tests and userland tests (if they exist)
+# \todo Would be nice to invoke the core vs userland tests as separate invocations to get more readable output
+RUN cat <<EOF > run-tests.sh
+#!/bin/bash
+set -exo pipefail
+
+# Only run tests if pnpm-workspace.yaml exists (generated when scaffolding a game-specific dashboard).
+# We need the workspace file to be able to run 'pnpm install'.
+if [ -f /build/$PNPM_ROOT/pnpm-workspace.yaml ]; then
+  # Run SDK core tests
+  echo "Running SDK core dashboard tests (using Playwright)"
+  cd /build/$SDK_ROOT/Frontend/DashboardPlaywrightTests
+  pnpm run test
+
+  # Run userland unit tests (if they exist)
+  if [ -d $PROJECT_ROOT/$BACKEND_DIR/Dashboard/tests/unit ]; then
+    echo "Running userland dashboard unit tests (using Vitest)"
+    pnpm run test-unit
+  fi
+
+  # Run userland Playwright tests (if they exist)
+  if [ -d $PROJECT_ROOT/$BACKEND_DIR/Dashboard/tests/e2e ]; then
+    echo "Running userland dashboard tests (using Playwright)"
+    cd /build/$PROJECT_ROOT/$BACKEND_DIR/Dashboard
+    pnpm run test-e2e
+  fi
+else
+  echo "Skipping dashboard tests due to no pnpm-workspace.yaml found"
+fi
+EOF
+RUN chmod +x run-tests.sh
+ENTRYPOINT ["/build/run-tests.sh"]
+
+#----------------------------------------------------------------------
+# Playwright.NET images
+#----------------------------------------------------------------------
+
+FROM mcr.microsoft.com/playwright/dotnet:v${PLAYWRIGHT_VERSION}-jammy AS playwright-net-tests
+ARG SDK_ROOT
+ARG PROJECT_ROOT
+ARG BACKEND_DIR
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# Copy all files from the server build
+# \todo This copies too much stuff, about 800 MB worth in Idler -- optimize
+COPY --from=build-dotnet /build /build
+WORKDIR /build
+
+# Copy SDK test projects
+COPY $SDK_ROOT/Backend/Cloud.Tests /build/$SDK_ROOT/Backend/Cloud.Tests
+COPY $SDK_ROOT/Backend/Cloud.Serialization.Compilation.Tests /build/$SDK_ROOT/Backend/Cloud.Serialization.Compilation.Tests
+COPY $SDK_ROOT/Backend/CodeAnalyzers.Tests /build/$SDK_ROOT/Backend/CodeAnalyzers.Tests
+COPY $SDK_ROOT/Backend/Server.Tests /build/$SDK_ROOT/Backend/Server.Tests
+COPY $SDK_ROOT/Backend/System.Tests /build/$SDK_ROOT/Backend/System.Tests
+
+# Run SDK unit tests
+# \todo Run these only when the docker image is being run
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages <<EOF
+  dotnet test $SDK_ROOT/Backend/Cloud.Tests --framework=net8.0
+  dotnet test $SDK_ROOT/Backend/Cloud.Serialization.Compilation.Tests --framework=net8.0
+  dotnet test $SDK_ROOT/Backend/Server.Tests --framework=net8.0
+EOF
+
+# Run game-specific unit tests
+RUN --mount=type=cache,id=nuget-cache,target=/root/.nuget/packages <<EOF
+  # Backend/SharedCode.Tests (if exists)
+  if [ -d $PROJECT_ROOT/$BACKEND_DIR/SharedCode.Tests ]; then
+    echo "Run 'dotnet test SharedCode.Tests'"
+    dotnet test $PROJECT_ROOT/$BACKEND_DIR/SharedCode.Tests
+  fi
+
+  # Backend/Server.Tests (if exists)
+  if [ -d $PROJECT_ROOT/$BACKEND_DIR/Server.Tests ]; then
+    echo "Run 'dotnet test Server.Tests'"
+    dotnet test $PROJECT_ROOT/$BACKEND_DIR/Server.Tests
+  fi
+EOF
+
+# Create test run script for running SDK and userland tests
+# \todo Better userland test discovery -- currently expects hard-coded userland directory Backend/System.Tests
+# \todo Would be nice to invoke the core vs userland tests as separate invocations to get more readable output
+RUN cat <<EOF > run-tests.sh
+#!/bin/bash
+set -exo pipefail
+
+# Run SDK core Playwright.NET system tests
+echo "Running Playwright.NET SDK core system tests"
+dotnet test $SDK_ROOT/Backend/System.Tests
+
+# Run userland Playwright.NET tests (if exists)
+if [ -d $PROJECT_ROOT/$BACKEND_DIR/System.Tests ]; then
+  echo "Running Playwright.NET userland system tests"
+  dotnet test $PROJECT_ROOT/$BACKEND_DIR/System.Tests
+fi
+EOF
+RUN chmod +x run-tests.sh
+
+ENTRYPOINT ["/build/run-tests.sh"]
+
+#----------------------------------------------------------------------
+# Copy the entrypoint and toybox binaries
+# Need to use a temporary stage for chmod & symblinking
+#----------------------------------------------------------------------
+
+# Note: Using same image as dashboard build stage to fetching another image
+FROM node:$NODE_VERSION-bullseye-slim AS build-utils
+ARG SDK_ROOT
+ARG TARGETARCH
+
+# Copy entrypoint binary for this arch & make executable
+COPY $SDK_ROOT/entrypoint/output/entrypoint-${TARGETARCH} /entrypoint
+RUN chmod 755 /entrypoint
+
+# Make symlinks to toybox for 'tar' (to be copied into runtime image)
+COPY $SDK_ROOT/ToyBox/output/toybox-${TARGETARCH} /toybox/toybox
+RUN cd /toybox && \
+  chmod 755 toybox && \
+  ln -sf toybox tar
+
+#----------------------------------------------------------------------
+# Generate runtime image
+#----------------------------------------------------------------------
+
+# Available versions in: https://hub.docker.com/_/microsoft-dotnet-aspnet
+# \note Use matching runtime image as the project's TargetFramework
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}${CHISELED_IMAGE:+-jammy-chiseled-extra} AS runtime
+ARG SERVER_SECRETS_DIR
+
+# Add metadata about release as docker image labels
+LABEL io.metaplay.sdk_version=31.1.0 \
+  io.metaplay.default_helm_repo=https://charts.metaplay.dev/ \
+  io.metaplay.default_server_chart_version=0.7.0 \
+  io.metaplay.default_botclient_chart_version=0.4.2
+
+# Ports: 8080 (dashboard/admin api), 6000 (node remoting), 9090 (Prometheus metrics), 9339 (clients)
+EXPOSE 8080 6000 9090 9339
+
+# ASP.NET warns if we bind to non-default port. We have reasons to do that (websockets),
+# so avoid a false warning by removing the default port.
+ENV ASPNETCORE_HTTP_PORTS=
+
+# Copy toybox binary & symlink for tar (required by kubectl cp)
+COPY --from=build-utils /toybox /usr/bin
+
+# Copy dotnet build artifacts & generated DLLs
+# \note Chown all the files to the user to ensure they can write files into the directory
+COPY --from=build-dotnet --chown=$APP_UID:$APP_UID /build/out /
+
+# Copy secrets
+COPY $SERVER_SECRETS_DIR /gameserver/Secrets
+
+# Copy built dashboard (do this last as it takes the longest to build)
+COPY --from=build-dashboard /wwwroot /gameserver/wwwroot
+
+# Copy and use the entrypoint binary, default to running 'gameserver'
+COPY --from=build-utils /entrypoint /entrypoint
+ENTRYPOINT ["/entrypoint"]
+CMD ["gameserver"]

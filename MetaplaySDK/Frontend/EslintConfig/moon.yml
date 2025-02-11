@@ -1,0 +1,17 @@
+type: library
+tags:
+  - public-package
+
+project:
+  description: Reusable ESLint configuration for Metaplay's projects.
+  maintainers:
+    - Teemu
+
+tasks:
+  lint:
+    command: eslint . --fix
+    inputs:
+      - index.js
+      - package.json
+
+  # Note: This package does not have a format task to avoid circular dependencies. The formatter inherits this package for linting the formatting options.

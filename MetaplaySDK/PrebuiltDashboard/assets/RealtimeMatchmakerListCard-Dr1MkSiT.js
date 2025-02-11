@@ -1,0 +1,1 @@
+import{b as t,o as a,e as r,_ as s}from"./index-B7jvAjdE.js";function c(i,o){const e=t("meta-list-card");return a(),r(e,{itemList:[],title:"Real-Time Matchmakers",emptyMessage:"No real-time matchmakers to list!","data-testid":"realtime-matchmakers-list-card"})}const m={},n=s(m,[["render",c],["__file","RealtimeMatchmakerListCard.vue"]]);export{n as default};

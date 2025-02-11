@@ -1,0 +1,26 @@
+{
+  "name": "@metaplay/bootstrap",
+  "version": "1.0.0",
+  "description": "Customized version of Bootstrap 4 for the LiveOps Dashboard.",
+  "exports": "./dist/meta-bootstrap.css",
+  "type": "module",
+  "devDependencies": {
+    "@metaplay/prettier-config": "workspace:^",
+    "@prettier/plugin-pug": "3.2.0",
+    "@trivago/prettier-plugin-sort-imports": "4.3.0",
+    "bootstrap": "4.6.2",
+    "bootstrap-vue": "2.23.1",
+    "jquery": "3.7.1",
+    "popper.js": "1.16.1",
+    "sass": "1.81.0",
+    "vue": "3.5.13",
+    "vue-toastification": "2.0.0-rc.5",
+    "prettier": "3.4.1",
+    "prettier-plugin-tailwindcss": "0.6.9"
+  },
+  "scripts": {
+    "postinstall": "sass --load-path=node_modules/ --update meta-bootstrap.sass:dist/meta-bootstrap.css"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true
+}

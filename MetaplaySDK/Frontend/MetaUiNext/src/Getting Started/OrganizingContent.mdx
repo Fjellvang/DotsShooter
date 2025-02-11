@@ -1,0 +1,79 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Getting Started/Organizing Content" />
+
+# Organizing Content with Meta UI Layouts
+
+This page talks about the information hierarchy of the LiveOps Dashboard and how you can fit your own content in it.
+
+The guiding philosophy with our component design is that, where possible, parent components should be responsible for the layout of their children. In practice this means that we have dedicated layout components that organize the content of a page, and that the children of these layout components should be the actual content of the page.
+
+## Core Layout
+
+<img src="organizing-content-page.png" alt="Core layout of the LiveOps Dashboard" width="800"/>
+
+The LiveOps Dashboard is has a simple core layout that consist of a sidebar on the left, selected content on the right, and a header bar at the top.
+
+<img src="organizing-content-mobile.png" alt="Core layout of the LiveOps Dashboard on a narrow screen" width="400"/>
+
+The core layout is reactive: it uses a breakpoint to switch into a mobile-friendly single-column mode on very narrow screens, where the sidebar becomes an overlaying element instead of a side-by-side element. Additionally, the main content area has a responsive max-width by default, so that the pages remain readable even on very wide browser windows.
+
+## Navigation Hierarchy
+
+To maintain a sense of place, the sidebar should ideally have one entry highlighted at all times to hint at where the user is, and the header bar should have a descriptive name for the current page.
+
+<img src="organizing-content-guilds.png" alt="Sidebar navigation in the LiveOps Dashboard" width="500"/>
+
+We prefer hierarchies that go at most 3 levels deep whenever possible. The most typical pattern is to have a "list" page in the the sidebar that users then use to navigate to a "details" page of the player or system that they were interested in.
+
+## Page Layout
+
+All pages should use the [MViewContainer](/docs/layouts-mviewcontainer--overview) component as their root element to inherit our base layout for pages. This component helps with responsive layouts by limiting the horizontal width to two columns as well as having slots and utility properties for page alerts and the overview card.
+
+![Example of a page layout with an overview card](organizing-content-page-layout.png "Example of a page layout with an overview card")
+
+Our preferred layout is to have one [MPageOverviewCard](/docs/composites-mpageoverviewcard--overview) in the template(#overview) slot and the main content of the page ([MCards](/docs/primitives-mcard--overview)) in the default slot. This makes for a very efficient UI to navigate quickly as you can group the essential information of the page into the overview card.
+
+### UI Placements in Pages
+
+While not strictly related to the Meta UI design system, this is a good point to remind about the [UI placements API](https://docs.metaplay.io/liveops-dashboard/how-to-guides/customizing-the-liveops-dashboard-frontend.html#add-custom-components). It allows you to inject your own content into our existing pages, so you do not have to modify the underlying code.
+
+The easiest way to check what placement are available on any given page is to open the corresponding Vue file and look for the `UiPlacement` component in it.
+
+## Column Layouts
+
+Beyond the `MViewContainer`, the most used layouts are the column layouts. These are simple components that divide the content of a page into 1, 2, or 3 columns. The columns have their own min and max width to optimize screen estate, and they will collapse into a one column layout on narrow screens.
+
+### 1 Column Layout
+
+![Example of a 1 column layout](organizing-content-1-column.png "Example of a 1 column layout")
+
+The `MOneColumnLayout` is used for cards that should not be full width to make the content more legible. It is commonly used for navigation lists and other content that is the main focus of the page.
+
+### 2 Column Layout
+
+![Example of a 2 column layout](organizing-content-2-columns.png "Example of a 2 column layout")
+
+The [MTwoColumnLayout](/docs/layouts-mtwocolumnlayout--overview) is used for content that should be side-by-side. This is the default layout we use for most pages because it strikes a good balance between content density and legibility.
+
+### 3 Column Layout
+
+The `MThreeColumnLayout` is used for very narrow content that can fit more than two columns side-by-side. This is a rare layout because three columns collapse in an unintuitive way on medium-narrow screens, but it can be useful for very dense content.
+
+When in doubt, try to avoid using more than two columns.
+
+## Advanced: Tab Layouts
+
+![Example of a tab layout](organizing-content-tabs.png "Example of a tab layout")
+
+When your page has more than 4 cards it often starts to get hard for users to navigate. In these cases, you can use the [MTabLayout](/docs/layouts-mtablayout--overview) to organize the content of the page into tabs. This component automatically handles the layout and styling of the tabs and under-the-hood details like programmatic navigation and deep linking via URLs.
+
+## Advanced: Page Alerts
+
+<img src="organizing-data-page-alerts.png" alt="Example of a page alert" width="700"/>
+
+Sometimes you want to show programmatic disclaimers on pages, like when there are errors or warnings. You can use the `alerts` property in the `MViewContainer` component to have these alerts show up at the top of the page. The view container component will take care of all layout and styling for you.
+
+# Next Steps
+
+With cards organized into layouts, the last step is to [handle user input](?path=/docs/getting-started-user-input-and-actions--overview) in the next page.

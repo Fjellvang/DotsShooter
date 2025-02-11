@@ -1,0 +1,23 @@
+# Define the name of the environment. This is rendered in the game server's UI and helps you determine which environment you are connected to.
+environment: staging
+
+# Define the environment family.
+environmentFamily: Staging
+
+# Configure which runtime options files to use (located in Backend/Server/Config/)
+config:
+  files:
+    - "./Config/Options.base.yaml"
+    - "./Config/Options.staging.yaml"
+
+# Tell Helm to discover all other values from the infrastructure.
+tenant:
+  discoveryEnabled: true
+
+# Use a single-node deployment. This configuration will be moved elsewhere later.
+shards:
+- name: all
+  singleton: true
+  requests:
+    cpu: 1500m
+    memory: 3000M

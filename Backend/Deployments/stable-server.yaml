@@ -1,0 +1,15 @@
+# Define the name of the environment. This is rendered in the game server's UI and helps you determine which environment you are connected to.
+environment: stable
+
+# Define the environment family.
+environmentFamily: Development
+
+# Configure which runtime options files to use (located in Backend/Server/Config/)
+config:
+  files:
+    - "./Config/Options.base.yaml"
+    - "./Config/Options.dev.yaml"
+
+# Tell Helm to discover all other values from the infrastructure.
+tenant:
+  discoveryEnabled: true

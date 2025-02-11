@@ -1,0 +1,72 @@
+[
+  {
+    "Id": "offline",
+    "Description": "",
+    "DoNotBuildForDevices": false,
+    "ConnectionEndpointConfig": {
+      "ServerHost": null,
+      "ServerPort": 0,
+      "ServerPortForWebSocket": 0,
+      "EnableTls": false,
+      "CdnBaseUrl": null,
+      "CommitIdCheckRule": "Disabled",
+      "BackupGateways": [],
+      "IsOfflineMode": true
+    },
+    "ClientLoggingConfig": {
+      "LogLevel": "Verbose",
+      "LogLevelOverrides": []
+    },
+    "ClientGameConfigBuildApiConfig": {
+      "AdminApiBaseUrl": null,
+      "GameConfigPublishPolicy": "NotAllowed",
+      "AdminApiAuthenticationTokenProvider": "None",
+      "AdminApiCredentialsPath": null,
+      "AdminApiUseOpenIdConnectIdToken": false,
+      "AdminApiOAuth2Settings": {
+        "ClientId": null,
+        "ClientSecret": null,
+        "AuthorizationEndpoint": null,
+        "TokenEndpoint": null,
+        "Audience": null,
+        "LocalCallbackUrls": null,
+        "UseStateParameter": false
+      }
+    }
+  },
+  {
+    "Id": "localhost",
+    "Description": "",
+    "DoNotBuildForDevices": true,
+    "ConnectionEndpointConfig": {
+      "ServerHost": "localhost",
+      "ServerPort": 9339,
+      "ServerPortForWebSocket": 9380,
+      "EnableTls": false,
+      "CdnBaseUrl": "http://localhost:5552/",
+      "CommitIdCheckRule": "Disabled",
+      "BackupGateways": [],
+      "IsOfflineMode": false
+    },
+    "ClientLoggingConfig": {
+      "LogLevel": "Verbose",
+      "LogLevelOverrides": []
+    },
+    "ClientGameConfigBuildApiConfig": {
+      "AdminApiBaseUrl": "http://localhost:5550/api/",
+      "GameConfigPublishPolicy": "Allowed",
+      "AdminApiAuthenticationTokenProvider": "None",
+      "AdminApiCredentialsPath": null,
+      "AdminApiUseOpenIdConnectIdToken": false,
+      "AdminApiOAuth2Settings": {
+        "ClientId": null,
+        "ClientSecret": null,
+        "AuthorizationEndpoint": null,
+        "TokenEndpoint": null,
+        "Audience": null,
+        "LocalCallbackUrls": null,
+        "UseStateParameter": false
+      }
+    }
+  }
+]

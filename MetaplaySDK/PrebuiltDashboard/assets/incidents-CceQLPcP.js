@@ -1,0 +1,1 @@
+import{bJ as t,bk as n,bm as o}from"./index-B7jvAjdE.js";function r(e,i){return{permission:"api.incident_reports.view",pollingPolicy:t(),fetcherPolicy:n(`/players/${e}/incidentReport/${i}`),cacheRetentionPolicy:o(1e4)}}export{r as g};

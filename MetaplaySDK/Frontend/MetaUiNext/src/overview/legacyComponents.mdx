@@ -1,0 +1,58 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Component Libraries/Legacy Components" />
+
+# Metaplay Legacy Components
+
+The LiveOps Dashboard was originally developed using Bootstrap-based components from the `@metaplay/meta-ui` library. As part of our efforts to move away from bootstrap, we have deprecated these components and are transitioning to the new `@metaplay/meta-ui-next` library, which offers a more advanced and flexible framework.
+
+All legacy components are part of the Metplay SDK package and can be accessed locally from the `@metaplay/meta-ui` library. Each component is tailored to meet a specific need and includes a range of methods and properties for customizing its appearance and behavior. Below is an overview of the available components:
+
+- `MetaAbbreviateNumber`- A custom component that can be used to display large numbers in an abbreviated format.
+- `MetaAlert`- A custom component that can be used to display alert messages.
+- `MetaBarChart`- A custom component that can be used to display bar charts.
+- `MetaCountryCode`- A custom component that can be used to display country name and flag given its ISO code.
+- `MetaDuration`- A custom component that can be used to display durations in a human-readable format.
+- `MetaInputGuildSelect` - A custom select component that can be used to search and select multiple guilds from a dropdown list.
+- `MetaInputPlayerSelect`- A custom select component that can be used to search and select multiple players from a dropdown list.
+- `MetaInputSelect` - A custom select component that can be used to search and select multiple items from a dropdown list.
+- `MetaIpAddress` - A custom component that can be used to display humanized IP addresses.
+- `MetaLazyLoader`- A custom wrapper for a component that hides child elements when they are outside the viewport" for better readability.
+- `MetaListCard` - A reusable utiltiy component that can be used to display consistent looking lists throughout the LiveOps dashboard.
+- `MetaNoSeatBelts`- A custom component used to display a standard disclaimer message.
+- `MetaOrdinalNumber`- A custom component that can be used to display numbers in an ordinal format.
+- `MetaPluralLabel`- A custom component to display a plural after a number label if the number is greater than 1.
+- `MetaRawData`- An opinionated componet that displays a developer friendly list of arbitrary data.
+- `MetaRewardBadge` - An opinionated component that displays humanized MetaReward types.
+- `MetaTime`- A custom component that can be used to display timestamps in a human-readable format.
+- `MetaToast`- A custom component that can be used to display toast notifications.
+- `MetaUsername`- A custom component that can be used to display a dashboard username with a link to their audit log activities.
+- `MetaEventStreamCard` - A custom component that can be used to display events in a time-ordered fashion.
+
+## Usage
+
+All legacy components are documented within their respective component files, including details about available properties, methods, and customization options. You can access this information through the code completion features available in your IDE, or refer to the source code of any existing dashboard views or core components to see how a particular legacy component is implemented and how it can be used in your project. For example, to use the `MetaAlert` component in your project, simply import it from the `@metaplay/meta-ui` library and include it in your Vue file as shown below:
+
+```ts
+// MyAlertComponent.vue
+<template lang="pug">
+// Display a warning alert
+meta-alert(
+  title="Warning!"
+  message="This is a warning, proceed with caution!"
+  variant="warning"
+  )
+</template>
+
+<script lang="ts" setup>
+import { MetaAlert } from '@metaplay/meta-ui'
+</script>
+```
+
+## Known Caveats
+
+The migration from the legacy components to the new `@metaplay/meta-ui-next` library is still ongoing and may require a few more SDK releases to complete. During this transition, please check if there is an equivalent component in the new library before using a legacy component in your project.
+
+## 💬 Give us feedback
+
+Do not hesitate to reach out if you encounter any issues or have questions regarding the legacy components. We will strive to keep breaking changes to a minimum and will proactively communicate any significant updates, so keep an eye on them if you rely on meta-components in your project!
