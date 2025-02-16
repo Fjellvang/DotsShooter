@@ -6,5 +6,7 @@ namespace Game.Logic.GameConfigs
     {
         [GameConfigEntry("ShopConfig")]
         public GameConfigLibrary<ShopStatId, ShopStatConfig> ShopConfiguration { get; private set; }
+        [GameConfigEntry("InitialStatsConfig")]
+        public GameConfigLibrary<StatId, InitialStatsConfig> InitialStatsConfiguration { get; private set; }
     }
 }

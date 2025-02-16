@@ -1,4 +1,6 @@
-﻿using Metaplay.Core.Math;
+﻿using Game.Logic.GameConfigs;
+using Game.Logic.PlayerActions;
+using Metaplay.Core.Math;
 using Metaplay.Core.Model;
 
 namespace Game.Logic
@@ -24,9 +26,14 @@ namespace Game.Logic
             
         }
 
-        // TODO: Implement this, once we support game config
-        // public void SetInitialStats(SharedGameConfig gameConfig)
-        // {
-        // }
+        public void SetInitialStats(SharedGameConfig gameConfig)
+        {
+            MoveSpeed = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.MoveSpeed.ToString())].InitialValue);
+            AttackSpeed = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.AttackSpeed.ToString())].InitialValue);
+            Damage = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Damage.ToString())].InitialValue);
+            Health = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Health.ToString())].InitialValue);
+            Range = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Range.ToString())].InitialValue);
+            ExplosionRadius = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.ExplosionRadius.ToString())].InitialValue);
+        }
     }
 }

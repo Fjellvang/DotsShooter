@@ -1,0 +1,7 @@
+Id #key,InitialValue
+MoveSpeed,5
+AttackSpeed,1
+Damage,2
+Health,100
+Range,5
+ExplosionRadius,0.5

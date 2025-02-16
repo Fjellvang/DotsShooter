@@ -1,2 +1,7 @@
-Id #key,InitialValue,StatIncreasePerLevel,UpgradeCost,UpgradeCostPerLevel,IncreaseOperator
-MoveSpeed,5,1,10,1,Add
+Id #key,StatIncreasePerLevel,UpgradeCost,UpgradeCostPerLevel,IncreaseOperator
+MoveSpeed,1,10,1,Add
+AttackSpeed,0.9,10,1,Multiply
+Damage,1,10,1,Add
+Health,10,10,1,Add
+Range,1,10,1,Add
+ExplosionRadius,1.05,10,1,Multiply

@@ -47,6 +47,11 @@ namespace Game.Logic
             PlayerName  = name;
         }
 
+        protected override void GameOnSessionStarted()
+        {
+            GameStats.SetInitialStats(GameConfig);
+        }
+
         #region Schema migrations
 
         // Example migration from schema v1 to v2
