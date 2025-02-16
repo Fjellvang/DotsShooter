@@ -1,7 +1,5 @@
-﻿using System;
-using DotsShooter.Metaplay;
-using DotsShooter.Player;
-using Game.Logic;
+﻿using DotsShooter.Metaplay;
+using Game.Logic.PlayerActions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;

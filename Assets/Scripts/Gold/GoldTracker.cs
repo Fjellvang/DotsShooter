@@ -1,6 +1,5 @@
-﻿using System;
-using DotsShooter.Metaplay;
-using Game.Logic;
+﻿using DotsShooter.Metaplay;
+using Game.Logic.PlayerActions;
 using UnityEngine;
 
 namespace DotsShooter.Gold
