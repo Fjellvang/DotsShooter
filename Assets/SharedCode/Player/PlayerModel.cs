@@ -5,6 +5,7 @@ using Metaplay.Core.Config;
 using Metaplay.Core.Model;
 using Metaplay.Core.Player;
 using System.Runtime.Serialization;
+using Game.Logic.GameConfigs;
 
 namespace Game.Logic
 {
@@ -18,9 +19,12 @@ namespace Game.Logic
         public const int TicksPerSecond = 10;
         protected override int GetTicksPerSecond() => TicksPerSecond;
 
-        [IgnoreDataMember] public IPlayerModelServerListener ServerListener { get; set; } = EmptyPlayerModelServerListener.Instance;
-        [IgnoreDataMember] public IPlayerModelClientListener ClientListener { get; set; } = EmptyPlayerModelClientListener.Instance;
-
+        [IgnoreDataMember] 
+        public IPlayerModelServerListener ServerListener { get; set; } = EmptyPlayerModelServerListener.Instance;
+        [IgnoreDataMember] 
+        public IPlayerModelClientListener ClientListener { get; set; } = EmptyPlayerModelClientListener.Instance;
+        [IgnoreDataMember] 
+        public new SharedGameConfig GameConfig => GetGameConfig<SharedGameConfig>();
         // Player profile
         [MetaMember(100)] 
         public sealed override EntityId PlayerId { get; set; }

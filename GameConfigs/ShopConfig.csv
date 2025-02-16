@@ -1,0 +1,2 @@
+Id #key,InitialValue,StatIncreasePerLevel,UpgradeCost,UpgradeCostPerLevel,IncreaseOperator
+MoveSpeed,5,1,10,1,Add
