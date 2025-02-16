@@ -1,5 +1,5 @@
 Id #key,StatIncreasePerLevel,UpgradeCost,UpgradeCostPerLevel,IncreaseOperator
-MoveSpeed,1,10,1,Add
+MoveSpeed,1,1,1,Add
 AttackSpeed,0.9,10,1,Multiply
 Damage,1,10,1,Add
 Health,10,10,1,Add

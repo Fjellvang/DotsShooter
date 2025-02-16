@@ -1,4 +1,6 @@
-﻿using Metaplay.Core;
+﻿using System;
+using Game.Logic.PlayerActions;
+using Metaplay.Core;
 using Metaplay.Core.Config;
 using Metaplay.Core.Model;
 
@@ -13,7 +15,7 @@ namespace Game.Logic.GameConfigs
     public class ShopStatId : StringId<ShopStatId> { }
 
     [MetaSerializable]
-    public class ShopStatConfig : IGameConfigData<ShopStatId>
+    public class ShopStatConfig : IGameConfigData<ShopStatId>, IGameConfigPostLoad
     {
         [MetaMember(1)] 
         public ShopStatId Id; // The unique identifier for this config, ie its name
@@ -26,7 +28,7 @@ namespace Game.Logic.GameConfigs
         /// how much it costs to upgrade this stat
         /// </summary>
         [MetaMember(3)]
-        public float UpgradeCost;
+        public int UpgradeCost;
         /// <summary>
         /// How much should the upgrade cost increase per level
         /// </summary>
@@ -40,5 +42,16 @@ namespace Game.Logic.GameConfigs
         
         //TODO: implement stat levels.
         public ShopStatId ConfigKey => Id;
+
+        public void PostLoad()
+        {
+            var parsed = Enum.TryParse<PlayerStat>(Id.Value, out var _);
+            MetaDebug.Assert(parsed, "ShopStatConfig {0} has invalid Id", Id);
+            MetaDebug.Assert(StatIncreasePerLevel > 0, "ShopStatConfig {0} has invalid StatIncreasePerLevel", Id);
+            MetaDebug.Assert(UpgradeCost > 0, "ShopStatConfig {0} has invalid UpgradeCost", Id);
+            MetaDebug.Assert((IncreaseOperator == PlayerStatIncreaseOperator.Add) ||
+                             (IncreaseOperator == PlayerStatIncreaseOperator.Multiply && StatIncreasePerLevel != 0),
+                "ShopStatConfig {0} has invalid IncreaseOperator", Id);
+        }
     }
 }

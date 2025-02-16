@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Logic.GameConfigs;
 using Metaplay.Core.Math;
 using Metaplay.Core.Model;
 
@@ -28,35 +29,35 @@ namespace Game.Logic.PlayerActions
 
         public override MetaActionResult Execute(PlayerModel player, bool commit)
         {
-            //TODO: Gold cost should be dynamic and determined by gameconfig. For now it works
-            if (player.Gold < 10)
+            var config = player.GameConfig.ShopConfiguration[ShopStatId.FromString(Stat.ToString())];
+            
+            if (player.Gold < config.UpgradeCost)
             {
                 return ActionResult.NotEnoughGold;
             }
 
             if (commit)
             {
-                player.Gold -= 10;
-                //TODO: eh, not super clean, double switching. Works for now.
+                player.Gold -= config.UpgradeCost;
                 switch (Stat)
                 {
                     case PlayerStat.MoveSpeed:
-                        player.GameStats.MoveSpeed = CalculateNewStatValue(Stat, player.GameStats.MoveSpeed);
+                        player.GameStats.MoveSpeed = CalculateNewStatValue(config, player.GameStats.MoveSpeed);
                         break;
                     case PlayerStat.AttackSpeed:
-                        player.GameStats.AttackSpeed = CalculateNewStatValue(Stat, player.GameStats.AttackSpeed);
+                        player.GameStats.AttackSpeed = CalculateNewStatValue(config, player.GameStats.AttackSpeed);
                         break;
                     case PlayerStat.Damage:
-                        player.GameStats.Damage = CalculateNewStatValue(Stat, player.GameStats.Damage);
+                        player.GameStats.Damage = CalculateNewStatValue(config, player.GameStats.Damage);
                         break;
                     case PlayerStat.Health:
-                        player.GameStats.Health = CalculateNewStatValue(Stat, player.GameStats.Health);
+                        player.GameStats.Health = CalculateNewStatValue(config, player.GameStats.Health);
                         break;
                     case PlayerStat.Range:
-                        player.GameStats.Range = CalculateNewStatValue(Stat, player.GameStats.Range);
+                        player.GameStats.Range = CalculateNewStatValue(config, player.GameStats.Range);
                         break;
                     case PlayerStat.ExplosionRadius:
-                        player.GameStats.ExplosionRadius = CalculateNewStatValue(Stat, player.GameStats.ExplosionRadius);
+                        player.GameStats.ExplosionRadius = CalculateNewStatValue(config, player.GameStats.ExplosionRadius);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -68,19 +69,12 @@ namespace Game.Logic.PlayerActions
             return ActionResult.Success;
         }
         
-        //TODO: This is a very simple example, we should move this to game config, and reconsider the rules
-        private static F64 CalculateNewStatValue(PlayerStat stat, F64 current)
+        private static F64 CalculateNewStatValue(ShopStatConfig config, F64 current)
         {
-            return stat switch
-            {
-                PlayerStat.MoveSpeed => current + F64.FromDouble(1),
-                PlayerStat.AttackSpeed => current * F64.FromDouble(0.9),
-                PlayerStat.Damage => current + F64.FromDouble(1),
-                PlayerStat.Health => current * F64.FromDouble(1.1),
-                PlayerStat.Range => current + F64.FromDouble(1),
-                PlayerStat.ExplosionRadius => current * F64.FromDouble(1.05),
-                _ => throw new ArgumentOutOfRangeException(nameof(stat), stat, null)
-            };
+            //TODO: introduce concept of stat level.
+            return config.IncreaseOperator == PlayerStatIncreaseOperator.Add
+                ? F64.FromDouble(current.Double + config.StatIncreasePerLevel)
+                : F64.FromDouble(current.Double * config.StatIncreasePerLevel);
         }
     }
 }
