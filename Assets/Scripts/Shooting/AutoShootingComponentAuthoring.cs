@@ -27,8 +27,8 @@ namespace DotsShooter
         [SerializeField]
         private float spawnOffset;
 
-        [SerializeField] 
-        private PlayerStats _playerStats;
+        // [SerializeField] 
+        // private PlayerStats _playerStats;
         // [SerializeField]
         // private float projectileDamage = 5;
         // [SerializeField]
@@ -46,8 +46,8 @@ namespace DotsShooter
                         ProjectileSpeed = authoring.projectileSpeed,
                         SpawnOffset = authoring.spawnOffset,
                         ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
-                        ProjectileDamage = authoring._playerStats.Damage,
-                        ProjectileRadius = authoring._playerStats.ExplosionRadius
+                        ProjectileDamage = 0,//authoring._playerStats.Damage,
+                        ProjectileRadius = 0,//authoring._playerStats.ExplosionRadius
                     });
             }
         }

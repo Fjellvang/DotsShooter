@@ -20,10 +20,14 @@ public class GoldPresenter : MonoBehaviour
 
     private LabelContainer _goldLabel;
 
-    private void Start()
+    private void Awake()
     {
         _root = m_Document.rootVisualElement;
         _goldLabel = _root.Q<LabelContainer>("gold-label");
+    }
+
+    private void Start()
+    {
         UpdateGold();
     }
 

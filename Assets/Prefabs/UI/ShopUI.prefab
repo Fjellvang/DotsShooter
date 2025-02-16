@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3572646346431653816}
   - component: {fileID: 5943137830078057292}
   - component: {fileID: 6434473753149567359}
+  - component: {fileID: 4744073530890665838}
   m_Layer: 0
   m_Name: ShopUI
   m_TagString: Untagged
@@ -66,7 +67,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   document: {fileID: 3572646346431653816}
-  _playerStats: {fileID: 11400000, guid: c982cc0e14d80354c8db545911a8ae49, type: 2}
 --- !u!114 &6434473753149567359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,4 +80,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Document: {fileID: 3572646346431653816}
-  _playerGold: {fileID: 11400000, guid: f760c27c3f8742e44ba3501e843e0fc6, type: 2}
+--- !u!114 &4744073530890665838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229251505466513136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2458933140c54c9db0aec7a69c1b617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _developerDescription: 
+  _unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5943137830078057292}
+        m_TargetAssemblyTypeName: DotsShooter.UI.ShopMenuPresenter, Assembly-CSharp
+        m_MethodName: UpdateLabels
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6434473753149567359}
+        m_TargetAssemblyTypeName: GoldPresenter, Assembly-CSharp
+        m_MethodName: UpdateGold
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _actionResponses: []
+  _conditions: []
+  _operator: 0
+  _replayEventBufferOnRegister: 1
+  _eventReference:
+    _usage: 0
+    _event: {fileID: 11400000, guid: 9d7095d24e87a69439a0e7044b873835, type: 2}
+    _eventInstancer: {fileID: 0}
+    _collection: {fileID: 0}
+    _list: {fileID: 0}
+    _collectionInstancer: {fileID: 0}
+    _listInstancer: {fileID: 0}

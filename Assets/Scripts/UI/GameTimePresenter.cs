@@ -38,8 +38,7 @@ public class GameTimePresenter : MonoBehaviour
     private void Update()
     {
         if(!_isGameLoaded) return;
-
-        var simulationTime = _entityQuery.GetSingleton<SimulationTime>();
+        if(!_entityQuery.TryGetSingleton<SimulationTime>(out var simulationTime)) return;
 
         var timeleft = simulationTime.GameTime - simulationTime.ElapsedTime;
 

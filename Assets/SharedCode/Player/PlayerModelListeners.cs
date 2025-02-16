@@ -9,6 +9,7 @@ namespace Game.Logic
     public interface IPlayerModelClientListener
     {
         void OnGoldAdded();
+        void OnStatUpdated();
     }
 
     public class EmptyPlayerModelServerListener : IPlayerModelServerListener
@@ -20,6 +21,10 @@ namespace Game.Logic
     {
         public static readonly EmptyPlayerModelClientListener Instance = new EmptyPlayerModelClientListener();
         public void OnGoldAdded()
+        {
+        }
+
+        public void OnStatUpdated()
         {
         }
     }

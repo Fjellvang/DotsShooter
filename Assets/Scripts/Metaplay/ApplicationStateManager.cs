@@ -53,6 +53,7 @@ namespace DotsShooter.Metaplay
         // When connection to server is not established, display connection status.
         public SceneAsset MenuScene;
         public VoidEvent GoldAddedEvent;
+        public VoidEvent StatUpdatedEvent;
 
         // Runtime state
         ApplicationState        _applicationState = ApplicationState.AppStart;  // Begin in the AppStart state.
@@ -134,7 +135,7 @@ namespace DotsShooter.Metaplay
         void IMetaplayLifecycleDelegate.OnSessionStarted()
         {
             // Hook up to updates in PlayerModel.
-            MetaplayClient.PlayerModel.ClientListener = this;
+            MetaplayClient.PlayerModel.ClientListener = this; //TODO: I want to introduce a seperate listener class. Maybe a ScriptableObject we can inject in relevant places?
 
             // Switch to the in-game state.
             SwitchToState(ApplicationState.Game);
@@ -235,6 +236,11 @@ namespace DotsShooter.Metaplay
         public void OnGoldAdded()
         {
             GoldAddedEvent.Raise();
+        }
+
+        public void OnStatUpdated()
+        {
+            StatUpdatedEvent.Raise();
         }
     }
 }

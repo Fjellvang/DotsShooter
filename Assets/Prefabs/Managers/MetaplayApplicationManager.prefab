@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuScene: {fileID: 102900000, guid: 580d5c5359f506842b37ebb6d80b372b, type: 3}
   GoldAddedEvent: {fileID: 11400000, guid: 6bd10a1d51f78764eb76635a7bcc063e, type: 2}
+  StatUpdatedEvent: {fileID: 11400000, guid: 9d7095d24e87a69439a0e7044b873835, type: 2}
 --- !u!114 &8540396564884590011
 MonoBehaviour:
   m_ObjectHideFlags: 0

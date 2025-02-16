@@ -1,5 +1,7 @@
 ﻿using System;
+using DotsShooter.Metaplay;
 using DotsShooter.Player;
+using Game.Logic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -10,8 +12,6 @@ namespace DotsShooter.UI
     {
         [Tooltip("Reference to the View (UI)")] [SerializeField]
         private UIDocument document;
-        [SerializeField]
-        private PlayerStats _playerStats;
         
         private VisualElement _root;
         
@@ -49,47 +49,42 @@ namespace DotsShooter.UI
             _damagePowerupButton.Button.clicked += OnDamagePowerupButtonClicked;
             _attackSpeedPowerupButton.Button.clicked += OnAttackSpeedPowerupButtonClicked;
             _rangePowerupButton.Button.clicked += OnRangePowerupButtonClicked;
-
             UpdateLabels();
+        }
+        public void UpdateLabels()
+        {
+            var playerStats = MetaplayClient.PlayerModel.GameStats;
+            _radiusPowerupButton.Value = playerStats.ExplosionRadius.Float;
+            _moveSpeedPowerupButton.Value = playerStats.MoveSpeed.Float;
+            _damagePowerupButton.Value = playerStats.Damage.Float;
+            _attackSpeedPowerupButton.Value = playerStats.AttackSpeed.Float;
+            _rangePowerupButton.Value = playerStats.Range.Float;
         }
 
         private void OnRangePowerupButtonClicked()
         {
-            _playerStats.Range += 1f;
-            UpdateLabels();
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.Range));
         }
 
-        private void UpdateLabels()
-        {
-            _radiusPowerupButton.Value = _playerStats.ExplosionRadius;
-            _moveSpeedPowerupButton.Value = _playerStats.MoveSpeed;
-            _damagePowerupButton.Value = _playerStats.Damage;
-            _attackSpeedPowerupButton.Value = _playerStats.AttackSpeed;
-            _rangePowerupButton.Value = _playerStats.Range;
-        }
 
         private void OnAttackSpeedPowerupButtonClicked()
         {
-            _playerStats.AttackSpeed *= 0.9f;
-            UpdateLabels();
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.AttackSpeed));
         }
 
         private void OnDamagePowerupButtonClicked()
         {
-            _playerStats.Damage += 1f;
-            UpdateLabels();
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.Damage));
         }
 
         private void OnMoveSpeedPowerupButtonClicked()
         {
-            _playerStats.MoveSpeed += 1f;
-            UpdateLabels();
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.MoveSpeed));
         }
 
         private void OnRadiusPowerupButtonClicked()
         {
-            _playerStats.ExplosionRadius *= 1.05f;
-            UpdateLabels();
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.ExplosionRadius));
         }
 
         private void OnContinueButtonClicked()

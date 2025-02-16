@@ -33,6 +33,8 @@ namespace Game.Logic
         // Game-specific state
         [MetaMember(200)]
         public int Gold { get; set; } = 0;  // the amount of gold the player has
+        [MetaMember(201)]
+        public PlayerStatsModel GameStats { get; set; } = new PlayerStatsModel();
 
         protected override void GameInitializeNewPlayerModel(MetaTime now, ISharedGameConfig gameConfig, EntityId playerId, string name)
         {
