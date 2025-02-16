@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2323705378432486647}
   - component: {fileID: 145353070311996324}
   - component: {fileID: 6392031399888717104}
+  - component: {fileID: 2487202882672246255}
   m_Layer: 0
   m_Name: InGameUI
   m_TagString: Untagged
@@ -97,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Document: {fileID: 7167764491720864106}
-  _playerGold: {fileID: 11400000, guid: f760c27c3f8742e44ba3501e843e0fc6, type: 2}
 --- !u!114 &145353070311996324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +146,46 @@ MonoBehaviour:
   _eventReference:
     _usage: 0
     _event: {fileID: 11400000, guid: c3d41d5e6864a984fabe3ed55d9426d4, type: 2}
+    _eventInstancer: {fileID: 0}
+    _collection: {fileID: 0}
+    _list: {fileID: 0}
+    _collectionInstancer: {fileID: 0}
+    _listInstancer: {fileID: 0}
+--- !u!114 &2487202882672246255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242763580630710497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2458933140c54c9db0aec7a69c1b617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _developerDescription: 
+  _unityEventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2323705378432486647}
+        m_TargetAssemblyTypeName: GoldPresenter, Assembly-CSharp
+        m_MethodName: UpdateGold
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _actionResponses: []
+  _conditions: []
+  _operator: 0
+  _replayEventBufferOnRegister: 1
+  _eventReference:
+    _usage: 0
+    _event: {fileID: 11400000, guid: 6bd10a1d51f78764eb76635a7bcc063e, type: 2}
     _eventInstancer: {fileID: 0}
     _collection: {fileID: 0}
     _list: {fileID: 0}

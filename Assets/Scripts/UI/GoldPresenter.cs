@@ -3,6 +3,7 @@ using System.Collections;
 using DotsShooter;
 using DotsShooter.Gold;
 using DotsShooter.Health;
+using DotsShooter.Metaplay;
 using DotsShooter.Player;
 using DotsShooter.UI;
 using Unity.Collections;
@@ -13,8 +14,6 @@ public class GoldPresenter : MonoBehaviour
 {
     [Tooltip("Reference to the View (UI)")] [SerializeField]
     private UIDocument m_Document;
-    [SerializeField]
-    private PlayerGold _playerGold;
     
     // Root element of the UI
     private VisualElement _root;
@@ -25,22 +24,11 @@ public class GoldPresenter : MonoBehaviour
     {
         _root = m_Document.rootVisualElement;
         _goldLabel = _root.Q<LabelContainer>("gold-label");
-        _goldLabel.Value = _playerGold.Gold;
+        UpdateGold();
     }
 
-
-    private void OnEnable()
+    public void UpdateGold()
     {
-        _playerGold.OnGoldChanged += OnGoldChanged;
-    }
-
-    private void OnDisable()
-    {
-        _playerGold.OnGoldChanged -= OnGoldChanged;
-    }
-
-    public void OnGoldChanged()
-    {
-        _goldLabel.Value = _playerGold.Gold;
+        _goldLabel.Value = MetaplayClient.PlayerModel.Gold;
     }
 }

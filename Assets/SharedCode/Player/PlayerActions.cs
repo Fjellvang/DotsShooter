@@ -50,6 +50,7 @@ namespace Game.Logic
             {
                 player.Gold += 1;
                 player.Log.Info("Button clicked!");
+                player.ClientListener.OnGoldAdded();
             }
 
             return ActionResult.Success;

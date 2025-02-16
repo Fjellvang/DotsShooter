@@ -11,6 +11,7 @@ using Metaplay.Unity;
 using Metaplay.Unity.DefaultIntegration;
 using System;
 using System.Text;
+using UnityAtoms.BaseAtoms;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,6 +52,7 @@ namespace DotsShooter.Metaplay
 
         // When connection to server is not established, display connection status.
         public SceneAsset MenuScene;
+        public VoidEvent GoldAddedEvent;
 
         // Runtime state
         ApplicationState        _applicationState = ApplicationState.AppStart;  // Begin in the AppStart state.
@@ -229,5 +231,10 @@ namespace DotsShooter.Metaplay
         }
 
         #endregion // IMetaplayLifecycleDelegate
+
+        public void OnGoldAdded()
+        {
+            GoldAddedEvent.Raise();
+        }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using System;
+using DotsShooter.Metaplay;
+using Game.Logic;
 using UnityEngine;
 
 namespace DotsShooter.Gold
 {
     public class GoldTracker : MonoBehaviour
     {
-        [SerializeField]
-        PlayerGold _playerGold;
-        
         public void AddGold(int amount)
         {
-            _playerGold.Gold += amount;
+            // We could have just raised this event from the event system...
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(amount));
         }
         
         public void AddGold() => AddGold(1);
