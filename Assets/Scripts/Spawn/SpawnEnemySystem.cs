@@ -21,7 +21,6 @@ namespace DotsShooter
             _random = new Random(1234);
             state.RequireForUpdate<EnemyPrefabs>();
         }
-        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
@@ -35,7 +34,9 @@ namespace DotsShooter
             }
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
-            var enemiesToSpawn = 1 + (int)(simulationTime.ElapsedTime / 5);// increase spawn rate over time, 1 enemy every 5 seconds, TODO: make this configurable
+            var round = spawnEnemyData.ValueRO.GameStateTracker.Value.Round;
+            
+            var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2) ;// increase spawn rate over time, 1 enemy every 2 seconds, TODO: make this configurable
             
             for (int i = 0; i < enemiesToSpawn; i++)
             {

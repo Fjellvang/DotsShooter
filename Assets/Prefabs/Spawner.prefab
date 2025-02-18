@@ -52,9 +52,10 @@ MonoBehaviour:
     Weight: 20
   - Prefab: {fileID: 3890467185232950674, guid: 55926179b90eec743925f44152ca3454, type: 3}
     Weight: 10
-  SpawnTime: 2
+  SpawnTime: 5
   MaxX: 50
   MaxY: 50
+  GameStateTracker: {fileID: 11400000, guid: d35cbe40c7d625b4ebaa6b561c4a419e, type: 2}
 --- !u!114 &4027191241803160189
 MonoBehaviour:
   m_ObjectHideFlags: 0
