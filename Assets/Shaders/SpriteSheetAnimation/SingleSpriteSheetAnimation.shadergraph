@@ -927,10 +927,10 @@
     "hlslDeclarationOverride": 3,
     "m_Hidden": false,
     "m_Value": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": 0.0
+        "r": 0.0,
+        "g": 0.9245283007621765,
+        "b": 0.13047975301742555,
+        "a": 1.0
     },
     "isMainColor": false,
     "m_ColorMode": 0
@@ -957,7 +957,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"3432b1b567cc70a468350217514bbbf1\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"895ae20855331364bbb8c16eff382013\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
@@ -986,7 +986,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 2.0,
+    "m_Value": 5.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1639,8 +1639,8 @@
     "m_ObjectId": "939cc7a6814942bda3f136dd732e7b08",
     "m_Title": "Animation",
     "m_Position": {
-        "x": -1471.0,
-        "y": 169.99998474121095
+        "x": -1471.2000732421875,
+        "y": 168.8000030517578
     }
 }
 
@@ -1936,7 +1936,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 4.0,
+    "m_Value": 7.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -2064,7 +2064,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 4.0,
+    "m_Value": 16.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -2390,7 +2390,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 7.0,
+    "m_Value": 32.0,
     "m_FloatType": 2,
     "m_RangeValues": {
         "x": 0.0,
