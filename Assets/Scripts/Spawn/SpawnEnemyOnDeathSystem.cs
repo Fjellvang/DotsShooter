@@ -22,10 +22,7 @@ namespace DotsShooter
                          .WithAll<DestroyNextFrame>())
             {
                 var enemy = ecb.Instantiate(spawnEnemyOnDeath.ValueRO.Prefab);
-                ecb.SetComponent(enemy, new LocalTransform
-                {
-                    Position = transform.ValueRO.Position
-                });
+                ecb.SetComponent(enemy, LocalTransform.FromPosition(transform.ValueRO.Position));
             }
         }
     }
