@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - Prefab: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+  - Prefab: {fileID: 1580659186050169693, guid: d92492f7007900043a619ad71ff68f00, type: 3}
     Weight: 70
-  - Prefab: {fileID: 5717518933050959223, guid: 85dc9e4d6b2eee54d9e23317e56c0175, type: 3}
+  - Prefab: {fileID: 4838184950576053998, guid: 50a155f118058954bb3664cfd272ee6f, type: 3}
     Weight: 20
-  - Prefab: {fileID: 3890467185232950674, guid: 55926179b90eec743925f44152ca3454, type: 3}
+  - Prefab: {fileID: 1990579540387780508, guid: 8a24c78fadf26404daf53bf0e185b2d2, type: 3}
     Weight: 10
   SpawnTime: 5
   MaxX: 50

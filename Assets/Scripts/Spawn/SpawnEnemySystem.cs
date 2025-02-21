@@ -18,7 +18,7 @@ namespace DotsShooter
         {
             state.RequireForUpdate<SimulationTime>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            _random = new Random(1234);
+            _random = new Random();
             state.RequireForUpdate<EnemyPrefabs>();
         }
         public void OnUpdate(ref SystemState state)
