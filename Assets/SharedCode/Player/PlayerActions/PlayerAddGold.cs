@@ -16,7 +16,7 @@ namespace Game.Logic.PlayerActions
         {
             if (commit)
             {
-                player.Gold += 1;
+                player.Gold += Amount;
                 player.ClientListener.OnGoldAdded();
             }
 

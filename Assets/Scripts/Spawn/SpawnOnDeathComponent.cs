@@ -2,7 +2,7 @@
 
 namespace DotsShooter
 {
-    public struct SpawnEnemyOnDeathComponent : IComponentData
+    public struct SpawnOnDeathComponent : IComponentData
     {
         public Entity Prefab;
     }

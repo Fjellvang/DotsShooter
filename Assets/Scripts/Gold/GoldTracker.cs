@@ -9,6 +9,7 @@ namespace DotsShooter.Gold
     {
         public void AddGold(int amount)
         {
+            Debug.Log($"adding {amount} gold");
             // We could have just raised this event from the event system...
             MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(amount));
         }

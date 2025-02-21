@@ -5,7 +5,7 @@ using Unity.Transforms;
 
 namespace DotsShooter
 {
-    public partial struct SpawnEnemyOnDeathSystem : ISystem
+    public partial struct SpawnOnDeathSystem : ISystem
     {
         public void OnCreate(ref SystemState state)
         {
@@ -18,7 +18,7 @@ namespace DotsShooter
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             foreach (var (spawnEnemyOnDeath, transform) in 
-                     SystemAPI.Query<RefRO<SpawnEnemyOnDeathComponent>, RefRO<LocalTransform>>()
+                     SystemAPI.Query<RefRO<SpawnOnDeathComponent>, RefRO<LocalTransform>>()
                          .WithAll<DestroyNextFrame>())
             {
                 var enemy = ecb.Instantiate(spawnEnemyOnDeath.ValueRO.Prefab);

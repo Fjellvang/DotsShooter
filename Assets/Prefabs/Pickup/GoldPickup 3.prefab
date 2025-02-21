@@ -14,15 +14,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2299632972858266417, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2299632972858266417, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2299632972858266417, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.7
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299632972858266417, guid: d5917620c631b9148a46f86958dbe769, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2299632972858266417, guid: d5917620c631b9148a46f86958dbe769, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4025952751771196441, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: _value
@@ -34,11 +42,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4551859890726662863, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: overrideList.Array.data[1].value.y
-      value: 0.58176094
+      value: 0.27987415
       objectReference: {fileID: 0}
     - target: {fileID: 4551859890726662863, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: overrideList.Array.data[1].value.z
-      value: 0.58176094
+      value: 0.27987415
       objectReference: {fileID: 0}
     - target: {fileID: 5554802616740565873, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: m_LocalPosition.x
