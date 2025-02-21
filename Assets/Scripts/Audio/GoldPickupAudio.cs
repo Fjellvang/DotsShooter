@@ -6,7 +6,7 @@
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
-                eventSystem.OnGoldPickup += Play;
+                eventSystem.OnGoldPickup += HandleGoldPickup;
             }
         }
         
@@ -14,8 +14,13 @@
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
             {
-                eventSystem.OnGoldPickup -= Play;
+                eventSystem.OnGoldPickup -= HandleGoldPickup;
             }
+        }
+        
+        private void HandleGoldPickup(int _)
+        {
+            Play();
         }
     }
 }

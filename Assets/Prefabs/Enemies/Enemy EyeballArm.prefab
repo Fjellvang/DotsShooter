@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: overrideList.Array.data[2].value.x
       value: -1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4568269927197874877, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+      propertyPath: Prefab
+      value: 
+      objectReference: {fileID: 5057627604815499705, guid: 454ace2d921fe814992370bb311f1867, type: 3}
     - target: {fileID: 5558474631314066380, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.4

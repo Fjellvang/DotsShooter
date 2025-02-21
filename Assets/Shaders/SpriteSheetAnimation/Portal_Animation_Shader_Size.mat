@@ -42,7 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationSize: 0.3
+    - _AnimationSize: 0.45
     - _AnimatonSpeed: 2.5
     - _Frames: 32
     - _Height: 7

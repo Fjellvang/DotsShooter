@@ -1,4 +1,5 @@
-﻿using DotsShooter.Metaplay;
+﻿using DotsShooter.Events;
+using DotsShooter.Metaplay;
 using Game.Logic.PlayerActions;
 using UnityEngine;
 
@@ -12,8 +13,6 @@ namespace DotsShooter.Gold
             MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(amount));
         }
         
-        public void AddGold() => AddGold(1);
-
         private void OnEnable()
         {
             if(Helpers.TryGetEventSystem(out var eventSystem))

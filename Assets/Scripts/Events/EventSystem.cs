@@ -15,7 +15,7 @@ namespace DotsShooter.Events
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnTogglePause;
-        public event Action OnGoldPickup;
+        public event Action<int> OnGoldPickup;
         public event Action OnPlayerWon;
 
         protected override void OnCreate()
@@ -61,10 +61,10 @@ namespace DotsShooter.Events
                 OnEnemyDied?.Invoke();
             }
 
-            foreach (var _ in SystemAPI.Query<RefRO<GoldPickupComponent>>()
+            foreach (var component in SystemAPI.Query<RefRO<GoldPickupComponent>>()
                          .WithAll<DestroyNextFrame>())
             {
-                OnGoldPickup?.Invoke();
+                OnGoldPickup?.Invoke(component.ValueRO.Value);
             }
         }
 
@@ -73,4 +73,5 @@ namespace DotsShooter.Events
             OnTogglePause?.Invoke();
         }
     }
+
 }
