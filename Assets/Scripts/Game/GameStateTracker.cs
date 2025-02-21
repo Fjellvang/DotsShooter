@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using DotsShooter.Metaplay;
+using Game.Logic.PlayerActions;
+using UnityEngine;
 
 namespace DotsShooter
 {
@@ -11,6 +13,7 @@ namespace DotsShooter
         public void StartGame()
         {
             _round = 1;
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerStartGame());
             Debug.Log($"Game started. Round: {_round}");
         }
 

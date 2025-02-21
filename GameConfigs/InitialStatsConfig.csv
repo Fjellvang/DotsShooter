@@ -1,7 +1,7 @@
 Id #key,InitialValue
 MoveSpeed,5
-AttackSpeed,0.5
+AttackSpeed,0.45
 Damage,2
 Health,100
-Range,10
-ExplosionRadius,0.5
+Range,15
+ExplosionRadius,1
