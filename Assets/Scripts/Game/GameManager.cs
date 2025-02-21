@@ -1,4 +1,6 @@
-﻿using Unity.Entities;
+﻿using System;
+using System.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -15,6 +17,8 @@ namespace DotsShooter
         [SerializeField]
         SceneAsset _shopScene;
 
+        public int GetCurrentRound() => _gameStateTracker.Round;
+        
         private static void EnsureGameUnpaused()
         {
             var simulationSystemGroup =
@@ -44,7 +48,7 @@ namespace DotsShooter
                 eventSystem.OnPlayerWon += PlayerWon;
             }
         }
-        
+
         public void PlayerWon()
         {
             Debug.Log("Player won!");

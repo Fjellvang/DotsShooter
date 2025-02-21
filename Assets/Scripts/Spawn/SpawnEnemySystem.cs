@@ -16,15 +16,19 @@ namespace DotsShooter
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<GameStateComponent>();
             state.RequireForUpdate<SimulationTime>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            state.RequireForUpdate<GameStateInitializedComponent>();
             _random = new Random(1234);
             state.RequireForUpdate<EnemyPrefabs>();
         }
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
             var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
+            var round = SystemAPI.GetSingleton<GameStateComponent>().Round;
             var buffer = SystemAPI.GetSingletonBuffer<EnemyPrefabs>();
             
             spawnEnemyData.ValueRW.SpawnTimer -= SystemAPI.Time.DeltaTime;
@@ -34,7 +38,6 @@ namespace DotsShooter
             }
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
-            var round = spawnEnemyData.ValueRO.GameStateTracker.Value.Round;
             
             var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2) ;// increase spawn rate over time, 1 enemy every 2 seconds, TODO: make this configurable
             
