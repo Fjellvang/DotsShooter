@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using DotsShooter;
 using DotsShooter.Player;
 using Unity.Entities;
 using Unity.Transforms;

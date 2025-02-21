@@ -1,8 +1,5 @@
 ﻿using DotsShooter.Metaplay;
-using Game.Logic;
-using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace DotsShooter.Player
 {
