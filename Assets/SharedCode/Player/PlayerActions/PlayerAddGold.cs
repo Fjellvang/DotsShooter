@@ -1,22 +1,25 @@
-﻿using Metaplay.Core.Model;
+﻿using Game.Logic.GameConfigs;
+using Metaplay.Core.Model;
 
 namespace Game.Logic.PlayerActions
 {
     [ModelAction(ActionCodes.PlayerAddGold)]
     public class PlayerAddGold : PlayerAction
     {
-        public int Amount { get; private set; }
-        public PlayerAddGold() { Amount = 1; }
-        public PlayerAddGold(int amount) //TODO: not very safe to let client set amount
+        public CoinType Type { get; private set; }
+        public PlayerAddGold() { Type = CoinType.Small; }
+        public PlayerAddGold(CoinType type) //TODO: not very safe to let client set amount
         {
-            Amount = amount;
+            Type = type;
         }
 
         public override MetaActionResult Execute(PlayerModel player, bool commit)
         {
+            var config = player.GameConfig.CoinValueConfiguration[Type];
+
             if (commit)
             {
-                player.Gold += Amount;
+                player.Gold += config.Value;
                 player.ClientListener.OnGoldAdded();
             }
 

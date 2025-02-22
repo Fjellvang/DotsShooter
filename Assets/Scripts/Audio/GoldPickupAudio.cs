@@ -1,4 +1,6 @@
-﻿namespace DotsShooter.Audio
+﻿using Game.Logic.GameConfigs;
+
+namespace DotsShooter.Audio
 {
     public class GoldPickupAudio : AudioClipPlayer
     {
@@ -18,7 +20,7 @@
             }
         }
         
-        private void HandleGoldPickup(int _)
+        private void HandleGoldPickup(CoinType _)
         {
             Play();
         }

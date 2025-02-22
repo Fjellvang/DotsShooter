@@ -1,9 +1,10 @@
-﻿using Unity.Entities;
+﻿using Game.Logic.GameConfigs;
+using Unity.Entities;
 
 namespace DotsShooter.Pickup
 {
     public struct GoldPickupComponent : IComponentData
     {
-        public int Value;
+        public CoinType Value;
     }
 }

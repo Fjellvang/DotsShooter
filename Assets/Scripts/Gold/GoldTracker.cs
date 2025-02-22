@@ -1,5 +1,6 @@
 ﻿using DotsShooter.Events;
 using DotsShooter.Metaplay;
+using Game.Logic.GameConfigs;
 using Game.Logic.PlayerActions;
 using UnityEngine;
 
@@ -7,11 +8,10 @@ namespace DotsShooter.Gold
 {
     public class GoldTracker : MonoBehaviour
     {
-        public void AddGold(int amount)
+        public void AddGold(CoinType type)
         {
-            Debug.Log($"adding {amount} gold");
             // We could have just raised this event from the event system...
-            MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(amount));
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerAddGold(type));
         }
         
         private void OnEnable()

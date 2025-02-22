@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: _value
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4025952751771196441, guid: d5917620c631b9148a46f86958dbe769, type: 3}
+      propertyPath: coinType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4551859890726662863, guid: d5917620c631b9148a46f86958dbe769, type: 3}
       propertyPath: overrideList.Array.data[1].value.x
       value: 0.98742133

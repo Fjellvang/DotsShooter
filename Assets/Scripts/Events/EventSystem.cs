@@ -2,6 +2,7 @@ using System;
 using DotsShooter.Destruction;
 using DotsShooter.Pickup;
 using DotsShooter.Player;
+using Game.Logic.GameConfigs;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -15,7 +16,7 @@ namespace DotsShooter.Events
         public event Action<float3> OnPlayerDied;
         public event Action OnEnemyDied;
         public event Action OnTogglePause;
-        public event Action<int> OnGoldPickup;
+        public event Action<CoinType> OnGoldPickup;
         public event Action OnPlayerWon;
 
         protected override void OnCreate()

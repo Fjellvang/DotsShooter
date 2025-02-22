@@ -8,5 +8,7 @@ namespace Game.Logic.GameConfigs
         public GameConfigLibrary<ShopStatId, ShopStatConfig> ShopConfiguration { get; private set; }
         [GameConfigEntry("InitialStatsConfig")]
         public GameConfigLibrary<StatId, InitialStatsConfig> InitialStatsConfiguration { get; private set; }
+        [GameConfigEntry("CoinValueConfig")]
+        public GameConfigLibrary<CoinType, CoinValueConfig> CoinValueConfiguration { get; private set; }
     }
 }
