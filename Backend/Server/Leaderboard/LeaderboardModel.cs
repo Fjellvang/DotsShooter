@@ -18,6 +18,17 @@ public class LeaderboardModel : ISchemaMigratable
 [Table("LeaderboardEntries")]
 public class PersistedLeaderboardModel : IPersistedItem
 {
+    public PersistedLeaderboardModel()
+    {
+    }
+
+    public PersistedLeaderboardModel(EntityId playerId, int kills, int goldCollected, DateTime recordedAt)
+    {
+        PlayerId = playerId.ToString();
+        Kills = kills;
+        GoldCollected = goldCollected;
+        RecordedAt = recordedAt;
+    }
     [Key]
     [PartitionKey]
     [Required]
@@ -33,4 +44,6 @@ public class PersistedLeaderboardModel : IPersistedItem
     public int Kills { get; set; }
     [Required]
     public int GoldCollected { get; set; }
+    [Required]
+    public DateTime RecordedAt { get; set; }
 }
