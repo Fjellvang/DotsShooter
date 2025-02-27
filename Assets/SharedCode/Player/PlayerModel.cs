@@ -1,11 +1,13 @@
 // This file is part of Metaplay SDK which is released under the Metaplay SDK License.
 
+using System.Collections.Generic;
 using Metaplay.Core;
 using Metaplay.Core.Config;
 using Metaplay.Core.Model;
 using Metaplay.Core.Player;
 using System.Runtime.Serialization;
 using Game.Logic.GameConfigs;
+using Game.Logic.Leaderboard;
 
 namespace Game.Logic
 {
@@ -39,6 +41,9 @@ namespace Game.Logic
         public int Gold { get; set; } = 0;  // the amount of gold the player has
         [MetaMember(201)]
         public PlayerStatsModel GameStats { get; set; } = new PlayerStatsModel();
+        
+        [MetaMember(250), Transient] 
+        public List<LeaderboardEntryDto> Leaderboard { get; set; } = new();
 
         protected override void GameInitializeNewPlayerModel(MetaTime now, ISharedGameConfig gameConfig, EntityId playerId, string name)
         {

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Metaplay.Cloud.Persistence;
+﻿using System;
+using System.Collections.Generic;
 using Metaplay.Core;
 using Metaplay.Core.Model;
 
@@ -9,41 +7,9 @@ namespace Game.Server.Leaderboard;
 
 [MetaSerializable]
 [SupportedSchemaVersions(1,1)]
-public class LeaderboardModel : ISchemaMigratable
+public class LeaderboardModel : ISchemaMigratable // For future schema migrations 
 {
-    // [MetaMember(1)]
-    // public List<LeaderboardEntry> Entries = new List<LeaderboardEntry>();
-}
-
-[Table("LeaderboardEntries")]
-public class PersistedLeaderboardModel : IPersistedItem
-{
-    public PersistedLeaderboardModel()
-    {
-    }
-
-    public PersistedLeaderboardModel(EntityId playerId, int kills, int goldCollected, DateTime recordedAt)
-    {
-        PlayerId = playerId.ToString();
-        Kills = kills;
-        GoldCollected = goldCollected;
-        RecordedAt = recordedAt;
-    }
-    [Key]
-    [PartitionKey]
-    [Required]
-    public int Id { get; set; }
-    
-    [Required]
-    [Column(TypeName = "varchar(64)")]
-    public string PlayerId { get; set; }
-    // Helper accessor for parsing the PlayerId back to an EntityId
-    public EntityId PlayerEntityId => EntityId.ParseFromString(PlayerId);
-    
-    [Required]
-    public int Kills { get; set; }
-    [Required]
-    public int GoldCollected { get; set; }
-    [Required]
-    public DateTime RecordedAt { get; set; }
+    [MetaMember(1)]
+    public Dictionary<EntityId, Entry> Entries = new ();
+    public record Entry(int Kills, int GoldCollected, int RoundsCompleted, DateTime RecordedAt);
 }

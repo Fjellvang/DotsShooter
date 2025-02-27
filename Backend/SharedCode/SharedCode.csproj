@@ -7,6 +7,13 @@
 
   <ItemGroup>
     <Compile Include="$(SharedCodePath)\**\*.cs" LinkBase="SharedCode" />
+    <Compile Update="..\..\Assets\SharedCode\TypeCodes\MessageCodes.cs">
+      <LinkBase>SharedCode\</LinkBase>
+      <Link>SharedCode\TypeCodes\MessageCodes.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Assets\SharedCode\Leaderboard\LeaderboardDto.cs">
+      <Link>SharedCode\Leaderboard\LeaderboardDto.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

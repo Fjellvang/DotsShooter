@@ -5,6 +5,9 @@ using Metaplay.Cloud.Entity;
 using Metaplay.Core;
 using Metaplay.Server;
 using System;
+using System.Threading.Tasks;
+using Game.Logic.TypeCodes;
+using Game.Server.Leaderboard;
 using static System.FormattableString;
 
 namespace Game.Server.Player
@@ -32,6 +35,21 @@ namespace Game.Server.Player
         protected override void OnSwitchedToModel(PlayerModel model)
         {
             model.ServerListener = this;
+        }
+
+        protected override async Task OnSessionStartAsync(PlayerSessionParamsBase start, bool isFirstLogin)
+        {
+            await FetchLeaderboardAsync();
+        }
+
+        public async Task FetchLeaderboardAsync()
+        {
+            EntityId leaderboardEntity = EntityId.Create(EntityKindGame.Leaderboard, 0);
+            var request = new GetLeaderboardRequest(10);
+            var response = await EntityAskAsync(leaderboardEntity, request);
+        
+            // Update the player model with leaderboard data
+            Model.Leaderboard = response.Entries;
         }
     }
 }
