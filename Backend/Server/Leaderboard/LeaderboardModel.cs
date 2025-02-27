@@ -11,5 +11,16 @@ public class LeaderboardModel : ISchemaMigratable // For future schema migration
 {
     [MetaMember(1)]
     public Dictionary<EntityId, Entry> Entries = new ();
-    public record Entry(int Kills, int GoldCollected, int RoundsCompleted, DateTime RecordedAt);
+    [MetaSerializable]
+    public class Entry
+    {
+        [MetaMember(1)]
+        public int Kills { get; set; } 
+        [MetaMember(2)]
+        public int GoldCollected { get; set; }
+        [MetaMember(3)]
+        public int RoundsCompleted { get; set; } 
+        [MetaMember(4)]
+        public DateTimeOffset RecordedAt { get; set; }
+    }
 }

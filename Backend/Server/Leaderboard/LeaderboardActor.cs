@@ -31,12 +31,12 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
         
         foreach(var entry in entries)
         {
-            model.Entries[entry.PlayerEntityId] = new LeaderboardModel.Entry(
-                entry.Kills,
-                entry.GoldCollected,
-                entry.RoundsCompleted,
-                entry.RecordedAt
-            );
+            model.Entries[entry.PlayerEntityId] = new LeaderboardModel.Entry{
+                Kills = entry.Kills,
+                GoldCollected = entry.GoldCollected,
+                RoundsCompleted = entry.RoundsCompleted,
+                RecordedAt = entry.RecordedAt
+            };
         }
         
         return model;

@@ -52,11 +52,11 @@ public static class DatabaseExtensions
     {
         var itemSpec = DatabaseTypeRegistry.GetItemSpec(typeof(LeaderboardEntry));
         var sql = """
-                     
-                             SELECT TOP (@Limit) * 
-                             FROM LeaderboardEntries 
-                             ORDER BY (Kills * @KillWeight + GoldCollected * @GoldWeight + RoundsCompleted * @RoundWeight) DESC
-                     """;
+                      SELECT * 
+                      FROM LeaderboardEntries 
+                      ORDER BY (Kills * @KillWeight + GoldCollected * @GoldWeight + RoundsCompleted * @RoundWeight) DESC
+                      LIMIT @Limit
+                  """;
 
         // Query from all database Shards and combine.
         var results = await Task.WhenAll(
@@ -70,7 +70,7 @@ public static class DatabaseExtensions
                         itemSpec.TableName,
                         shardNdx,
                         // Label for metrics
-                        "GetAll",
+                        "GetTopLeaderBoardEntries",
                         async conn =>
                         {
                             // Query 
