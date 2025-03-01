@@ -38,7 +38,7 @@ public static class DatabaseExtensions
                         async conn =>
                         {
                             // Query 
-                            var result = await conn.QueryAsync(itemSpec.ItemType, query).ConfigureAwait(false);
+                            var result = await conn.QueryAsync(itemSpec.ItemType, query);
                             return result.Cast<T>();
                         });
                 }));
@@ -81,7 +81,7 @@ public static class DatabaseExtensions
                                 KillWeight = 2,    // Each kill is worth 100 points
                                 GoldWeight = 1,    // Each gold piece is worth 0.1 points
                                 RoundWeight = 2    // Each completed round is worth 500 points
-                            }).ConfigureAwait(false);
+                            });
                             return result.Cast<LeaderboardEntry>();
                         });
                 }));

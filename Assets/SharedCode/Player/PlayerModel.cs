@@ -8,6 +8,7 @@ using Metaplay.Core.Player;
 using System.Runtime.Serialization;
 using Game.Logic.GameConfigs;
 using Game.Logic.Leaderboard;
+using Game.Logic.TypeCodes;
 
 namespace Game.Logic
 {

@@ -29,3 +29,14 @@ public class GetLeaderboardResponse : EntityAskResponse
         Entries = entries;
     }
 }
+
+[MetaMessage(MessageCodes.UpdateLeaderboardRequest, MessageDirection.ServerInternal)]
+public class UpdateLeaderboardRequest : MetaMessage
+{
+    public LeaderboardEntryDto Entry { get; set; }
+    public UpdateLeaderboardRequest() { }
+    public UpdateLeaderboardRequest(LeaderboardEntryDto entry)
+    {
+        Entry = entry;
+    }
+}

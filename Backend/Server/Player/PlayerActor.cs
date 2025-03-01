@@ -6,6 +6,7 @@ using Metaplay.Core;
 using Metaplay.Server;
 using System;
 using System.Threading.Tasks;
+using Game.Logic.Leaderboard;
 using Game.Logic.TypeCodes;
 using Game.Server.Leaderboard;
 using static System.FormattableString;
@@ -50,6 +51,19 @@ namespace Game.Server.Player
         
             // Update the player model with leaderboard data
             Model.Leaderboard = response.Entries;
+        }
+
+        public void OnMatchCompleted(int kills, int goldCollected, int roundsCompleted)
+        {
+            var leaderboardEntry = new LeaderboardEntryDto
+            {
+                PlayerId = Model.PlayerId.ToString(),
+                Kills = kills,
+                GoldCollected = goldCollected,
+                RoundsCompleted = roundsCompleted
+            };
+            var leaderboardEntity = EntityId.Create(EntityKindGame.Leaderboard, 0);
+            CastMessage(leaderboardEntity, new UpdateLeaderboardRequest(leaderboardEntry));
         }
     }
 }

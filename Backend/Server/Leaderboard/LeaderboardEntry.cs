@@ -13,19 +13,18 @@ public class LeaderboardEntry : IPersistedItem
     {
     }
 
-    public LeaderboardEntry(EntityId playerId, int kills, int goldCollected, DateTime recordedAt)
+    public LeaderboardEntry(EntityId playerId, int kills, int goldCollected, int roundsCompleted, DateTime recordedAt)
     {
         PlayerId = playerId.ToString();
         Kills = kills;
         GoldCollected = goldCollected;
+        RoundsCompleted = roundsCompleted;
         RecordedAt = recordedAt;
     }
-    [Key]
-    [PartitionKey]
-    [Required]
-    public int Id { get; set; }
     
     [Required]
+    [Key]
+    [PartitionKey]
     [Column(TypeName = "varchar(64)")]
     public string PlayerId { get; set; }
     // Helper accessor for parsing the PlayerId back to an EntityId

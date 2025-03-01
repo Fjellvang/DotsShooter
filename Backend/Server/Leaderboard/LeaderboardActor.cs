@@ -26,21 +26,12 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
     protected override async Task<LeaderboardModel> InitializeNew()
     {
         // Load top entries from database (limit to a reasonable number)
-        var entries = await LoadTopEntriesFromDatabase(10);
-        var model = new LeaderboardModel();
-        
-        foreach(var entry in entries)
-        {
-            model.Entries[entry.PlayerEntityId] = new LeaderboardModel.Entry{
-                Kills = entry.Kills,
-                GoldCollected = entry.GoldCollected,
-                RoundsCompleted = entry.RoundsCompleted,
-                RecordedAt = entry.RecordedAt
-            };
-        }
-        
+        var model = await FetchLeaderboardModel();
+
         return model;
     }
+
+
 
 
     protected override Task<LeaderboardModel> RestoreFromPersisted(PersistedLeaderboardModel persisted)
@@ -84,32 +75,43 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
         return new GetLeaderboardResponse(topEntries.Select(ToDto).ToList());
     }
 
-    // [EntityAskHandler]
-    // UpdateLeaderboardResponse HandleUpdateLeaderboardRequest(EntityId sender, UpdateLeaderboardRequest request)
-    // {
-    //     // Update player's entry
-    //     _state.Entries[request.PlayerId] = new LeaderboardModel.LeaderboardEntry(
-    //         request.Kills,
-    //         request.GoldCollected,
-    //         request.RoundsCompleted,
-    //         DateTime.UtcNow
-    //     );
-    //
-    //     // Also update the database
-    //     var dbEntry = new LeaderboardEntry(
-    //         request.PlayerId,
-    //         request.Kills,
-    //         request.GoldCollected,
-    //         request.RoundsCompleted,
-    //         DateTime.UtcNow
-    //     );
-    //
-    //     // Use an upsert operation
-    //     MetaDatabase.Get().UpsertAsync(dbEntry).FireAndForget();
-    //
-    //     return new UpdateLeaderboardResponse(true);
-    // }
+    [MessageHandler]
+    private async Task HandleUpdateLeaderboardRequest(UpdateLeaderboardRequest request)
+    {
+        // Update the database
+        var dbEntry = new LeaderboardEntry(
+            request.Entry.PlayerEntityId,
+            request.Entry.Kills,
+            request.Entry.GoldCollected,
+            request.Entry.RoundsCompleted,
+            request.Entry.RecordedAt.ToDateTime()
+        );
     
+        // Use an upsert operation
+        await MetaDatabase.Get().InsertOrUpdateAsync(dbEntry);
+
+        // Refetch the leaderboard model.
+        // This is a simple wasteful way to do it, but it's fine for this example.
+        _state = await FetchLeaderboardModel();
+    }
+    
+    private static async Task<LeaderboardModel> FetchLeaderboardModel()
+    {
+        var entries = await LoadTopEntriesFromDatabase(10);
+        var model = new LeaderboardModel();
+        
+        foreach(var entry in entries)
+        {
+            model.Entries[entry.PlayerEntityId] = new LeaderboardModel.Entry{
+                Kills = entry.Kills,
+                GoldCollected = entry.GoldCollected,
+                RoundsCompleted = entry.RoundsCompleted,
+                RecordedAt = entry.RecordedAt
+            };
+        }
+
+        return model;
+    }
     private static async Task<List<LeaderboardEntry>> LoadTopEntriesFromDatabase(int limit)
     {
         return await MetaDatabase.Get().GetTopLeaderBoardEntries(limit);
