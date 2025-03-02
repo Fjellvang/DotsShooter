@@ -4,9 +4,9 @@ namespace Game.Logic
 {
     public interface IPlayerModelServerListener
     {
-        void OnMatchCompleted(int kills, int goldCollected, int roundsCompleted);
+        void OnCollectLeaderboardStats(int kills, int goldCollected, int roundsCompleted);
     }
-
+    
     public interface IPlayerModelClientListener
     {
         void OnGoldAdded();
@@ -16,7 +16,7 @@ namespace Game.Logic
     public class EmptyPlayerModelServerListener : IPlayerModelServerListener
     {
         public static readonly EmptyPlayerModelServerListener Instance = new EmptyPlayerModelServerListener();
-        public void OnMatchCompleted(int kills, int goldCollected, int roundsCompleted)
+        public void OnCollectLeaderboardStats(int kills, int goldCollected, int roundsCompleted)
         {
         }
     }

@@ -53,14 +53,15 @@ namespace Game.Server.Player
             Model.Leaderboard = response.Entries;
         }
 
-        public void OnMatchCompleted(int kills, int goldCollected, int roundsCompleted)
+        public void OnCollectLeaderboardStats(int kills, int goldCollected, int roundsCompleted)
         {
             var leaderboardEntry = new LeaderboardEntryDto
             {
                 PlayerId = Model.PlayerId.ToString(),
                 Kills = kills,
                 GoldCollected = goldCollected,
-                RoundsCompleted = roundsCompleted
+                RoundsCompleted = roundsCompleted,
+                RecordedAt = MetaTime.Now
             };
             var leaderboardEntity = EntityId.Create(EntityKindGame.Leaderboard, 0);
             CastMessage(leaderboardEntity, new UpdateLeaderboardRequest(leaderboardEntry));

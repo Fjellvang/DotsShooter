@@ -78,6 +78,8 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
     [MessageHandler]
     private async Task HandleUpdateLeaderboardRequest(UpdateLeaderboardRequest request)
     {
+        var existingEntry = await MetaDatabase.Get().TryGetAsync<LeaderboardEntry>(request.Entry.PlayerId);
+
         // Update the database
         var dbEntry = new LeaderboardEntry(
             request.Entry.PlayerEntityId,
@@ -86,6 +88,15 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
             request.Entry.RoundsCompleted,
             request.Entry.RecordedAt.ToDateTime()
         );
+        
+        var existingScore = existingEntry != null ? CalculateScore(existingEntry) : 0;
+        var newScore = CalculateScore(dbEntry);
+        
+        if(existingScore > newScore)
+        {
+            // No need to update the database
+            return;
+        }
     
         // Use an upsert operation
         await MetaDatabase.Get().InsertOrUpdateAsync(dbEntry);
@@ -93,6 +104,17 @@ public class LeaderboardActor : PersistedEntityActor<PersistedLeaderboardModel, 
         // Refetch the leaderboard model.
         // This is a simple wasteful way to do it, but it's fine for this example.
         _state = await FetchLeaderboardModel();
+    }
+    
+    private float CalculateScore(LeaderboardEntry entry)
+    {
+        // TODO: This needs to be cleaned up. We also use this logic in the database query, so we have duplicated hardcoded values.
+        // We should move this to a shared constant or a configuration file.
+        var killWeight = 2;
+        var goldWeight = 1;
+        var roundWeight = 2;
+        
+        return entry.Kills * killWeight + entry.GoldCollected * goldWeight + entry.RoundsCompleted * roundWeight;
     }
     
     private static async Task<LeaderboardModel> FetchLeaderboardModel()

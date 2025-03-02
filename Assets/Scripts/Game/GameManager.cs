@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using DotsShooter.Metaplay;
+using Game.Logic.PlayerActions;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEditor;
@@ -13,9 +15,12 @@ namespace DotsShooter
         private bool _isPaused;
         [SerializeField]
         GameStateTracker _gameStateTracker;
+
+        private readonly PlayerStatisticsTracker _playerStatisticsTracker = new ();
         
         [SerializeField]
         SceneAsset _shopScene;
+        
 
         public int GetCurrentRound() => _gameStateTracker.Round;
         
@@ -46,6 +51,9 @@ namespace DotsShooter
                 eventSystem.OnTogglePause += TogglePause;
                 eventSystem.OnPlayerDied += GameEnded;
                 eventSystem.OnPlayerWon += PlayerWon;
+                eventSystem.OnGoldPickup += _playerStatisticsTracker.IncreaseGoldCollected;
+                eventSystem.OnEnemyDied += _playerStatisticsTracker.IncreaseKills;
+                eventSystem.OnPlayerDied += RegisterStatisticWithServer;
             }
         }
 
@@ -53,6 +61,7 @@ namespace DotsShooter
         {
             Debug.Log("Player won!");
             _gameStateTracker.IncreaseRound();
+            _playerStatisticsTracker.IncreaseRoundsCompleted();
             UnsubscribeFromGameRelatedEvents();
             SceneManager.LoadScene(_shopScene.name);
         }
@@ -67,6 +76,17 @@ namespace DotsShooter
             UnsubscribeFromGameRelatedEvents();
         }
 
+        private void RegisterStatisticWithServer(float3 _)
+        {
+            // TODO: I Doubt its good practice to invoke the server listener directly from the game manager
+            // but for the sake of the example I will do it here
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerSendLeaderboardStats(
+                _playerStatisticsTracker.Kills,
+                _playerStatisticsTracker.GoldCollected,
+                _playerStatisticsTracker.RoundsCompleted));
+
+        }
+
         public void UnsubscribeFromGameRelatedEvents()
         {
             if (Helpers.TryGetEventSystem(out var eventSystem))
@@ -74,6 +94,9 @@ namespace DotsShooter
                 eventSystem.OnTogglePause -= TogglePause;
                 eventSystem.OnPlayerDied -= GameEnded;
                 eventSystem.OnPlayerWon -= PlayerWon;
+                eventSystem.OnGoldPickup -= _playerStatisticsTracker.IncreaseGoldCollected;
+                eventSystem.OnEnemyDied -= _playerStatisticsTracker.IncreaseKills;
+                eventSystem.OnPlayerDied -= RegisterStatisticWithServer;
             }
         }
     }
