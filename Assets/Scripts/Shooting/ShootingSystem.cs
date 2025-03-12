@@ -6,6 +6,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace DotsShooter
 {
@@ -26,15 +27,14 @@ namespace DotsShooter
         public void OnUpdate(ref SystemState state)
         {
             var targetEnemy = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRO;
-            var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
-            var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
         
             float deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
-            foreach (var (shooter, entity) in SystemAPI.Query<RefRW<AutoShootingComponent>>().WithEntityAccess())
+            foreach (var (shooter, transform, entity) in 
+                     SystemAPI.Query<RefRW<AutoShootingComponent>, RefRO<LocalTransform>>().WithEntityAccess())
             {
-                if (targetEnemy.Direction.Equals(float3.zero))
+                if (targetEnemy.Direction.Equals(float3.zero) || math.isnan(targetEnemy.Direction.x))
                 {
                     continue;
                 }
@@ -55,7 +55,7 @@ namespace DotsShooter
 
                 var bullet = ecb.Instantiate(shootingComponent.ProjectilePrefab);
             
-                var bulletPosition = playerPosition + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
+                var bulletPosition = transform.ValueRO.Position + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
                 var bulletRotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x));
             
                 ecb.SetComponent(bullet, new LocalTransform

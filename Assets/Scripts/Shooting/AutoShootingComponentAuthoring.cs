@@ -43,6 +43,7 @@ namespace DotsShooter
                     new AutoShootingComponent
                     {
                         Cooldown = authoring.cooldown,
+                        CooldownTimer = 0,
                         ProjectileSpeed = authoring.projectileSpeed,
                         SpawnOffset = authoring.spawnOffset,
                         ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
