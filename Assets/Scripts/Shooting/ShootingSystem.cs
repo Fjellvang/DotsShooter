@@ -23,7 +23,7 @@ namespace DotsShooter
             state.RequireForUpdate<EnemyTag>();
         }        
         
-        [BurstCompile]
+        // [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var targetEnemy = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRO;
@@ -53,33 +53,87 @@ namespace DotsShooter
                     continue;
                 }
 
-                var bullet = ecb.Instantiate(shootingComponent.ProjectilePrefab);
-            
-                var bulletPosition = transform.ValueRO.Position + targetEnemy.Direction * shooter.ValueRO.SpawnOffset;
-                var bulletRotation = quaternion.Euler(0, 0, math.atan2(targetEnemy.Direction.y, targetEnemy.Direction.x));
-            
-                ecb.SetComponent(bullet, new LocalTransform
+                var direction = targetEnemy.Direction;
+                var position = transform.ValueRO.Position; 
+                var offset = shootingComponent.SpawnOffset;
+                if (shootingComponent.BulletCount <= 1)
                 {
-                    Position = bulletPosition,
-                    Rotation = bulletRotation,
-                    Scale = 1
-                });
-            
-                ecb.SetComponent(bullet, new MovementComponent
+                    SpawnBullet(position, direction, offset, ecb, shootingComponent);
+                }
+                else
                 {
-                    Direction = targetEnemy.Direction,
-                    Speed = shootingComponent.ProjectileSpeed
-                });
-
-                // TODO: this system is horrible and highly coupled. We should find another approach
-                ecb.SetComponent(bullet, new AreaDamage()
-                {
-                    Damage = shootingComponent.ProjectileDamage,
-                    Radius = shootingComponent.ProjectileRadius
-                });
+                    var bulletCount = shootingComponent.BulletCount;
+                    // Calculate the spread angle based on bullet count
+                    // More bullets = wider spread
+                    var totalSpreadAngle = math.TORADIANS * 90 * (bulletCount - 1);
+                    // float totalSpreadAngle = math.min(shootingComponent.MaxSpreadAngle, 
+                    //                                  shootingComponent.BaseSpreadAngle * (bulletCount - 1));
+                    float angleStep = totalSpreadAngle / (bulletCount - 1);
             
+                    // Calculate perpendicular vector for creating the spread
+            
+                    // Spawn bullets with appropriate spread
+                    for (int i = 0; i < bulletCount; i++)
+                    {
+                        // Calculate the angle for this bullet
+                        float currentAngle;
+                        if (bulletCount == 1)
+                        {
+                            currentAngle = 0; // No spread for single bullet
+                        }
+                        else
+                        {
+                            // Convert from [0..bulletCount-1] to [-spreadAngle/2..+spreadAngle/2]
+                            currentAngle = (i * angleStep) - (totalSpreadAngle / 2);
+                        }
+                
+                        // Convert the angle to radians
+                        var angleRad = math.radians(currentAngle);
+                        
+                        // Rotate the 2D direction vector
+                        var cosAngle = math.cos(angleRad);
+                        var sinAngle = math.sin(angleRad);
+                        var spreadDirection = new float3(
+                            direction.x * cosAngle - direction.y * sinAngle,
+                            direction.x * sinAngle + direction.y * cosAngle,
+                            0
+                        );
+                    
+                    
+                
+                        // Spawn the bullet with the calculated direction
+                        SpawnBullet(position, spreadDirection, offset, ecb, shootingComponent);
+                    }
+                }
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
             }
+        }
+
+        private static void SpawnBullet(float3 position, float3 direction, float spawnOffset, EntityCommandBuffer ecb,
+            AutoShootingComponent shootingComponent)
+        {
+            var bulletPosition = position + direction * spawnOffset;
+            var bulletRotation = quaternion.Euler(0, 0, math.atan2(direction.y, direction.x));
+            var bullet = ecb.Instantiate(shootingComponent.ProjectilePrefab);
+            ecb.SetComponent(bullet, new LocalTransform
+            {
+                Position = bulletPosition,
+                Rotation = bulletRotation,
+                Scale = 1
+            });
+            
+            ecb.SetComponent(bullet, new MovementComponent
+            {
+                Direction = direction,
+                Speed = shootingComponent.ProjectileSpeed
+            });
+
+            // TODO: this system is horrible and highly coupled. We should find another approach
+            ecb.SetComponent(bullet, new AreaDamage()
+            {
+                Damage = shootingComponent.ProjectileDamage,
+                Radius = shootingComponent.ProjectileRadius
+            });
         }
     }
 }

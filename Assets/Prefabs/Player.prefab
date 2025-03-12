@@ -450,3 +450,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6690577022243745467, guid: cfb21862c70ba2c44bba62c3da645cff, type: 3}
   projectileSpeed: 20
   spawnOffset: 1
+  BulletCount: 0

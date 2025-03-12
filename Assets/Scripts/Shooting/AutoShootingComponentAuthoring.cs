@@ -14,6 +14,7 @@ namespace DotsShooter
         public float ProjectileDamage;
         public float ProjectileRadius;
         public float SpawnOffset;
+        public int BulletCount;
     }
     public class AutoShootingComponentAuthoring : MonoBehaviour
     
@@ -26,6 +27,7 @@ namespace DotsShooter
         private float projectileSpeed;
         [SerializeField]
         private float spawnOffset;
+        public int BulletCount;
 
         // [SerializeField] 
         // private PlayerStats _playerStats;
@@ -39,17 +41,17 @@ namespace DotsShooter
             public override void Bake(AutoShootingComponentAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity,
-                    new AutoShootingComponent
-                    {
-                        Cooldown = authoring.cooldown,
-                        CooldownTimer = 0,
-                        ProjectileSpeed = authoring.projectileSpeed,
-                        SpawnOffset = authoring.spawnOffset,
-                        ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
-                        ProjectileDamage = 0,//authoring._playerStats.Damage,
-                        ProjectileRadius = 0,//authoring._playerStats.ExplosionRadius
-                    });
+                AddComponent(entity, new AutoShootingComponent
+                {
+                    Cooldown = authoring.cooldown,
+                    CooldownTimer = 0,
+                    ProjectileSpeed = authoring.projectileSpeed,
+                    SpawnOffset = authoring.spawnOffset,
+                    ProjectilePrefab = GetEntity(authoring.projectilePrefab, TransformUsageFlags.Dynamic),
+                    ProjectileDamage = 0, //authoring._playerStats.Damage,
+                    ProjectileRadius = 0,
+                    BulletCount = authoring.BulletCount, 
+                });
             }
         }
     }
