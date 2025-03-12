@@ -1,20 +1,21 @@
 ﻿using Unity.Entities;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace DotsShooter.Destruction
 {
+    [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct DestroySystem : ISystem
     {
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
         }
 
         public void OnUpdate(ref SystemState state)
         {
             var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true);
-            var ecbSystem = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecbSystem = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             
             foreach (var (_, entity) in SystemAPI.Query<RefRO<DestroyNextFrame>>().WithEntityAccess())
@@ -28,8 +29,9 @@ namespace DotsShooter.Destruction
                          .WithEntityAccess())
             {
                 state.EntityManager.SetComponentEnabled<DestroyNextFrame>(entity, true);
+                // Helpers.DestroyEntityHierarchy(entity, ref ecb, ref childBufferFromEntity);
                 // Is this redundant? 
-                state.EntityManager.SetComponentEnabled<MarkedForDestruction>(entity, false);
+                // state.EntityManager.SetComponentEnabled<MarkedForDestruction>(entity, false);
             }
         }
     }

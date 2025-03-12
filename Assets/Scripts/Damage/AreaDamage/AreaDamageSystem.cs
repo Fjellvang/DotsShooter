@@ -5,6 +5,7 @@ using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
+using UnityEngine;
 using Grid = DotsShooter.SpatialPartitioning.Grid;
 
 namespace DotsShooter.Damage.AreaDamage

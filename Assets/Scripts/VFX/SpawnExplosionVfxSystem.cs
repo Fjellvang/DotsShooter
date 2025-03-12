@@ -39,7 +39,7 @@ namespace DotsShooter.VFX
         }
     }
     
-    [WithAll(typeof(MarkedForDestruction))]
+    [WithAll(typeof(DestroyNextFrame))]
     public partial struct Job : IJobEntity
     {
         public SpawnExplosionVfx ExplosionSpawner;
