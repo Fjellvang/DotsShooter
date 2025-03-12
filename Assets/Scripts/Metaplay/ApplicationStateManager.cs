@@ -52,7 +52,7 @@ namespace DotsShooter.Metaplay
         }
 
         // When connection to server is not established, display connection status.
-        public SceneAsset MenuScene;
+        // public SceneAsset MenuScene;
         public VoidEvent GoldAddedEvent;
         public VoidEvent StatUpdatedEvent;
 
@@ -118,7 +118,7 @@ namespace DotsShooter.Metaplay
                     break;
 
                 case ApplicationState.Game:
-                    SceneManager.LoadScene(MenuScene.name);
+                    // SceneManager.LoadScene(MenuScene.name);
                     break;
             }
 
