@@ -1,17 +1,21 @@
-﻿using DotsShooter.Time;
+using DotsShooter.Time;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Random = Unity.Mathematics.Random;
+
 namespace DotsShooter
 {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
+    [BurstCompile]
     public partial struct SpawnEnemySystem : ISystem
     {
-        Random _random;
+        private Random _random;
+        private EntityQuery _potentialSpawnPointsQuery;
         
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -20,9 +24,11 @@ namespace DotsShooter
             state.RequireForUpdate<SimulationTime>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<GameStateInitializedComponent>();
-            _random = new Random(1234);
             state.RequireForUpdate<EnemyPrefabs>();
+            
+            _random = Random.CreateFromIndex(1234);
         }
+        
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -36,63 +42,96 @@ namespace DotsShooter
             {
                 return;
             }
+            
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
+            var parallelEcb = ecb.AsParallelWriter();
             
-            var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2) ;// increase spawn rate over time, 1 enemy every 2 seconds, TODO: make this configurable
+            var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2);
             
-            for (int i = 0; i < enemiesToSpawn; i++)
+            // Prepare enemy weights for random selection
+            var totalEnemyWeights = CalculateTotalWeights(buffer);
+            
+            // Create a job to both generate data and spawn entities in parallel
+            var spawnEnemiesJob = new SpawnEnemiesParallelJob
             {
-                SpawnEnemy(ref state, spawnEnemyData, buffer, ecb);
-            }
-
-            spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
+                Random = _random,
+                MaxX = spawnEnemyData.ValueRO.MaxX,
+                MaxY = spawnEnemyData.ValueRO.MaxY,
+                EnemyPrefabs = buffer,
+                TotalWeight = totalEnemyWeights,
+                CommandBuffer = parallelEcb
+            };
             
+            spawnEnemiesJob.Schedule(enemiesToSpawn, 32).Complete();
+            
+            // Update the random state for next frame
+            _random = spawnEnemiesJob.Random;
+            
+            // Reset the spawn timer
+            spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;
             SystemAPI.SetSingleton(spawnEnemyData.ValueRO);
         }
-
         
         [BurstCompile]
-        private void SpawnEnemy(ref SystemState state,
-            RefRW<SpawnEnemyData> spawnEnemyData,
-            in DynamicBuffer<EnemyPrefabs> enemies,
-            EntityCommandBuffer ecb)
-        {
-            var enemyIndex = GetWeightedRandomEnemyIndex(enemies);
-            var enemyPrefab = enemies[enemyIndex].Prefab;
-            var enemy = ecb.Instantiate(enemyPrefab); 
-            
-
-            var x = _random.NextFloat(-spawnEnemyData.ValueRO.MaxX, spawnEnemyData.ValueRO.MaxX);
-            var y = _random.NextFloat(-spawnEnemyData.ValueRO.MaxY, spawnEnemyData.ValueRO.MaxY);
-
-            var position = new float3(x, y, 0);
-            
-            ecb.SetComponent(enemy, LocalTransform.FromPosition(position));
-        }
-        
-        private int GetWeightedRandomEnemyIndex(in DynamicBuffer<EnemyPrefabs> enemies)
+        private int CalculateTotalWeights(in DynamicBuffer<EnemyPrefabs> enemies)
         {
             int totalWeight = 0;
             for (int i = 0; i < enemies.Length; i++)
             {
                 totalWeight += enemies[i].Weight;
             }
-
-            int randomWeight = _random.NextInt(0, totalWeight);
+            return totalWeight;
+        }
+    }
+    
+    [BurstCompile]
+    public struct SpawnEnemiesParallelJob : IJobParallelFor
+    {
+        [ReadOnly] public DynamicBuffer<EnemyPrefabs> EnemyPrefabs;
+        [ReadOnly] public float MaxX;
+        [ReadOnly] public float MaxY;
+        [ReadOnly] public int TotalWeight;
+        
+        public EntityCommandBuffer.ParallelWriter CommandBuffer;
+        public Random Random;
+        
+        [BurstCompile]
+        public void Execute(int index)
+        {
+            // Create a new random state for each parallel job to avoid thread safety issues
+            var localRandom = Random.CreateFromIndex((uint)(index + Random.NextUInt()));
+            
+            // Generate random position
+            var x = localRandom.NextFloat(-MaxX, MaxX);
+            var y = localRandom.NextFloat(-MaxY, MaxY);
+            var position = new float3(x, y, 0);
+            
+            // Select random enemy based on weights
+            int enemyIndex = GetWeightedRandomEnemyIndex(localRandom);
+            var enemyPrefab = EnemyPrefabs[enemyIndex].Prefab;
+            
+            // Use the index as sortKey to ensure deterministic results
+            var enemy = CommandBuffer.Instantiate(index, enemyPrefab);
+            CommandBuffer.SetComponent(index, enemy, LocalTransform.FromPosition(position));
+        }
+        
+        private int GetWeightedRandomEnemyIndex(Random random)
+        {
+            int randomWeight = random.NextInt(0, TotalWeight);
             int currentWeight = 0;
-
-            for (int i = 0; i < enemies.Length; i++)
+            
+            for (int i = 0; i < EnemyPrefabs.Length; i++)
             {
-                currentWeight += enemies[i].Weight;
+                currentWeight += EnemyPrefabs[i].Weight;
                 if (randomWeight < currentWeight)
                 {
                     return i;
                 }
             }
-
+            
             // Fallback to last enemy (should never happen if weights are positive)
-            return enemies.Length - 1;
+            return EnemyPrefabs.Length - 1;
         }
     }
 }

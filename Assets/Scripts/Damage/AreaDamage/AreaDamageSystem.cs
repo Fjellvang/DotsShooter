@@ -46,6 +46,7 @@ namespace DotsShooter.Damage.AreaDamage
             var grid = SystemAPI.GetSingleton<Grid>();
             foreach (var (damage, localTransform, entity) in SystemAPI
                          .Query<RefRO<AreaDamage>, RefRO<LocalTransform>>()
+                         .WithNone<MarkedForDestruction>()
                          .WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
@@ -53,8 +54,6 @@ namespace DotsShooter.Damage.AreaDamage
                     continue;
                 }
 
-                // var vfx = SystemAPI.GetSharedComponentTypeHandle<AreaDamageVfx>();
-                // var test = SystemAPI.GetComponent<AreaDamageVfx>(entity);
                 var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
