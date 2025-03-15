@@ -1,8 +1,10 @@
 ﻿using DotsShooter.Player;
 using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using Grid = DotsShooter.SpatialPartitioning.Grid;
@@ -17,33 +19,37 @@ namespace DotsShooter
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<Grid>();
-            state.RequireForUpdate<GridProperties>();
-            state.RequireForUpdate<GridPropertiesInitialized>();
-            
+            state.RequireForUpdate<PhysicsWorldSingleton>();
             state.RequireForUpdate<PlayerTag>();
             state.RequireForUpdate<AutoTargetingPlayer>();
             state.RequireForUpdate<EnemyTag>();
         }
 
-        // [BurstCompile]
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             //TODO: This shouldn't be singleton. We should extend it to be reusable.
             var target = SystemAPI.GetSingletonRW<AutoTargetingPlayer>().ValueRW;
             var playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
             var playerPosition = SystemAPI.GetComponent<LocalTransform>(playerEntity).Position;
-            var grid = SystemAPI.GetSingleton<Grid>();
+
+            var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
+            var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
             target.Direction = float3.zero;
-
-            var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
-
-            // var delta = new float3(1, 0, 0);
-            if (grid.FindClosestEntity(playerPosition, localToWorld, delta: out var delta, maxSearchRadius: target.Range)) 
+            if (physics.OverlapSphere(playerPosition, target.Range, ref overlapHits, target.CollisionFilter))
             {
-                target.Direction = math.normalize(delta); 
+                var closestDistance = overlapHits[0].Distance;
+                var closestHit = overlapHits[0];
+                for (int i = 1; i < overlapHits.Length; i++)
+                {
+                    if (!(overlapHits[i].Distance < closestDistance)) continue;
+                    
+                    closestDistance = overlapHits[i].Distance;
+                    closestHit = overlapHits[i];
+                }
+                target.Direction = math.normalize(closestHit.Position - playerPosition);
             }
-            
+
             SystemAPI.SetSingleton(target);
         }
     }

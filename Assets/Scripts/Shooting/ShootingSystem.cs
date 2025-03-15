@@ -30,6 +30,7 @@ namespace DotsShooter
         
             float deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var areadDamageLookup = SystemAPI.GetComponentLookup<AreaDamage>(true);
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             foreach (var (shooter, transform, entity) in 
                      SystemAPI.Query<RefRW<AutoShootingComponent>, RefRO<LocalTransform>>().WithEntityAccess())
@@ -58,7 +59,7 @@ namespace DotsShooter
                 var offset = shootingComponent.SpawnOffset;
                 if (shootingComponent.BulletCount <= 1)
                 {
-                    SpawnBullet(position, direction, offset, ecb, shootingComponent);
+                    SpawnBullet(position, direction, offset, ecb, shootingComponent, areadDamageLookup);
                 }
                 else
                 {
@@ -102,7 +103,7 @@ namespace DotsShooter
                     
                 
                         // Spawn the bullet with the calculated direction
-                        SpawnBullet(position, spreadDirection, offset, ecb, shootingComponent);
+                        SpawnBullet(position, spreadDirection, offset, ecb, shootingComponent, areadDamageLookup);
                     }
                 }
                 shooter.ValueRW.CooldownTimer = shootingComponent.Cooldown;
@@ -110,7 +111,7 @@ namespace DotsShooter
         }
 
         private static void SpawnBullet(float3 position, float3 direction, float spawnOffset, EntityCommandBuffer ecb,
-            AutoShootingComponent shootingComponent)
+            AutoShootingComponent shootingComponent, ComponentLookup<AreaDamage> areaDamageLookup)
         {
             var bulletPosition = position + direction * spawnOffset;
             var bulletRotation = quaternion.Euler(0, 0, math.atan2(direction.y, direction.x));
@@ -128,11 +129,14 @@ namespace DotsShooter
                 Speed = shootingComponent.ProjectileSpeed
             });
 
+            var collisionFilter = areaDamageLookup.GetRefRO(shootingComponent.ProjectilePrefab).ValueRO.CollisionFilter;
+            
             // TODO: this system is horrible and highly coupled. We should find another approach
             ecb.SetComponent(bullet, new AreaDamage()
             {
                 Damage = shootingComponent.ProjectileDamage,
-                Radius = shootingComponent.ProjectileRadius
+                Radius = shootingComponent.ProjectileRadius,
+                CollisionFilter = collisionFilter,
             });
         }
     }

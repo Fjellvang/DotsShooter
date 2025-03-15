@@ -1,4 +1,6 @@
 ﻿using Unity.Entities;
+using Unity.Physics;
+using Unity.Physics.Authoring;
 using UnityEngine;
 
 namespace DotsShooter.Damage.AreaDamage
@@ -7,12 +9,16 @@ namespace DotsShooter.Damage.AreaDamage
     {
         public float Damage;
         public float Radius;
+        public CollisionFilter CollisionFilter;
     }
 
     public class AreaDamageAuthoring : MonoBehaviour
     {
         public float Radius = 5;
         public float Damage = 10;
+        
+        public PhysicsCategoryTags BelongsTo;
+        public PhysicsCategoryTags CollidesWith;
         
         private class AreaDamageBaker : Baker<AreaDamageAuthoring>
         {
@@ -24,6 +30,11 @@ namespace DotsShooter.Damage.AreaDamage
                     {
                         Damage = authoring.Damage, 
                         Radius = authoring.Radius,
+                        CollisionFilter = new CollisionFilter()
+                        {
+                            BelongsTo = authoring.BelongsTo.Value,
+                            CollidesWith = authoring.CollidesWith.Value
+                        }
                     });
             }
         }

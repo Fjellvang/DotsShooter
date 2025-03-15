@@ -3,7 +3,10 @@ using DotsShooter.Health;
 using DotsShooter.SimpleCollision;
 using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using Grid = DotsShooter.SpatialPartitioning.Grid;
@@ -21,10 +24,8 @@ namespace DotsShooter.Damage.AreaDamage
 
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<PhysicsWorldSingleton>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            state.RequireForUpdate<Grid>();
-            state.RequireForUpdate<GridProperties>();
-            state.RequireForUpdate<GridPropertiesInitialized>();
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
 
             _bufferLookup = state.GetBufferLookup<DamageData>();
@@ -36,10 +37,8 @@ namespace DotsShooter.Damage.AreaDamage
         {
             _localToWorldLookup.Update(ref state);
 
-            var localToWorld = SystemAPI.GetComponentLookup<LocalToWorld>(true);
             var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
             _bufferLookup.Update(ref state);
-            var grid = SystemAPI.GetSingleton<Grid>();
             foreach (var (damage, localTransform, entity) in SystemAPI
                          .Query<RefRO<AreaDamage>, RefRO<LocalTransform>>()
                          .WithNone<MarkedForDestruction>()
@@ -50,19 +49,27 @@ namespace DotsShooter.Damage.AreaDamage
                     continue;
                 }
 
+                var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
                 var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
                     var location = localTransform.ValueRO.Position;
-                    var entities = grid.GetEntitiesInRadius(location, damage.ValueRO.Radius, localToWorld);
-                    for(int j = 0; j < entities.Length; j++)
+                    // var entities = grid.GetEntitiesInRadius(location, damage.ValueRO.Radius, localToWorld);
+                    
+                    var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
+                    if (physics.OverlapSphere(location, damage.ValueRO.Radius, ref overlapHits,
+                            damage.ValueRO.CollisionFilter))
                     {
-                        var other = entities[j];
-                        if (_bufferLookup.HasBuffer(other))
+                        for(int j = 0; j < overlapHits.Length; j++)
                         {
-                            _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
+                            var other = overlapHits[j].Entity;
+                            if (_bufferLookup.HasBuffer(other))
+                            {
+                                _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
+                            }
                         }
                     }
+                        
                     // Destroy the bullet
                     markedForDestructionLookup.SetComponentEnabled(entity, true);
                 }
