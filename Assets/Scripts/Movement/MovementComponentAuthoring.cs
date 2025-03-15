@@ -1,5 +1,6 @@
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics.GraphicsIntegration;
 using UnityEngine;
 
 namespace DotsShooter
@@ -28,6 +29,7 @@ namespace DotsShooter
                     Direction = authoring.initialDirection
                 };
                 AddComponent(entity, data);
+                AddComponent(entity, new PhysicsGraphicalSmoothing{ ApplySmoothing = 1});
             }
         }
     }
