@@ -33,11 +33,11 @@ namespace DotsShooter.Damage.AreaDamage
         {
             _localToWorldLookup.Update(ref state);
 
-            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
             _bufferLookup.Update(ref state);
             foreach (var (damage, localTransform, entity) in SystemAPI
                          .Query<RefRO<AreaDamage>, RefRO<LocalTransform>>()
-                         .WithNone<MarkedForDestruction>()
+                         .WithNone<DestroyNextFrameTag>()
                          .WithEntityAccess())
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))

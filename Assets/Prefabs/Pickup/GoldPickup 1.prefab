@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5618823202070361083}
   - component: {fileID: 6211289272200666987}
   - component: {fileID: 4025952751771196441}
+  - component: {fileID: 118978467800794518}
   m_Layer: 0
   m_Name: GoldPickup 1
   m_TagString: Untagged
@@ -255,6 +256,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinType: 0
+--- !u!114 &118978467800794518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580659186050169693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4779125536709205564
 GameObject:
   m_ObjectHideFlags: 0

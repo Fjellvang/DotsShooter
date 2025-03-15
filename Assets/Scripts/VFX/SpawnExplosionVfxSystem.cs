@@ -1,4 +1,5 @@
-﻿using DotsShooter.Damage.AreaDamage;
+﻿using DotsShooter.Common;
+using DotsShooter.Damage.AreaDamage;
 using DotsShooter.Destruction;
 using Unity.Burst;
 using Unity.Collections;
@@ -11,10 +12,11 @@ using UnityEngine.UI;
 namespace DotsShooter.VFX
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(EffectsSystemGroup))]
     public partial struct SpawnExplosionVfxSystem : ISystem
     {
         [BurstCompile]
-        void OnCreate(ref SystemState state)
+        public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<SpawnExplosionVfx>();
@@ -22,7 +24,7 @@ namespace DotsShooter.VFX
         }
 
         [BurstCompile]
-        void OnUpdate(ref SystemState state)
+        public void OnUpdate(ref SystemState state)
         {
             var explosionSpawner = SystemAPI.GetSingleton<SpawnExplosionVfx>();
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -39,7 +41,7 @@ namespace DotsShooter.VFX
         }
     }
     
-    [WithAll(typeof(DestroyNextFrame))]
+    [WithAll(typeof(DestroyNextFrameTag))]
     public partial struct Job : IJobEntity
     {
         public SpawnExplosionVfx ExplosionSpawner;

@@ -10,10 +10,10 @@ namespace DotsShooter.Destruction
             public override void Bake(DestroyableAuthor authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent<DestroyNextFrame>(entity);
-                AddComponent<MarkedForDestruction>(entity);
-                SetComponentEnabled<DestroyNextFrame>(entity, false);
-                SetComponentEnabled<MarkedForDestruction>(entity, false);
+                AddComponent<DestroyNextFrameTag>(entity);
+                // AddComponent<MarkedForDestruction>(entity);
+                SetComponentEnabled<DestroyNextFrameTag>(entity, false);
+                // SetComponentEnabled<MarkedForDestruction>(entity, false);
             }
         }
     }

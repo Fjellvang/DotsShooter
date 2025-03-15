@@ -6,6 +6,7 @@ using Unity.Transforms;
 namespace DotsShooter
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct LifeTimeSystem : ISystem
     {
         public void OnCreate(ref SystemState state)
@@ -24,7 +25,7 @@ namespace DotsShooter
                 lifeTime.ValueRW.LifeTime -= deltaTime;
                 if (lifeTime.ValueRO.LifeTime <= 0)
                 {
-                    SystemAPI.SetComponentEnabled<MarkedForDestruction>(entity, true);
+                    SystemAPI.SetComponentEnabled<DestroyNextFrameTag>(entity, true);
                 }
             }
         }

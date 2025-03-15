@@ -3,9 +3,6 @@ using DotsShooter.SimpleCollision;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Transforms;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace DotsShooter.Damage
 {
@@ -34,7 +31,7 @@ namespace DotsShooter.Damage
         public void OnUpdate(ref SystemState state)
         {
             _bufferLookup.Update(ref state);
-            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
+            var markedForDestructionLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
 
 
             // var handleDamageJob = new HandleDamageJob()

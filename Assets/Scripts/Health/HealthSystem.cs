@@ -25,19 +25,19 @@ namespace DotsShooter.Health
         public void OnUpdate(ref SystemState state)
         {
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
-            var markedForDestructionLookup = SystemAPI.GetComponentLookup<MarkedForDestruction>();
+            var destroyNextFrameLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
             
             // TODO: Refactor this to parallel jobs?
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())
             {
-                HandleDamage(ref state, entity, health, ref markedForDestructionLookup, ref bufferLookup);
+                HandleDamage(ref state, entity, health, ref destroyNextFrameLookup, ref bufferLookup);
             }
             
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithAll<PlayerTag>())
             {
-                if (HandleDamage(ref state, entity, health, ref markedForDestructionLookup, ref bufferLookup))
+                if (HandleDamage(ref state, entity, health, ref destroyNextFrameLookup, ref bufferLookup))
                 {
                     SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, true);
                 }
@@ -50,14 +50,14 @@ namespace DotsShooter.Health
         /// <param name="state"></param>
         /// <param name="entity"></param>
         /// <param name="health"></param>
-        /// <param name="markedForDestructionLookup"></param>
+        /// <param name="destroyNextFrameLookup"></param>
         /// <param name="damageBufferFromEntity"></param>
         /// <returns></returns>
         [BurstCompile]
         private static bool HandleDamage(ref SystemState state, 
             in Entity entity, 
             in RefRW<HealthComponent> health, 
-            ref ComponentLookup<MarkedForDestruction> markedForDestructionLookup,
+            ref ComponentLookup<DestroyNextFrameTag> destroyNextFrameLookup,
             ref BufferLookup<DamageData> damageBufferFromEntity
             )
         {
@@ -76,7 +76,7 @@ namespace DotsShooter.Health
                 didDamage = true;
                 if (health.ValueRW.Health <= 0)
                 {
-                    markedForDestructionLookup.SetComponentEnabled(entity, true);
+                    destroyNextFrameLookup.SetComponentEnabled(entity, true);
                 }
             }
             

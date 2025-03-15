@@ -5,6 +5,7 @@ using Unity.Entities;
 
 namespace DotsShooter.Pickup
 {
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct GoldPickupSystem : ISystem
     {
         [BurstCompile]
@@ -12,7 +13,7 @@ namespace DotsShooter.Pickup
         {
             foreach (var (_, entity) in SystemAPI.Query<RefRO<GoldPickupComponent>>()
                          .WithEntityAccess()
-                         .WithNone<MarkedForDestruction>()
+                         .WithNone<DestroyNextFrameTag>()
                      )
             {
                 if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
@@ -23,7 +24,7 @@ namespace DotsShooter.Pickup
                 var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
                 if (simpleCollisionBuffer.Length > 0)
                 {
-                    SystemAPI.SetComponentEnabled<MarkedForDestruction>(entity, true);
+                    SystemAPI.SetComponentEnabled<DestroyNextFrameTag>(entity, true);
                 }
             }
         }

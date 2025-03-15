@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DotsShooter
 {
+    [RequireComponent(typeof(DestroyableAuthor))]
     public class LifeTimeComponentAuthoring : MonoBehaviour
     {
         public float LifeTime = 1f;
@@ -14,10 +15,6 @@ namespace DotsShooter
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new LifeTimeComponent { LifeTime = authoring.LifeTime });
-                AddComponent<MarkedForDestruction>(entity);
-                AddComponent<DestroyNextFrame>(entity);
-                SetComponentEnabled<MarkedForDestruction>(entity, false);
-                SetComponentEnabled<DestroyNextFrame>(entity, false);
             }
         }
     }

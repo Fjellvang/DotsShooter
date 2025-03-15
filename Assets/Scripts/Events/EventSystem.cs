@@ -1,4 +1,5 @@
 using System;
+using DotsShooter.Common;
 using DotsShooter.Destruction;
 using DotsShooter.Pickup;
 using DotsShooter.Player;
@@ -10,7 +11,7 @@ using Unity.Transforms;
 
 namespace DotsShooter.Events
 {
-    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    [UpdateInGroup(typeof(EffectsSystemGroup))]
     public partial class EventSystem : SystemBase
     {
         public event Action<float3> OnPlayerDied;
@@ -51,19 +52,19 @@ namespace DotsShooter.Events
 
             foreach (var localTransform in SystemAPI.Query<RefRO<LocalTransform>>()
                          .WithAll<PlayerTag>()
-                         .WithAll<DestroyNextFrame>())
+                         .WithAll<DestroyNextFrameTag>())
             {
                 OnPlayerDied?.Invoke(localTransform.ValueRO.Position);
             }
 
             foreach (var _ in SystemAPI.Query<RefRO<EnemyTag>>()
-                         .WithAll<DestroyNextFrame>())
+                         .WithAll<DestroyNextFrameTag>())
             {
                 OnEnemyDied?.Invoke();
             }
 
             foreach (var component in SystemAPI.Query<RefRO<GoldPickupComponent>>()
-                         .WithAll<DestroyNextFrame>())
+                         .WithAll<DestroyNextFrameTag>())
             {
                 OnGoldPickup?.Invoke(component.ValueRO.Value);
             }

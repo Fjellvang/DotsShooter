@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 6919299950219275554}
   - component: {fileID: 8816393136907486756}
   - component: {fileID: 524633817717487512}
+  - component: {fileID: 2405194953659462257}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -514,6 +515,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 1
   projectilePrefab: {fileID: 6690577022243745467, guid: cfb21862c70ba2c44bba62c3da645cff, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 20
   spawnOffset: 1
   BulletCount: 0
+--- !u!114 &2405194953659462257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

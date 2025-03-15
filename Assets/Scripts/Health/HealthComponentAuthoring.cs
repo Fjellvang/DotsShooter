@@ -11,6 +11,7 @@ namespace DotsShooter.Health
         public float MaxHealth;
     }
 
+    [RequireComponent(typeof(DestroyableAuthor))]
     public class HealthComponentAuthoring : MonoBehaviour
     {
         [SerializeField] 
@@ -25,12 +26,6 @@ namespace DotsShooter.Health
                     Health = authoring.health,
                     MaxHealth = authoring.health
                 });
-                
-                AddComponent<MarkedForDestruction>(entity);
-                AddComponent<DestroyNextFrame>(entity);
-                SetComponentEnabled<MarkedForDestruction>(entity, false);
-                SetComponentEnabled<DestroyNextFrame>(entity, false);
-
                 AddBuffer<DamageData>(entity);
             }
         }

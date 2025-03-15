@@ -2,10 +2,10 @@
 using Game.Logic.GameConfigs;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DotsShooter.Pickup
 {
+    [RequireComponent(typeof(DestroyableAuthor))]
     public class GoldPickupComponentAuthoring : MonoBehaviour
     {
         [SerializeField] 
@@ -17,10 +17,6 @@ namespace DotsShooter.Pickup
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new GoldPickupComponent { Value = authoring.coinType });
-                AddComponent<MarkedForDestruction>(entity);
-                AddComponent<DestroyNextFrame>(entity);
-                SetComponentEnabled<MarkedForDestruction>(entity, false);
-                SetComponentEnabled<DestroyNextFrame>(entity, false);
             }
         }
     }

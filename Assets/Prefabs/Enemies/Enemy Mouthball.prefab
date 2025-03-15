@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 8595309834285277119}
   - component: {fileID: -2160789984755854971}
   - component: {fileID: 4568269927197874877}
+  - component: {fileID: 2405194953659462257}
   m_Layer: 0
   m_Name: Enemy Mouthball
   m_TagString: Untagged
@@ -301,7 +302,7 @@ MonoBehaviour:
     m_CollidesWithCategories:
       m_Override: 0
       m_Value:
-        Category00: 0
+        Category00: 1
         Category01: 1
         Category02: 0
         Category03: 0
@@ -461,3 +462,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1580659186050169693, guid: d5917620c631b9148a46f86958dbe769, type: 3}
+--- !u!114 &2405194953659462257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
