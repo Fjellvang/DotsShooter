@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb76090c75d748beaa3bcc4652560b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 1
   initialDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &305077072983973601
 MonoBehaviour:
@@ -360,9 +360,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MotionType: 0
   m_Smoothing: 0
-  m_Mass: 1
-  m_LinearDamping: 0.01
-  m_AngularDamping: 0.05
+  m_Mass: 50
+  m_LinearDamping: Infinity
+  m_AngularDamping: Infinity
   m_InitialLinearVelocity:
     x: 0
     y: 0

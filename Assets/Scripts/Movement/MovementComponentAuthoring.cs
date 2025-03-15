@@ -24,7 +24,7 @@ namespace DotsShooter
                 
                 var data = new MovementComponent
                 {
-                    Speed = authoring.speed,
+                    Speed = authoring.speed, // For the player this is overriden by gameconfigs..
                     Direction = authoring.initialDirection
                 };
                 AddComponent(entity, data);

@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
+using Unity.Physics;
 
 namespace DotsShooter
 {
@@ -24,7 +25,6 @@ namespace DotsShooter
             // Schedule the job
             new MovementJob
             {
-                DeltaTime = deltaTime
             }.ScheduleParallel();
         }
     }
@@ -32,13 +32,11 @@ namespace DotsShooter
     [BurstCompile]
     public partial struct MovementJob : IJobEntity
     {
-        public float DeltaTime;
-        
         [BurstCompile]
-        public void Execute(ref LocalTransform transform, in MovementComponent movementComponent)
+        public void Execute(in MovementComponent movementComponent, ref PhysicsVelocity physicsVelocity)
         {
-            var direction = movementComponent.Direction * movementComponent.Speed * DeltaTime;
-            transform.Position += direction;
+            var direction = movementComponent.Direction * movementComponent.Speed;
+            physicsVelocity.Linear += direction;
         }
     }
 }
