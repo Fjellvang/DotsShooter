@@ -1,18 +1,14 @@
 ﻿using DotsShooter.Player;
-using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
-using Grid = DotsShooter.SpatialPartitioning.Grid;
 
 namespace DotsShooter
 {
     [UpdateBefore(typeof(ShootingSystem))]
-    [UpdateAfter(typeof(UpdateGridSystem))]
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct TargetingSystem : ISystem
     {

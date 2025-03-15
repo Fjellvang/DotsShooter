@@ -1,15 +1,11 @@
 ﻿using DotsShooter.Destruction;
 using DotsShooter.Health;
 using DotsShooter.SimpleCollision;
-using DotsShooter.SpatialPartitioning;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
-using Grid = DotsShooter.SpatialPartitioning.Grid;
 
 namespace DotsShooter.Damage.AreaDamage
 {
