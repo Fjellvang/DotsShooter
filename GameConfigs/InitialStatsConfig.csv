@@ -1,5 +1,5 @@
 Id #key,InitialValue
-MoveSpeed,2.5
+MoveSpeed,5
 AttackSpeed,0.45
 Damage,2
 Health,100

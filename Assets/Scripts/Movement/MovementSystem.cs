@@ -36,7 +36,7 @@ namespace DotsShooter
         public void Execute(in MovementComponent movementComponent, ref PhysicsVelocity physicsVelocity)
         {
             var direction = movementComponent.Direction * movementComponent.Speed;
-            physicsVelocity.Linear += direction;
+            physicsVelocity.Linear = direction;
         }
     }
 }
