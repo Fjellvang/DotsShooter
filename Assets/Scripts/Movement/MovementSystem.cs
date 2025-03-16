@@ -1,9 +1,6 @@
 using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Transforms;
-using Unity.Mathematics;
-using Unity.Collections;
 using Unity.Physics;
 
 namespace DotsShooter
@@ -22,16 +19,13 @@ namespace DotsShooter
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            var deltaTime = SystemAPI.Time.DeltaTime;
-            
-            // Schedule the job
-            new MovementJob
-            {
-            }.ScheduleParallel();
+            new MovementJob().ScheduleParallel();
+            new MovementJobWithModifications().ScheduleParallel();
         }
     }
 
     [BurstCompile]
+    [WithNone(typeof(PlayerTag))]
     public partial struct MovementJob : IJobEntity
     {
         [BurstCompile]
