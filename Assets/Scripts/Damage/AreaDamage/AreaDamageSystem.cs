@@ -44,7 +44,6 @@ namespace DotsShooter.Damage.AreaDamage
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
                     var location = localTransform.ValueRO.Position;
-                    // var entities = grid.GetEntitiesInRadius(location, damage.ValueRO.Radius, localToWorld);
                     
                     var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
                     if (physics.OverlapSphere(location, damage.ValueRO.Radius, ref overlapHits,
