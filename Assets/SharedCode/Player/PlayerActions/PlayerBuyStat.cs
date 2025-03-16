@@ -9,11 +9,12 @@ namespace Game.Logic.PlayerActions
     public enum PlayerStat
     {
         MoveSpeed = 0,
-        AttackSpeed = 10,
+        Cooldown = 10,
         Damage = 20,
         Health = 30,
         Range = 40,
-        ExplosionRadius = 50
+        ExplosionRadius = 50,
+        ExtraProjectile = 60,
     }
     
     [ModelAction(ActionCodes.PlayerBuyStat)]
@@ -44,8 +45,8 @@ namespace Game.Logic.PlayerActions
                     case PlayerStat.MoveSpeed:
                         player.GameStats.MoveSpeed = CalculateNewStatValue(config, player.GameStats.MoveSpeed);
                         break;
-                    case PlayerStat.AttackSpeed:
-                        player.GameStats.AttackSpeed = CalculateNewStatValue(config, player.GameStats.AttackSpeed);
+                    case PlayerStat.Cooldown:
+                        player.GameStats.Cooldown = CalculateNewStatValue(config, player.GameStats.Cooldown);
                         break;
                     case PlayerStat.Damage:
                         player.GameStats.Damage = CalculateNewStatValue(config, player.GameStats.Damage);
@@ -58,6 +59,10 @@ namespace Game.Logic.PlayerActions
                         break;
                     case PlayerStat.ExplosionRadius:
                         player.GameStats.ExplosionRadius = CalculateNewStatValue(config, player.GameStats.ExplosionRadius);
+                        break;
+                    case PlayerStat.ExtraProjectile:
+                        //TODO: this is silly and a hack. 
+                        player.GameStats.ExtraProjectiles = (int)CalculateNewStatValue(config, F64.FromInt(player.GameStats.ExtraProjectiles)).Double;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

@@ -9,17 +9,19 @@ namespace Game.Logic
     public class PlayerStatsModel
     {
         [MetaMember(1)] // These could be implicit, but for now we're explicit to know whats happening.
-        public F64 MoveSpeed = F64.FromFloat(5);
+        public F64 MoveSpeed = F64.FromFloat(1);
         [MetaMember(2)]
-        public F64 AttackSpeed = F64.FromFloat(1);
+        public F64 Cooldown = F64.FromFloat(1);
         [MetaMember(3)]
         public F64 Damage = F64.FromFloat(1f);
         [MetaMember(4)]
         public F64 Health = F64.FromFloat(100f); //TODO: Implement health system
         [MetaMember(5)]
-        public F64 Range = F64.FromFloat(10f);
+        public F64 Range = F64.FromFloat(1f);
         [MetaMember(6)]
-        public F64 ExplosionRadius = F64.FromFloat(0.25f);
+        public F64 ExplosionRadius = F64.FromFloat(1f);
+        [MetaMember(7)] 
+        public int ExtraProjectiles = 0;
 
         public PlayerStatsModel()
         {
@@ -29,7 +31,7 @@ namespace Game.Logic
         public void SetInitialStats(SharedGameConfig gameConfig)
         {
             MoveSpeed = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.MoveSpeed.ToString())].InitialValue);
-            AttackSpeed = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.AttackSpeed.ToString())].InitialValue);
+            Cooldown = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Cooldown.ToString())].InitialValue);
             Damage = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Damage.ToString())].InitialValue);
             Health = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Health.ToString())].InitialValue);
             Range = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Range.ToString())].InitialValue);

@@ -1,4 +1,5 @@
 ﻿using DotsShooter.Damage;
+using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -49,16 +50,17 @@ namespace DotsShooter.Weapons.Burst
                  if (weaponState.ValueRW.NextAttackTimer > 0) { continue; }
                  
                  var position = SystemAPI.GetComponent<LocalTransform>(parent.ValueRO.Value).Position;
+                 var statModifications = SystemAPI.GetComponent<PlayerStatModifications>(parent.ValueRO.Value);
                  var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
-                 var closestDirection = Helpers.FindClosestDirection(physics, position, weaponData.ValueRO, overlapHits);
+                 var closestDirection = Helpers.FindClosestDirection(physics, position, weaponData.ValueRO, statModifications, overlapHits);
 
                  if (closestDirection.Equals(Vector3.zero)) { continue; }
                  // spawn bullet.
-                 SpawnBullet(position, closestDirection, 0, projectilePrefab.ValueRO, weaponData.ValueRO, ecb);
+                 SpawnBullet(position, closestDirection, statModifications, projectilePrefab.ValueRO, weaponData.ValueRO, ecb);
 
                  weaponState.ValueRW.NextAttackTimer = weaponData.ValueRO.TimeBetweenShots;
                  weaponState.ValueRW.AttackCounter++;
-                 var numberOfAttacks = weaponData.ValueRO.AttackCount; // TODO: Make this effected by player stats
+                 var numberOfAttacks = weaponData.ValueRO.AttackCount + statModifications.ExtraProjectiles; 
                  if (weaponState.ValueRW.AttackCounter < numberOfAttacks) { continue; }
                  
                  weaponState.ValueRW.AttackCounter = 0;
@@ -69,10 +71,10 @@ namespace DotsShooter.Weapons.Burst
 
 
          
-         private static void SpawnBullet(float3 position, float3 direction, float spawnOffset,
+         private static void SpawnBullet(float3 position, float3 direction, PlayerStatModifications statModifications,
              WeaponProjectilePrefab shootingComponent, WeaponData weaponData, EntityCommandBuffer ecb)
          {
-             var bulletPosition = position + direction * spawnOffset;
+             var bulletPosition = position + direction;
              var bulletRotation = quaternion.Euler(0, 0, math.atan2(direction.y, direction.x));
              var bullet = ecb.Instantiate(shootingComponent.Prefab);
              var transform = LocalTransform.FromPositionRotation(bulletPosition, bulletRotation);
@@ -84,7 +86,7 @@ namespace DotsShooter.Weapons.Burst
              });
              ecb.SetComponent(bullet, new DamageOnCollision()
              {
-                 Damage = weaponData.Damage,
+                 Damage = weaponData.Damage * statModifications.DamageMultiplier,
                  DestroyOnCollision = true
              });
          }

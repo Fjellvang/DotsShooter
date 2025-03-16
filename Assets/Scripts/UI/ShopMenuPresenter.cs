@@ -21,6 +21,7 @@ namespace DotsShooter.UI
         private PowerUpButtonWithText _damagePowerupButton;
         private PowerUpButtonWithText _attackSpeedPowerupButton;
         private PowerUpButtonWithText _rangePowerupButton;
+        private PowerUpButtonWithText _extraProjectilePowerupButton;
         
         private void Awake()
         {
@@ -35,6 +36,7 @@ namespace DotsShooter.UI
             _damagePowerupButton = _root.Q<PowerUpButtonWithText>("Damage");
             _attackSpeedPowerupButton = _root.Q<PowerUpButtonWithText>("AttackSpeed");
             _rangePowerupButton = _root.Q<PowerUpButtonWithText>("Range");
+            _extraProjectilePowerupButton = _root.Q<PowerUpButtonWithText>("ExtraProjectile");
         }
 
         private void OnEnable()
@@ -47,6 +49,7 @@ namespace DotsShooter.UI
             _damagePowerupButton.Button.clicked += OnDamagePowerupButtonClicked;
             _attackSpeedPowerupButton.Button.clicked += OnAttackSpeedPowerupButtonClicked;
             _rangePowerupButton.Button.clicked += OnRangePowerupButtonClicked;
+            _extraProjectilePowerupButton.Button.clicked += OnExtraProjectilePowerupButtonClicked;
             UpdateLabels();
         }
         public void UpdateLabels()
@@ -55,8 +58,9 @@ namespace DotsShooter.UI
             _radiusPowerupButton.Value = playerStats.ExplosionRadius.Float;
             _moveSpeedPowerupButton.Value = playerStats.MoveSpeed.Float;
             _damagePowerupButton.Value = playerStats.Damage.Float;
-            _attackSpeedPowerupButton.Value = playerStats.AttackSpeed.Float;
+            _attackSpeedPowerupButton.Value = playerStats.Cooldown.Float;
             _rangePowerupButton.Value = playerStats.Range.Float;
+            _extraProjectilePowerupButton.Value = playerStats.ExtraProjectiles;
         }
 
         private void OnRangePowerupButtonClicked()
@@ -67,7 +71,7 @@ namespace DotsShooter.UI
 
         private void OnAttackSpeedPowerupButtonClicked()
         {
-            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.AttackSpeed));
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.Cooldown));
         }
 
         private void OnDamagePowerupButtonClicked()
@@ -83,6 +87,11 @@ namespace DotsShooter.UI
         private void OnRadiusPowerupButtonClicked()
         {
             MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.ExplosionRadius));
+        }
+        
+        private void OnExtraProjectilePowerupButtonClicked()
+        {
+            MetaplayClient.PlayerContext.ExecuteAction(new PlayerBuyStat(PlayerStat.ExtraProjectile));
         }
 
         private void OnContinueButtonClicked()

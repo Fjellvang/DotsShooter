@@ -24,8 +24,8 @@ namespace Game.Logic.GameConfigs
         public void PostLoad()
         {
             var parsed = Enum.TryParse<PlayerStat>(Id.Value, out var _);
-            MetaDebug.Assert(parsed, "ShopStatConfig {0} has invalid Id", Id);
-            MetaDebug.Assert(InitialValue > 0, "ShopStatConfig {0} has negative or zero InitialValue", Id);
+            MetaDebug.Assert(parsed, "InitialStatsConfig {0} has invalid Id", Id);
+            MetaDebug.Assert(InitialValue > 0, "InitialStatsConfig {0} has negative or zero InitialValue", Id);
         }
     }
 }

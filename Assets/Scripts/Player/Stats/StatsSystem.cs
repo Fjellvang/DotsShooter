@@ -1,39 +1,46 @@
 ﻿using DotsShooter.Metaplay;
+using Unity.Burst;
 using Unity.Entities;
 
 namespace DotsShooter.Player
 {
-    public struct StatsNeedsInitialization : IEnableableComponent, IComponentData
+    public struct StatsNeedsInitializationFlag : IEnableableComponent, IComponentData
     {
-
+    }
+    public struct StatsInitializedFlag : IEnableableComponent, IComponentData
+    {
     }
 
     [UpdateInGroup(typeof(InitializationSystemGroup))]
-    public partial class StatsSystem : SystemBase
+    public partial struct StatsSystem : ISystem
     {
-
-        protected override void OnCreate()
+        public void OnCreate(ref SystemState state)
         {
-            RequireForUpdate<StatsNeedsInitialization>();
+            state.RequireForUpdate<StatsNeedsInitializationFlag>();
         }
 
 
-        protected override void OnUpdate()
+        public void OnUpdate(ref SystemState state)
         {
-        //     var statsData = MetaplayClient.PlayerModel.GameStats;
-        //     foreach (var (autoShooting, movement, autoTargetingPlayer, entity) in
-        //              SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementSpeedComponent>, RefRW<AutoTargetingPlayer>>()
-        //                  .WithAll<PlayerTag, StatsNeedsInitialization>()
-        //                  .WithEntityAccess())
-        //     {
-        //         autoShooting.ValueRW.ProjectileDamage = statsData.Damage.Float;
-        //         autoShooting.ValueRW.Cooldown = statsData.AttackSpeed.Float;
-        //         autoShooting.ValueRW.ProjectileRadius = statsData.ExplosionRadius.Float;
-        //         movement.ValueRW.Speed = statsData.MoveSpeed.Float;
-        //         autoTargetingPlayer.ValueRW.Range = statsData.Range.Float;
-        //         
-        //         SystemAPI.SetComponentEnabled<StatsNeedsInitialization>(entity, false);
-        //     }
+            var statsData = MetaplayClient.PlayerModel.GameStats;
+            var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
+            foreach (var (statModifications, entity) in
+                     SystemAPI.Query<RefRW<PlayerStatModifications>>()
+                         .WithAll<PlayerTag, StatsNeedsInitializationFlag>()
+                         .WithEntityAccess())
+            {
+                statModifications.ValueRW.MoveSpeedMultiplier = statsData.MoveSpeed.Float;
+                statModifications.ValueRW.DamageMultiplier = statsData.Damage.Float;
+                statModifications.ValueRW.CooldownMultiplier = statsData.Cooldown.Float;
+                statModifications.ValueRW.RangeMultiplier = statsData.Range.Float;
+                // statModifications.ValueRW.Health = statsData.Health.Float;
+                statModifications.ValueRW.AreaOfEffectMultiplier = statsData.ExplosionRadius.Float;
+                statModifications.ValueRW.ExtraProjectiles = statsData.ExtraProjectiles;
+            
+                SystemAPI.SetComponentEnabled<StatsNeedsInitializationFlag>(entity, false);
+                ecb.AddComponent<StatsInitializedFlag>(entity);
+            }
+            ecb.Playback(state.EntityManager);
         }
     }
 }

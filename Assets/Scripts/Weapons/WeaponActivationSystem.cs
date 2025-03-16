@@ -1,4 +1,5 @@
 using DotsShooter.Common;
+using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
@@ -8,6 +9,10 @@ namespace DotsShooter.Weapons
     [UpdateInGroup(typeof(AttackSystemGroup))]
     public partial struct WeaponActivationSystem : ISystem
     {
+        public void OnCreate(ref SystemState state)
+        {
+            state.RequireForUpdate<StatsInitializedFlag>();
+        }
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -22,8 +27,8 @@ namespace DotsShooter.Weapons
                 SystemAPI.SetComponentEnabled<WeaponActiveFlag>(entity, true);
                 
                 // TODO: Introduce modifiers for attack speed
-                // var cooldownModifier = SystemAPI.GetComponent<CharacterStatModificationState>(parent.Value).AttackCooldown;
-                weaponState.ValueRW.CooldownTimer = weaponData.ValueRO.Cooldown;// * cooldownModifier;
+                var cooldownModifier = SystemAPI.GetComponent<PlayerStatModifications>(parent.ValueRO.Value).CooldownMultiplier;
+                weaponState.ValueRW.CooldownTimer = weaponData.ValueRO.Cooldown * (cooldownModifier);
             }
         }
     }

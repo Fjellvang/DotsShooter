@@ -16,7 +16,8 @@ namespace DotsShooter.Player
                 AddComponent<PlayerTag>(entity);
                 AddComponent<PlayerInput>(entity);
                 AddComponent<PlayerWasDamaged>(entity);
-                AddComponent<StatsNeedsInitialization>(entity);
+                AddComponent<PlayerStatModifications>(entity);
+                AddComponent<StatsNeedsInitializationFlag>(entity);
                 SetComponentEnabled<PlayerWasDamaged>(entity, false);
             }
         }

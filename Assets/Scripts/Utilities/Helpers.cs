@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DotsShooter.Events;
+using DotsShooter.Player;
 using DotsShooter.Weapons;
 using Unity.Collections;
 using Unity.Entities;
@@ -43,11 +44,12 @@ namespace DotsShooter
             return eventSystem != null;
         }
 
-        public static float3 FindClosestDirection(PhysicsWorldSingleton physics, in float3 position, in WeaponData weaponData,
+        public static float3 FindClosestDirection(PhysicsWorldSingleton physics, in float3 position, in WeaponData weaponData, in PlayerStatModifications statModifications,
             NativeList<DistanceHit> overlapHits)
         {
             var closest = float3.zero;
-            if (physics.OverlapSphere(position, weaponData.Range, ref overlapHits, weaponData.CollisionFilter))
+            var range = weaponData.Range * statModifications.RangeMultiplier;
+            if (physics.OverlapSphere(position, range, ref overlapHits, weaponData.CollisionFilter))
             {
                 var closestDistance = overlapHits[0].Distance;
                 var closestHit = overlapHits[0];

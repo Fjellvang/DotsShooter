@@ -486,6 +486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BurstWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 6931994510842999920, guid: 3c2a864352fa3114c8aee00227870e94, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

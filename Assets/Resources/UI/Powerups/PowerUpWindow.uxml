@@ -6,5 +6,6 @@
         <PowerUpButtonWithText value="1" name="MoveSpeed" label="Move speed" />
         <PowerUpButtonWithText value="1" name="AttackSpeed" label="Attack speed" />
         <PowerUpButtonWithText name="Range" label="Range&#10;" />
+        <PowerUpButtonWithText name="ExtraProjectile" label="Extra Projectile" />
     </engine:VisualElement>
 </engine:UXML>
