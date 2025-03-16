@@ -22,7 +22,7 @@ namespace DotsShooter.Player
         {
             var statsData = MetaplayClient.PlayerModel.GameStats;
             foreach (var (autoShooting, movement, autoTargetingPlayer, entity) in
-                     SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementComponent>, RefRW<AutoTargetingPlayer>>()
+                     SystemAPI.Query<RefRW<AutoShootingComponent>, RefRW<MovementSpeedComponent>, RefRW<AutoTargetingPlayer>>()
                          .WithAll<PlayerTag, StatsNeedsInitialization>()
                          .WithEntityAccess())
             {

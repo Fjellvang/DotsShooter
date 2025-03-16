@@ -15,9 +15,9 @@ namespace Unity.Rendering
             foreach (var (yDirectionOverride, parent, isFlipped, localTransform) 
                      in SystemAPI.Query<RefRW<yDirectionFloatOverride>, RefRO<Parent>, RefRW<IsFlipped>, RefRW<LocalTransform>>())
             {
-                if (!SystemAPI.HasComponent<MovementComponent>(parent.ValueRO.Value)) continue;
+                if (!SystemAPI.HasComponent<MovementDirectionComponent>(parent.ValueRO.Value)) continue;
                 
-                var movementComponent = SystemAPI.GetComponent<MovementComponent>(parent.ValueRO.Value);
+                var movementComponent = SystemAPI.GetComponent<MovementDirectionComponent>(parent.ValueRO.Value);
 
                 if (movementComponent.Direction.Equals(float3.zero))
                 {

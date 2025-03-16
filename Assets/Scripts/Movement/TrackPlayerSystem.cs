@@ -39,7 +39,7 @@ namespace DotsShooter
         public float3 PlayerPosition;
 
         [BurstCompile]
-        public void Execute(ref MovementComponent movement, in LocalTransform transform, in TrackPlayerComponent trackPlayer)
+        public void Execute(ref MovementDirectionComponent movement, in LocalTransform transform, in TrackPlayerComponent trackPlayer)
         {
             var direction = PlayerPosition - transform.Position;
             var distance = math.length(direction);

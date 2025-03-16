@@ -5,8 +5,12 @@ using UnityEngine;
 
 namespace DotsShooter
 {
-    public struct MovementComponent : IComponentData{
+    public struct MovementSpeedComponent : IComponentData {
         public float Speed;
+    }
+    
+    public struct MovementDirectionComponent : IComponentData
+    {
         public float3 Direction;
     }
 
@@ -23,11 +27,14 @@ namespace DotsShooter
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 
-                var data = new MovementComponent
+                var data = new MovementSpeedComponent
                 {
                     Speed = authoring.speed, // For the player this is overriden by gameconfigs..
-                    Direction = authoring.initialDirection
                 };
+                AddComponent(entity, new MovementDirectionComponent()
+                {
+                    Direction = authoring.initialDirection
+                });
                 AddComponent(entity, data);
                 AddComponent(entity, new PhysicsGraphicalSmoothing{ ApplySmoothing = 1});
             }

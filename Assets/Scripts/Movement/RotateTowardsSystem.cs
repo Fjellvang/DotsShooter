@@ -11,7 +11,7 @@ namespace DotsShooter
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<MovementComponent>();
+            state.RequireForUpdate<MovementDirectionComponent>();
             state.RequireForUpdate<RotateTowardsComponent>();
         }
 
@@ -34,7 +34,7 @@ namespace DotsShooter
         public float DeltaTime;
         
         [BurstCompile]
-        public void Execute(in MovementComponent movementComponent, ref LocalTransform transform, in RotateTowardsComponent rotateTowardsComponent)
+        public void Execute(in MovementDirectionComponent movementComponent, ref LocalTransform transform, in RotateTowardsComponent rotateTowardsComponent)
         {
             var direction = movementComponent.Direction;
             if (math.all(direction == float3.zero))

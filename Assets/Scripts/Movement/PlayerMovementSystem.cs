@@ -11,7 +11,7 @@ namespace DotsShooter
         public void OnUpdate(ref SystemState state)
         {
             foreach (var (playerInput, movement) in 
-                     SystemAPI.Query<RefRO<PlayerInput>, RefRW<MovementComponent>>())
+                     SystemAPI.Query<RefRO<PlayerInput>, RefRW<MovementDirectionComponent>>())
             {
                 movement.ValueRW.Direction = new float3(playerInput.ValueRO.Move.x, playerInput.ValueRO.Move.y, 0);
             }

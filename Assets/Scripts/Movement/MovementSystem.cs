@@ -14,7 +14,8 @@ namespace DotsShooter
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            state.RequireForUpdate<MovementComponent>();
+            state.RequireForUpdate<MovementSpeedComponent>();
+            state.RequireForUpdate<MovementDirectionComponent>();
         }
 
         [BurstCompile]
@@ -33,9 +34,9 @@ namespace DotsShooter
     public partial struct MovementJob : IJobEntity
     {
         [BurstCompile]
-        public void Execute(in MovementComponent movementComponent, ref PhysicsVelocity physicsVelocity)
+        public void Execute(in MovementDirectionComponent movementComponent, in MovementSpeedComponent speedComponent, ref PhysicsVelocity physicsVelocity)
         {
-            var direction = movementComponent.Direction * movementComponent.Speed;
+            var direction = movementComponent.Direction * speedComponent.Speed;
             physicsVelocity.Linear = direction;
         }
     }

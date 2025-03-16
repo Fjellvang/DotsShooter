@@ -7,14 +7,16 @@ namespace DotsShooter.Weapons
 {
     public class WeaponComponentAuthoring : MonoBehaviour
     {
-        public float TimeBetweenShots;
+        public float TimeBetweenShots = 0.25f;
         public GameObject ProjectilePrefab;
-        public int AttackCount;
-        public float Damage;
-        public float Range;
+        public int AttackCount = 1;
+        public float Damage = 1;
+        public float Range = 25f;
+        public float Cooldown = 2f;
         [Header("Collision Filter")]
         public PhysicsCategoryTags BelongsTo;
         public PhysicsCategoryTags CollidesWith;
+        public float AreaOfEffectRadius = 1f;
 
         public class WeaponComponentBaker : Baker<WeaponComponentAuthoring>
         {
@@ -30,14 +32,16 @@ namespace DotsShooter.Weapons
                         Range = authoring.Range,
                         CollisionFilter = new CollisionFilter
                         {
-                            BelongsTo = authoring.BelongsTo.Value,
-                            CollidesWith = authoring.CollidesWith.Value
-                        }
+                            BelongsTo = authoring.BelongsTo.Value, CollidesWith = authoring.CollidesWith.Value
+                        },
+                        Cooldown = authoring.Cooldown,
+                        AreaOfEffectRadius = authoring.AreaOfEffectRadius
                     });
                 AddComponent(entity, new WeaponActiveFlag());
                 AddComponent(entity, new WeaponProjectilePrefab 
                     { Prefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic) }
                 );
+                AddComponent(entity, new WeaponState());
             }
         }
     }

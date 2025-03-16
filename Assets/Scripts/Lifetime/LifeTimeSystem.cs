@@ -1,3 +1,4 @@
+using DotsShooter.Common;
 using DotsShooter.Destruction;
 using Unity.Burst;
 using Unity.Entities;
@@ -6,7 +7,7 @@ using Unity.Transforms;
 namespace DotsShooter
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(SimulationSystemGroup))]
+    [UpdateInGroup(typeof(AttackSystemGroup))]
     public partial struct LifeTimeSystem : ISystem
     {
         public void OnCreate(ref SystemState state)

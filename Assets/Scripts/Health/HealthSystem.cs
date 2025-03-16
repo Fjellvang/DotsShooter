@@ -1,4 +1,5 @@
-﻿using DotsShooter.Damage;
+﻿using DotsShooter.Common;
+using DotsShooter.Damage;
 using DotsShooter.Destruction;
 using DotsShooter.Player;
 using DotsShooter.SimpleCollision;
@@ -9,6 +10,7 @@ using Unity.Transforms;
 
 namespace DotsShooter.Health
 {
+    [UpdateInGroup(typeof(AttackSystemGroup))]
     [UpdateAfter(typeof(DamageOnCollisionSystem))]
     public partial struct HealthSystem : ISystem
     {

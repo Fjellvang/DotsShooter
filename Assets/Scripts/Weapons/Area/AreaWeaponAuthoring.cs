@@ -31,27 +31,37 @@ namespace DotsShooter.Weapons.Area
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
         }
 
-        [BurstCompile]
+        // [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
             var deltaTime = SystemAPI.Time.DeltaTime;
-            foreach (var (weaponData, weaponState, transform, projectilePrefab) 
-                     in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<LocalTransform>, RefRO<WeaponProjectilePrefab>>()
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
+            foreach (var (weaponData, weaponState,  projectilePrefab, parent, weaponActive) 
+                     in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<WeaponProjectilePrefab>, RefRO<Parent>, EnabledRefRW<WeaponActiveFlag>>()
                          .WithAll<AreaWeaponTag>())
-                
             {
                 weaponState.ValueRW.NextAttackTimer -= deltaTime;
-                if (weaponState.ValueRW.NextAttackTimer > 0) continue;
+                if (weaponState.ValueRW.NextAttackTimer > 0) { continue; }
                 
-                var position = transform.ValueRO.Position;
+                var position = SystemAPI.GetComponent<LocalTransform>(parent.ValueRO.Value).Position;
                 var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
                 var closestDirection = FindClosestDirection(physics, position, weaponData.ValueRO, overlapHits);
-                
+
+                if (closestDirection.Equals(Vector3.zero)) { continue; }
                 // spawn bullet.
-                // set next attacktimer if more than 0
+                SpawnBullet(position, closestDirection, 0, projectilePrefab.ValueRO, weaponData.ValueRO, ecb);
+
+                weaponState.ValueRW.NextAttackTimer = weaponData.ValueRO.TimeBetweenShots;
+                weaponState.ValueRW.AttackCounter++;
+                var numberOfAttacks = weaponData.ValueRO.AttackCount; // TODO: Make this effected by player stats
+                if (weaponState.ValueRW.AttackCounter < numberOfAttacks) { continue; }
+                
+                weaponState.ValueRW.AttackCounter = 0;
+                weaponActive.ValueRW = false;
             }
         }
 
@@ -76,33 +86,24 @@ namespace DotsShooter.Weapons.Area
             return closest;
         }
         
-        private static void SpawnBullet(float3 position, float3 direction, float spawnOffset, EntityCommandBuffer ecb,
-            AutoShootingComponent shootingComponent, ComponentLookup<AreaDamage> areaDamageLookup)
+        private static void SpawnBullet(float3 position, float3 direction, float spawnOffset,
+            WeaponProjectilePrefab shootingComponent, WeaponData weaponData, EntityCommandBuffer ecb)
         {
             var bulletPosition = position + direction * spawnOffset;
             var bulletRotation = quaternion.Euler(0, 0, math.atan2(direction.y, direction.x));
-            var bullet = ecb.Instantiate(shootingComponent.ProjectilePrefab);
-            ecb.SetComponent(bullet, new LocalTransform
-            {
-                Position = bulletPosition,
-                Rotation = bulletRotation,
-                Scale = 1
-            });
+            var bullet = ecb.Instantiate(shootingComponent.Prefab);
+            var transform = LocalTransform.FromPositionRotation(bulletPosition, bulletRotation);
             
-            ecb.SetComponent(bullet, new MovementComponent
+            ecb.SetComponent(bullet, transform);
+            ecb.SetComponent(bullet, new MovementDirectionComponent()
             {
                 Direction = direction,
-                Speed = shootingComponent.ProjectileSpeed
             });
-
-            var collisionFilter = areaDamageLookup.GetRefRO(shootingComponent.ProjectilePrefab).ValueRO.CollisionFilter;
-            
-            // TODO: this system is horrible and highly coupled. We should find another approach
             ecb.SetComponent(bullet, new AreaDamage()
             {
-                Damage = shootingComponent.ProjectileDamage,
-                Radius = shootingComponent.ProjectileRadius,
-                CollisionFilter = collisionFilter,
+                Damage = weaponData.Damage,
+                Radius = weaponData.AreaOfEffectRadius,
+                CollisionFilter = weaponData.CollisionFilter
             });
         }
     }

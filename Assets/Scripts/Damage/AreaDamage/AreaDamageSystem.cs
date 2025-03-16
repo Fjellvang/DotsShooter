@@ -1,4 +1,5 @@
-﻿using DotsShooter.Destruction;
+﻿using DotsShooter.Common;
+using DotsShooter.Destruction;
 using DotsShooter.Health;
 using DotsShooter.SimpleCollision;
 using Unity.Burst;
@@ -13,6 +14,8 @@ namespace DotsShooter.Damage.AreaDamage
     [UpdateAfter(typeof(SimpleCollisionSystem))]
     [UpdateBefore(typeof(HealthSystem))]
     [UpdateBefore(typeof(TransformSystemGroup))]
+    [UpdateInGroup(typeof(AttackSystemGroup))]
+
     public partial struct AreaDamageSystem : ISystem
     {
        private BufferLookup<DamageData> _bufferLookup;

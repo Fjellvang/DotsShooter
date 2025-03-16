@@ -30,8 +30,8 @@ namespace DotsShooter
         
             float deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var areadDamageLookup = SystemAPI.GetComponentLookup<AreaDamage>(true);
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
+            var areadDamageLookup = SystemAPI.GetComponentLookup<AreaDamage>(true);
             foreach (var (shooter, transform, entity) in 
                      SystemAPI.Query<RefRW<AutoShootingComponent>, RefRO<LocalTransform>>().WithEntityAccess())
             {
@@ -123,10 +123,9 @@ namespace DotsShooter
                 Scale = 1
             });
             
-            ecb.SetComponent(bullet, new MovementComponent
+            ecb.SetComponent(bullet, new MovementDirectionComponent()
             {
                 Direction = direction,
-                Speed = shootingComponent.ProjectileSpeed
             });
 
             var collisionFilter = areaDamageLookup.GetRefRO(shootingComponent.ProjectilePrefab).ValueRO.CollisionFilter;
