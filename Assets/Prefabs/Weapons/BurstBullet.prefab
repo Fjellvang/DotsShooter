@@ -102,8 +102,9 @@ GameObject:
   - component: {fileID: 6169405600835440756}
   - component: {fileID: 689732739352814627}
   - component: {fileID: 7096418219122707880}
+  - component: {fileID: 4543424598017625305}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BurstBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb76090c75d748beaa3bcc4652560b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 20
   initialDirection: {x: 1, y: 0, z: 0}
 --- !u!114 &3814272684719076615
 MonoBehaviour:
@@ -385,3 +386,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 5
   DestroyOnCollision: 1
+--- !u!114 &4543424598017625305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690577022243745467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

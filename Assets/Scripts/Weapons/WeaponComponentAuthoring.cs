@@ -13,10 +13,10 @@ namespace DotsShooter.Weapons
         public float Damage = 1;
         public float Range = 25f;
         public float Cooldown = 2f;
+        public float AreaOfEffectRadius = 1f;
         [Header("Collision Filter")]
         public PhysicsCategoryTags BelongsTo;
         public PhysicsCategoryTags CollidesWith;
-        public float AreaOfEffectRadius = 1f;
 
         public class WeaponComponentBaker : Baker<WeaponComponentAuthoring>
         {
@@ -38,6 +38,7 @@ namespace DotsShooter.Weapons
                         AreaOfEffectRadius = authoring.AreaOfEffectRadius
                     });
                 AddComponent(entity, new WeaponActiveFlag());
+                SetComponentEnabled<WeaponActiveFlag>(entity, false);
                 AddComponent(entity, new WeaponProjectilePrefab 
                     { Prefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic) }
                 );

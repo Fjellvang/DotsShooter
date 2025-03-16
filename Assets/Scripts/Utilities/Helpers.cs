@@ -1,6 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using DotsShooter.Events;
+using DotsShooter.Weapons;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 
 namespace DotsShooter
@@ -39,6 +43,26 @@ namespace DotsShooter
             return eventSystem != null;
         }
 
+        public static float3 FindClosestDirection(PhysicsWorldSingleton physics, in float3 position, in WeaponData weaponData,
+            NativeList<DistanceHit> overlapHits)
+        {
+            var closest = float3.zero;
+            if (physics.OverlapSphere(position, weaponData.Range, ref overlapHits, weaponData.CollisionFilter))
+            {
+                var closestDistance = overlapHits[0].Distance;
+                var closestHit = overlapHits[0];
+                for (int i = 1; i < overlapHits.Length; i++)
+                {
+                    if (!(overlapHits[i].Distance < closestDistance)) continue;
+                    
+                    closestDistance = overlapHits[i].Distance;
+                    closestHit = overlapHits[i];
+                }
+                closest = math.normalize(closestHit.Position - position);
+            }
+
+            return closest;
+        }
         public static bool TryGetSystem<T>([NotNullWhen(true)] out T system) where T : ComponentSystemBase
         {
             system = null;

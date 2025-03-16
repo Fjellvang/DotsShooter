@@ -20,6 +20,7 @@ namespace DotsShooter.Weapons
                 weaponState.ValueRW.CooldownTimer -= deltaTime;
                 if (weaponState.ValueRO.CooldownTimer > 0f) continue;
                 SystemAPI.SetComponentEnabled<WeaponActiveFlag>(entity, true);
+                
                 // TODO: Introduce modifiers for attack speed
                 // var cooldownModifier = SystemAPI.GetComponent<CharacterStatModificationState>(parent.Value).AttackCooldown;
                 weaponState.ValueRW.CooldownTimer = weaponData.ValueRO.Cooldown;// * cooldownModifier;

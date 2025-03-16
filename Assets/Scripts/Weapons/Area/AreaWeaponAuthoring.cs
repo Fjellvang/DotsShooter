@@ -30,11 +30,12 @@ namespace DotsShooter.Weapons.Area
     {
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<AreaWeaponTag>();
             state.RequireForUpdate<PhysicsWorldSingleton>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
         }
 
-        // [BurstCompile]
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
@@ -49,7 +50,7 @@ namespace DotsShooter.Weapons.Area
                 
                 var position = SystemAPI.GetComponent<LocalTransform>(parent.ValueRO.Value).Position;
                 var overlapHits = new NativeList<DistanceHit>(state.WorldUpdateAllocator);
-                var closestDirection = FindClosestDirection(physics, position, weaponData.ValueRO, overlapHits);
+                var closestDirection = Helpers.FindClosestDirection(physics, position, weaponData.ValueRO, overlapHits);
 
                 if (closestDirection.Equals(Vector3.zero)) { continue; }
                 // spawn bullet.
@@ -65,26 +66,6 @@ namespace DotsShooter.Weapons.Area
             }
         }
 
-        private static float3 FindClosestDirection(PhysicsWorldSingleton physics, in float3 position, in WeaponData weaponData,
-            NativeList<DistanceHit> overlapHits)
-        {
-            var closest = float3.zero;
-            if (physics.OverlapSphere(position, weaponData.Range, ref overlapHits, weaponData.CollisionFilter))
-            {
-                var closestDistance = overlapHits[0].Distance;
-                var closestHit = overlapHits[0];
-                for (int i = 1; i < overlapHits.Length; i++)
-                {
-                    if (!(overlapHits[i].Distance < closestDistance)) continue;
-                    
-                    closestDistance = overlapHits[i].Distance;
-                    closestHit = overlapHits[i];
-                }
-                closest = math.normalize(closestHit.Position - position);
-            }
-
-            return closest;
-        }
         
         private static void SpawnBullet(float3 position, float3 direction, float spawnOffset,
             WeaponProjectilePrefab shootingComponent, WeaponData weaponData, EntityCommandBuffer ecb)

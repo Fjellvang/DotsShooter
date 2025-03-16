@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1963107061037832406
+--- !u!1 &6931994510842999920
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7136940855476643222}
-  - component: {fileID: 6926663675861286993}
-  - component: {fileID: 7552888594842650567}
+  - component: {fileID: 4227740789308463139}
+  - component: {fileID: 804463503947350000}
+  - component: {fileID: 7326026417262962786}
   m_Layer: 0
-  m_Name: AreaBulletWeapon
+  m_Name: BurstWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7136940855476643222
+--- !u!4 &4227740789308463139
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963107061037832406}
+  m_GameObject: {fileID: 6931994510842999920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,25 +33,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6926663675861286993
+--- !u!114 &804463503947350000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963107061037832406}
+  m_GameObject: {fileID: 6931994510842999920}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7a9b52eeb424feabb0edb8c3b156c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeBetweenShots: 0.1
-  ProjectilePrefab: {fileID: 6690577022243745467, guid: cfb21862c70ba2c44bba62c3da645cff, type: 3}
-  AttackCount: 1
-  Damage: 6
-  Range: 50
-  Cooldown: 5
-  AreaOfEffectRadius: 3
+  TimeBetweenShots: 0.05
+  ProjectilePrefab: {fileID: 6690577022243745467, guid: 2c671f9574fd68c4b9feb81c84df6465, type: 3}
+  AttackCount: 3
+  Damage: 2
+  Range: 15
+  Cooldown: 2
+  AreaOfEffectRadius: 1
   BelongsTo:
     Category00: 0
     Category01: 1
@@ -118,15 +118,15 @@ MonoBehaviour:
     Category29: 0
     Category30: 0
     Category31: 0
---- !u!114 &7552888594842650567
+--- !u!114 &7326026417262962786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963107061037832406}
+  m_GameObject: {fileID: 6931994510842999920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9079f1ca2f9e436c9ae86a66b329011c, type: 3}
+  m_Script: {fileID: 11500000, guid: a574ebbeb904418d9160abdaac886bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
