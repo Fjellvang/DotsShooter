@@ -35,18 +35,12 @@ namespace DotsShooter.Damage.AreaDamage
 
             var markedForDestructionLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
             _bufferLookup.Update(ref state);
-            foreach (var (damage, localTransform, entity) in SystemAPI
-                         .Query<RefRO<AreaDamage>, RefRO<LocalTransform>>()
+            foreach (var (damage, localTransform, simpleCollisionBuffer, entity) in SystemAPI
+                         .Query<RefRO<AreaDamage>, RefRO<LocalTransform>, DynamicBuffer<SimpleCollisionEvent>>()
                          .WithNone<DestroyNextFrameTag>()
                          .WithEntityAccess())
             {
-                if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
-                {
-                    continue;
-                }
-
                 var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
-                var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
                     var location = localTransform.ValueRO.Position;

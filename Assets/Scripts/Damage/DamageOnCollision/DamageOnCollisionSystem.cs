@@ -32,32 +32,23 @@ namespace DotsShooter.Damage
         {
             _bufferLookup.Update(ref state);
             var markedForDestructionLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
+            var enemyTagLookup = SystemAPI.GetComponentLookup<EnemyTag>();
 
-
-            // var handleDamageJob = new HandleDamageJob()
-            // {
-            //     ECB = ecb.AsParallelWriter(),
-            //     BufferLookup = SystemAPI.GetBufferLookup<DamageData>()//_bufferLookup
-            // };
-            //
-            // state.Dependency = handleDamageJob.ScheduleParallel(
-            //     _damageQuery,
-            //     state.Dependency
-            // );
-            // var childBufferFromEntity = SystemAPI.GetBufferLookup<Child>(true); 
-            foreach (var (damage, entity) in SystemAPI.Query<RefRO<DamageOnCollision>>().WithEntityAccess())
+            foreach (var (damage, simpleCollisionBuffer, entity) in 
+                     SystemAPI.Query<RefRO<DamageOnCollision>, DynamicBuffer<SimpleCollisionEvent>>()
+                         .WithEntityAccess())
             {
-                if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
-                {
-                    continue;
-                }
-
-                var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
-
                 for (int i = 0; i < simpleCollisionBuffer.Length; i++)
                 {
                     var simpleCollisionEvent = simpleCollisionBuffer[i];
                     var other = simpleCollisionEvent.GetOtherEntity(entity);
+                    
+                    // HACK: This is a hack to prevent enemies from damaging each other
+                    if (enemyTagLookup.HasComponent(other) && enemyTagLookup.HasComponent(entity))
+                    {
+                        continue;
+                    }
+                    
                     if (_bufferLookup.HasBuffer(other)) {
                         _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
                     }

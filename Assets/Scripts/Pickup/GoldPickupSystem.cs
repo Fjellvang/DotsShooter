@@ -11,18 +11,13 @@ namespace DotsShooter.Pickup
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (_, entity) in SystemAPI.Query<RefRO<GoldPickupComponent>>()
+            foreach (var (buffer, entity) in SystemAPI.Query<DynamicBuffer<SimpleCollisionEvent>>()
+                         .WithAll<GoldPickupComponent>()
                          .WithEntityAccess()
                          .WithNone<DestroyNextFrameTag>()
                      )
             {
-                if (!state.EntityManager.HasComponent<SimpleCollisionEvent>(entity))
-                {
-                    continue;
-                }
-                
-                var simpleCollisionBuffer = state.EntityManager.GetBuffer<SimpleCollisionEvent>(entity);
-                if (simpleCollisionBuffer.Length > 0)
+                if (buffer.Length > 0)
                 {
                     SystemAPI.SetComponentEnabled<DestroyNextFrameTag>(entity, true);
                 }

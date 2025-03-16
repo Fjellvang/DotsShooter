@@ -55,7 +55,6 @@ MonoBehaviour:
   SpawnTime: 5
   MaxX: 50
   MaxY: 50
-  GameStateTracker: {fileID: 11400000, guid: d35cbe40c7d625b4ebaa6b561c4a419e, type: 2}
 --- !u!114 &4027191241803160189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,4 +67,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48fb35ab42e4e42aea33284cee7578c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 1893516707938013759, guid: c8007b218da1c654988a5583872e09e8, type: 3}
+  Prefab: {fileID: 6842532865595319397, guid: e8cfae783a11461429f1e5fd9d67bc34, type: 3}

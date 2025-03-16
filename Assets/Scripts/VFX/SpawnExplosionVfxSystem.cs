@@ -2,12 +2,9 @@
 using DotsShooter.Damage.AreaDamage;
 using DotsShooter.Destruction;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Rendering;
 using Unity.Transforms;
-using UnityEngine.UI;
+using UnityEngine;
 
 namespace DotsShooter.VFX
 {
@@ -28,14 +25,12 @@ namespace DotsShooter.VFX
         {
             var explosionSpawner = SystemAPI.GetSingleton<SpawnExplosionVfx>();
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var prefabRotation = SystemAPI.GetComponentRO<LocalTransform>(explosionSpawner.Prefab).ValueRO.Rotation;
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var parallelEcb = ecb.AsParallelWriter();    
             new Job()
                 {
                     ExplosionSpawner = explosionSpawner,
                     CommandBuffer = parallelEcb,
-                    PrefabRotation = prefabRotation
                 }
                 .ScheduleParallel();
         }
@@ -46,7 +41,6 @@ namespace DotsShooter.VFX
     {
         public SpawnExplosionVfx ExplosionSpawner;
         public EntityCommandBuffer.ParallelWriter  CommandBuffer;
-        public quaternion PrefabRotation;    
         public void Execute(
             [EntityIndexInQuery] int sortKey, 
             ref LocalTransform transform, 
@@ -55,10 +49,7 @@ namespace DotsShooter.VFX
         {
             var radius = damage.Radius;
             var explosionVfx = CommandBuffer.Instantiate(sortKey, ExplosionSpawner.Prefab);
-            // Get the existing rotation from the prefab
-            var local = LocalTransform.FromPositionRotation(transform.Position, PrefabRotation);
-            // local.Rotation = existing.ValueRO.Rotation;
-            CommandBuffer.SetComponent(sortKey, explosionVfx, new RadiusFloatOverride { Value = radius });
+            var local = LocalTransform.FromPositionRotationScale(transform.Position, Quaternion.identity, radius * 2);
             CommandBuffer.SetComponent(sortKey, explosionVfx, local); 
         }
     }
