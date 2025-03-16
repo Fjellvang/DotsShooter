@@ -13,8 +13,11 @@ GameObject:
   - component: {fileID: 2734891417316680015}
   - component: {fileID: 3384741211012658639}
   - component: {fileID: 2916101549249689692}
+  - component: {fileID: 4038331825587981048}
+  - component: {fileID: 3333427279248913323}
+  - component: {fileID: 6132239010366156266}
   m_Layer: 0
-  m_Name: Renderer
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,6 +73,13 @@ MonoBehaviour:
     type: 3
     value: {x: 0.25, y: 0, z: 0, w: 0}
     instanceOverride: 1
+  - name: _Dissolve
+    displayName: _Dissolve
+    shaderName: Assets/Shaders/SpriteSheetAnimation/SpriteSheetAnimation.shadergraph
+    materialName: Mouthball_Animation_Shader
+    type: 3
+    value: {x: 0, y: 0, z: 0, w: 0}
+    instanceOverride: 0
 --- !u!23 &2734891417316680015
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -136,6 +146,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsFlipped: 0
+--- !u!114 &4038331825587981048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992375793007815026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439792165ba442e9ae935bba263d84f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3333427279248913323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992375793007815026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6132239010366156266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992375793007815026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc9dba0e679e49eabcffc91017e16b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeTime: 1
+  StartEnabled: 0
 --- !u!1 &8321688916429615359
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +203,7 @@ GameObject:
   - component: {fileID: -2160789984755854971}
   - component: {fileID: 4568269927197874877}
   - component: {fileID: 2405194953659462257}
+  - component: {fileID: 7554945991999071328}
   m_Layer: 0
   m_Name: Enemy Mouthball
   m_TagString: Untagged
@@ -474,3 +523,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c00881d8a9641b389b4858c336e9763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7554945991999071328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321688916429615359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002a713bda334c019fddffb7b293f608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Entity: {fileID: 6992375793007815026}

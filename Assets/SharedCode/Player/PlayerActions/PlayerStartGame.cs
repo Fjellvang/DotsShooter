@@ -9,7 +9,7 @@ namespace Game.Logic.PlayerActions
         {
             if (commit)
             {
-                player.Gold = 0; // Reset gold
+                player.Gold = 20; // Reset gold
                 player.GameStats.SetInitialStats(player.GameConfig);
             }
 
