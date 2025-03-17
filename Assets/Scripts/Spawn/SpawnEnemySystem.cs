@@ -31,9 +31,15 @@ namespace DotsShooter
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
+            var gameStateComponent = SystemAPI.GetSingleton<GameStateComponent>();
+            if (gameStateComponent.GameEnded)
+            {
+                return; //TODO: Probably not the cleanest, we could consider disabling this system when game is ended
+            }
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
+            
             var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
-            var round = SystemAPI.GetSingleton<GameStateComponent>().Round;
+            var round = gameStateComponent.Round;
             var buffer = SystemAPI.GetSingletonBuffer<EnemyPrefabs>();
             
             spawnEnemyData.ValueRW.SpawnTimer -= SystemAPI.Time.DeltaTime;

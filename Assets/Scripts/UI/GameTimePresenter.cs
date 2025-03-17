@@ -1,3 +1,4 @@
+using DotsShooter;
 using DotsShooter.Time;
 using Unity.Entities;
 using UnityEngine;
@@ -39,9 +40,9 @@ public class GameTimePresenter : MonoBehaviour
     {
         if(!_isGameLoaded) return;
         if(!_entityQuery.TryGetSingleton<SimulationTime>(out var simulationTime)) return;
+        if(!_entityQuery.TryGetSingleton<GameStateComponent>(out var gameStateComponent)) return;
+        var timeLeft = gameStateComponent.GameTime - simulationTime.ElapsedTime;
 
-        var timeleft = simulationTime.GameTime - simulationTime.ElapsedTime;
-
-        _timeLabel.Value = Mathf.Round(timeleft);
+        _timeLabel.Value = Mathf.Round(timeLeft);
     }
 }

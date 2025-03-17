@@ -10,8 +10,6 @@ namespace DotsShooter.Time
     public struct SimulationTime : IComponentData
     {
         public float ElapsedTime;
-        public float GameTime;
-        public bool GameEnded;
     }
 
     public struct TimeSimulationEnabled : IComponentData, IEnableableComponent
@@ -25,19 +23,21 @@ namespace DotsShooter.Time
         {
             state.RequireForUpdate<SimulationTime>();
             state.RequireForUpdate<TimeSimulationEnabled>();
+            state.RequireForUpdate<GameStateComponent>();
         }
         public void OnUpdate(ref SystemState state)
         {
             var simulationTime = SystemAPI.GetSingletonRW<SimulationTime>();
+            var gameState = SystemAPI.GetSingletonRW<GameStateComponent>().ValueRW;
             simulationTime.ValueRW.ElapsedTime += SystemAPI.Time.DeltaTime;
             
             //TODO: This is a temporary solution. We should have a way to set the game time 
             var time = simulationTime.ValueRW;
-            if (time.ElapsedTime >= time.GameTime && !time.GameEnded)
+            if (time.ElapsedTime >= gameState.GameTime && !gameState.GameEnded)
             {
                 var eventQueue = SystemAPI.GetSingletonRW<EventQueue>().ValueRW.Value; 
                 eventQueue.Enqueue(new Event(){EventType = EventType.PlayerWon});
-                time.GameEnded = true;
+                gameState.GameEnded = true;
             }
         }
     }
@@ -56,7 +56,6 @@ namespace DotsShooter.Time
             {
                 Debug.Log($"Initializing simulation time entity with id {entity}");
                 simulationTime.ValueRW.ElapsedTime = 0;
-                simulationTime.ValueRW.GameEnded = false;
                 ecb.AddComponent<TimeSimulationEnabled>(entity);
             }
             ecb.Playback(state.EntityManager);

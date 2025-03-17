@@ -1,11 +1,12 @@
 ﻿using Unity.Entities;
-using UnityEngine;
 
 namespace DotsShooter
 {
     public struct GameStateComponent : IComponentData
     {
         public int Round;
+        public float GameTime;
+        public bool GameEnded;
     }
     
     public struct GameStateInitializedComponent : IComponentData
@@ -15,4 +16,6 @@ namespace DotsShooter
     public struct GameStateNeedInitializationComponent : IComponentData
     {
     }
+    
+    public struct GameEndedFlag : IComponentData { }
 }
