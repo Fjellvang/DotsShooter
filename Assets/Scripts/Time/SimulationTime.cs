@@ -28,16 +28,19 @@ namespace DotsShooter.Time
         public void OnUpdate(ref SystemState state)
         {
             var simulationTime = SystemAPI.GetSingletonRW<SimulationTime>();
-            var gameState = SystemAPI.GetSingletonRW<GameStateComponent>().ValueRW;
+            var gameState = SystemAPI.GetSingletonRW<GameStateComponent>();
             simulationTime.ValueRW.ElapsedTime += SystemAPI.Time.DeltaTime;
             
             //TODO: This is a temporary solution. We should have a way to set the game time 
             var time = simulationTime.ValueRW;
-            if (time.ElapsedTime >= gameState.GameTime && !gameState.GameEnded)
+            if (time.ElapsedTime >= gameState.ValueRO.GameTime && !gameState.ValueRO.GameEnded)
             {
                 var eventQueue = SystemAPI.GetSingletonRW<EventQueue>().ValueRW.Value; 
                 eventQueue.Enqueue(new Event(){EventType = EventType.PlayerWon});
-                gameState.GameEnded = true;
+                //TODO: this might not be the cleanest, but it works for now
+                gameState.ValueRW.GameEnded = true;
+                var gamestateentity = SystemAPI.GetSingletonEntity<GameStateComponent>();
+                state.EntityManager.AddComponent<GameEndedFlag>(gamestateentity);
             }
         }
     }

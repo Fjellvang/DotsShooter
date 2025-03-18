@@ -36,6 +36,7 @@ namespace Game.Logic
             Health = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Health.ToString())].InitialValue);
             Range = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.Range.ToString())].InitialValue);
             ExplosionRadius = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.ExplosionRadius.ToString())].InitialValue);
+            ExtraProjectiles = 0;
         }
     }
 }

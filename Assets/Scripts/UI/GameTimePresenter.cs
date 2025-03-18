@@ -32,7 +32,7 @@ public class GameTimePresenter : MonoBehaviour
     public void GameLoaded()
     {
         _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        _entityQuery = _entityManager.CreateEntityQuery(typeof(SimulationTime));
+        _entityQuery = _entityManager.CreateEntityQuery(typeof(SimulationTime), typeof(GameStateComponent));
         _isGameLoaded = true;
     }
 
@@ -43,6 +43,10 @@ public class GameTimePresenter : MonoBehaviour
         if(!_entityQuery.TryGetSingleton<GameStateComponent>(out var gameStateComponent)) return;
         var timeLeft = gameStateComponent.GameTime - simulationTime.ElapsedTime;
 
+        if (timeLeft < 0)
+        {
+            timeLeft = 0;
+        }
         _timeLabel.Value = Mathf.Round(timeLeft);
     }
 }

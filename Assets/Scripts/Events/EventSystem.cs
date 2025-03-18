@@ -8,6 +8,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace DotsShooter.Events
 {
@@ -43,6 +44,7 @@ namespace DotsShooter.Events
                         TogglePause();
                         break;
                     case EventType.PlayerWon:
+                        Debug.Log("Player won");
                         OnPlayerWon?.Invoke();
                         break;
                     default:

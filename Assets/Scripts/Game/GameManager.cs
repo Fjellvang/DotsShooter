@@ -59,10 +59,15 @@ namespace DotsShooter
 
         public void PlayerWon()
         {
-            Debug.Log("Player won!");
             _gameStateTracker.IncreaseRound();
             _playerStatisticsTracker.IncreaseRoundsCompleted();
             UnsubscribeFromGameRelatedEvents();
+            
+            StartCoroutine(LoadShopScene()); //TODO: trigger some UI to show the player won and fadeout
+        }
+        IEnumerator LoadShopScene()
+        {
+            yield return new WaitForSeconds(2);
             SceneManager.LoadScene(_shopScene.name);
         }
         public void GameEnded(float3 na)
