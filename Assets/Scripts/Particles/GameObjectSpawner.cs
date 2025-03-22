@@ -3,16 +3,18 @@ using DotsShooter.Events;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DotsShooter.Particles
 {
     public class GameObjectSpawner : MonoBehaviour
     {
-        public GameObject gameObject;
+        [FormerlySerializedAs("gameObject")] 
+        public GameObject objectToSpawn;
         
         public void Spawn(Vector3 position)
         {
-            Instantiate(gameObject, position, Quaternion.identity);
+            Instantiate(objectToSpawn, position, Quaternion.identity);
         }
         
         public void Spawn(float3 position)

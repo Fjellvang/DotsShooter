@@ -1,4 +1,5 @@
-﻿using DotsShooter.Damage.AreaDamage;
+﻿using DotsShooter.Common;
+using DotsShooter.Damage.AreaDamage;
 using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Collections;
@@ -42,8 +43,8 @@ namespace DotsShooter.Weapons.Area
             var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
             var deltaTime = SystemAPI.Time.DeltaTime;
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
-            foreach (var (weaponData, weaponState,  projectilePrefab,  parent, weaponActive) 
-                     in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<WeaponProjectilePrefab>, RefRO<Parent>, EnabledRefRW<WeaponActiveFlag>>()
+            foreach (var (weaponData, weaponState,  projectilePrefab,  parent, weaponActive, random) 
+                     in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<WeaponProjectilePrefab>, RefRO<Parent>, EnabledRefRW<WeaponActiveFlag>, RefRW<EntityRandom>>()
                          .WithAll<AreaWeaponTag>())
             {
                 weaponState.ValueRW.NextAttackTimer -= deltaTime;
@@ -55,6 +56,7 @@ namespace DotsShooter.Weapons.Area
                 var closestDirection = Helpers.FindClosestDirection(physics, position, weaponData.ValueRO, statModification, overlapHits);
 
                 if (closestDirection.Equals(Vector3.zero)) { continue; }
+                closestDirection = WeaponDataExtensions.CalculateNewDirectionBasedOnAccuracy(weaponData, closestDirection, random);
                 // spawn bullet.
                 SpawnBullet(position, closestDirection, statModification, projectilePrefab.ValueRO, weaponData.ValueRO, ecb);
 

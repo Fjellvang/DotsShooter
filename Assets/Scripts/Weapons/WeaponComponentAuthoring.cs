@@ -1,3 +1,4 @@
+using DotsShooter.Common;
 using Unity.Entities;
 using Unity.Physics;
 using Unity.Physics.Authoring;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace DotsShooter.Weapons
 {
+    [RequireComponent(typeof(EntityRandomAuthoring))]
     public class WeaponComponentAuthoring : MonoBehaviour
     {
         public float TimeBetweenShots = 0.25f;
@@ -14,6 +16,8 @@ namespace DotsShooter.Weapons
         public float Range = 25f;
         public float Cooldown = 2f;
         public float AreaOfEffectRadius = 1f;
+        [Range(0,1)]
+        public float WeaponAccuracy = 1;
         [Header("Collision Filter")]
         public PhysicsCategoryTags BelongsTo;
         public PhysicsCategoryTags CollidesWith;
@@ -30,12 +34,15 @@ namespace DotsShooter.Weapons
                         AttackCount = authoring.AttackCount,
                         Damage = authoring.Damage,
                         Range = authoring.Range,
-                        CollisionFilter = new CollisionFilter
-                        {
-                            BelongsTo = authoring.BelongsTo.Value, CollidesWith = authoring.CollidesWith.Value
-                        },
+                        CollisionFilter =
+                            new CollisionFilter
+                            {
+                                BelongsTo = authoring.BelongsTo.Value,
+                                CollidesWith = authoring.CollidesWith.Value
+                            },
                         Cooldown = authoring.Cooldown,
-                        AreaOfEffectRadius = authoring.AreaOfEffectRadius
+                        AreaOfEffectRadius = authoring.AreaOfEffectRadius,
+                        WeaponAccuracy = authoring.WeaponAccuracy
                     });
                 AddComponent(entity, new WeaponActiveFlag());
                 SetComponentEnabled<WeaponActiveFlag>(entity, false);

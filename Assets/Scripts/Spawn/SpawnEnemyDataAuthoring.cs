@@ -1,4 +1,5 @@
 using System;
+using DotsShooter.Common;
 using Unity.Entities;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace DotsShooter
         public float SpawnTimer;
     }
     
+    [RequireComponent(typeof(EntityRandomAuthoring))]
     public class SpawnEnemyDataAuthoring : MonoBehaviour
     {
         [Serializable]

@@ -1,4 +1,5 @@
-﻿using DotsShooter.Damage;
+﻿using DotsShooter.Common;
+using DotsShooter.Damage;
 using DotsShooter.Player;
 using Unity.Burst;
 using Unity.Collections;
@@ -36,14 +37,15 @@ namespace DotsShooter.Weapons.Burst
              state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
          }
 
+
          [BurstCompile]
          public void OnUpdate(ref SystemState state)
          {
              var physics = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
              var deltaTime = SystemAPI.Time.DeltaTime;
              var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
-             foreach (var (weaponData, weaponState,  projectilePrefab, parent, weaponActive) 
-                      in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<WeaponProjectilePrefab>, RefRO<Parent>, EnabledRefRW<WeaponActiveFlag>>()
+             foreach (var (weaponData, weaponState,  projectilePrefab, parent, weaponActive, random) 
+                      in SystemAPI.Query<RefRW<WeaponData>, RefRW<WeaponState>, RefRO<WeaponProjectilePrefab>, RefRO<Parent>, EnabledRefRW<WeaponActiveFlag>, RefRW<EntityRandom>>()
                           .WithAll<BurstWeaponTag>())
              {
                  weaponState.ValueRW.NextAttackTimer -= deltaTime;
@@ -55,6 +57,8 @@ namespace DotsShooter.Weapons.Burst
                  var closestDirection = Helpers.FindClosestDirection(physics, position, weaponData.ValueRO, statModifications, overlapHits);
 
                  if (closestDirection.Equals(Vector3.zero)) { continue; }
+                 
+                 closestDirection = WeaponDataExtensions.CalculateNewDirectionBasedOnAccuracy(weaponData, closestDirection, random);
                  // spawn bullet.
                  SpawnBullet(position, closestDirection, statModifications, projectilePrefab.ValueRO, weaponData.ValueRO, ecb);
 
@@ -65,12 +69,9 @@ namespace DotsShooter.Weapons.Burst
                  
                  weaponState.ValueRW.AttackCounter = 0;
                  weaponActive.ValueRW = false;
-                 
              }
          }
 
-
-         
          private static void SpawnBullet(float3 position, float3 direction, PlayerStatModifications statModifications,
              WeaponProjectilePrefab shootingComponent, WeaponData weaponData, EntityCommandBuffer ecb)
          {

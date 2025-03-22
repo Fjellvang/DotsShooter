@@ -65,6 +65,19 @@ namespace DotsShooter
 
             return closest;
         }
+        
+         // Rotate vector by degrees using trigonometry.
+         public static float3 RotateVector2DTrig(float3 vector, float degrees)
+         {
+             var radians = degrees * math.TORADIANS;
+             var sin = math.sin(radians);
+             var cos = math.cos(radians);
+    
+             var x = vector.x * cos - vector.y * sin;
+             var y = vector.x * sin + vector.y * cos;
+    
+             return new float3(x, y, 0);
+         }
         public static bool TryGetSystem<T>([NotNullWhen(true)] out T system) where T : ComponentSystemBase
         {
             system = null;

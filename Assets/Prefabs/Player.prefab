@@ -449,6 +449,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1731762247731853004}
     m_Modifications:
+    - target: {fileID: 804463503947350000, guid: 3c2a864352fa3114c8aee00227870e94, type: 3}
+      propertyPath: WeaponAccuracy
+      value: 0.95
+      objectReference: {fileID: 0}
     - target: {fileID: 4227740789308463139, guid: 3c2a864352fa3114c8aee00227870e94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -518,6 +522,22 @@ PrefabInstance:
     - target: {fileID: 1963107061037832406, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
       propertyPath: m_Name
       value: AreaBulletWeapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963107061037832406, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926663675861286993, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
+      propertyPath: Damage
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926663675861286993, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926663675861286993, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
+      propertyPath: WeaponAccuracy
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7136940855476643222, guid: 166b1652b783f6a4f99d5dcc9381f94b, type: 3}
       propertyPath: m_LocalPosition.x

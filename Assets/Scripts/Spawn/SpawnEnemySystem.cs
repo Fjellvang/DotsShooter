@@ -1,3 +1,4 @@
+using DotsShooter.Common;
 using DotsShooter.Time;
 using Unity.Burst;
 using Unity.Collections;
@@ -13,19 +14,17 @@ namespace DotsShooter
     [BurstCompile]
     public partial struct SpawnEnemySystem : ISystem
     {
-        private Random _random;
         private EntityQuery _potentialSpawnPointsQuery;
         
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<SpawnEnemyData>();
             state.RequireForUpdate<GameStateComponent>();
             state.RequireForUpdate<SimulationTime>();
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             state.RequireForUpdate<GameStateInitializedComponent>();
             state.RequireForUpdate<EnemyPrefabs>();
-            
-            _random = Random.CreateFromIndex(1234);
         }
         
         [BurstCompile]
@@ -36,6 +35,9 @@ namespace DotsShooter
             {
                 return; //TODO: Probably not the cleanest, we could consider disabling this system when game is ended
             }
+            var enemyDataEntity = SystemAPI.GetSingletonEntity<SpawnEnemyData>();
+            var random = SystemAPI.GetComponent<EntityRandom>(enemyDataEntity);
+            
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
             
             var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
@@ -60,7 +62,7 @@ namespace DotsShooter
             // Create a job to both generate data and spawn entities in parallel
             var spawnEnemiesJob = new SpawnEnemiesParallelJob
             {
-                Random = _random,
+                Random = random.Value,
                 MaxX = spawnEnemyData.ValueRO.MaxX,
                 MaxY = spawnEnemyData.ValueRO.MaxY,
                 EnemyPrefabs = buffer,
@@ -71,7 +73,7 @@ namespace DotsShooter
             spawnEnemiesJob.Schedule(enemiesToSpawn, 32).Complete();
             
             // Update the random state for next frame
-            _random = spawnEnemiesJob.Random;
+            random.Value = spawnEnemiesJob.Random;
             
             // Reset the spawn timer
             spawnEnemyData.ValueRW.SpawnTimer = spawnEnemyData.ValueRO.SpawnTime;

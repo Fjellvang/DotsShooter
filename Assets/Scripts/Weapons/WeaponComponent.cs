@@ -35,6 +35,10 @@ namespace DotsShooter.Weapons
         public float Damage;
         public float Range;
         public float AreaOfEffectRadius;
+        /// <summary>
+        /// 0-1 value representing the accuracy of the weapon, 1 being 100% accurate
+        /// </summary>
+        public float WeaponAccuracy;
         public CollisionFilter CollisionFilter;
     }
 
