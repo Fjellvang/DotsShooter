@@ -38,5 +38,20 @@ namespace Game.Logic
             ExplosionRadius = F64.FromFloat(gameConfig.InitialStatsConfiguration[StatId.FromString(PlayerStat.ExplosionRadius.ToString())].InitialValue);
             ExtraProjectiles = 0;
         }
+        
+        public float GetStatAsFloat(PlayerStat stat)
+        {
+            return stat switch
+            {
+                PlayerStat.MoveSpeed => MoveSpeed.Float,
+                PlayerStat.Cooldown => Cooldown.Float,
+                PlayerStat.Damage => Damage.Float,
+                PlayerStat.Health => Health.Float,
+                PlayerStat.Range => Range.Float,
+                PlayerStat.ExplosionRadius => ExplosionRadius.Float,
+                PlayerStat.ExtraProjectile => ExtraProjectiles,
+                _ => 0
+            };
+        }
     }
 }

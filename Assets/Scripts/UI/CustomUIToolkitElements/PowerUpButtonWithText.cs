@@ -7,6 +7,7 @@ public partial class PowerUpButtonWithText : VisualElement
 {
     private PowerupButton _powerupButton;
     private Label _label;
+    private LabelContainer _costLabelContainer;
     private float _value = 0;
     
     public PowerUpButtonWithText()
@@ -23,6 +24,7 @@ public partial class PowerUpButtonWithText : VisualElement
         }
         _powerupButton = this.Q<PowerupButton>("PowerupButton");
         _label = this.Q<Label>("ValueLabel");
+        _costLabelContainer = this.Q<LabelContainer>("CostLabel");
     }
     
     [UxmlAttribute]
@@ -43,5 +45,11 @@ public partial class PowerUpButtonWithText : VisualElement
             _value = value;
             _label.text = _value.ToString(CultureInfo.InvariantCulture);
         }
+    }
+    [UxmlAttribute]
+    public float CostValue
+    {
+        get => _costLabelContainer.Value;
+        set => _costLabelContainer.Value = value;
     }
 }

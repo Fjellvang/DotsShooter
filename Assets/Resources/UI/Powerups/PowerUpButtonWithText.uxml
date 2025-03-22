@@ -3,6 +3,7 @@
     <Style src="project://database/Assets/Resources/UI/LabelContainer.uss?fileID=7433441132597879392&amp;guid=8f8400a9d54a3a24fb528e8ef6980555&amp;type=3#LabelContainer" />
     <engine:VisualElement name="container">
         <engine:Instance template="LabelContainer" name="LabelContainer" />
+        <LabelContainer text="Cost:" name="CostLabel" />
         <PowerupButton name="PowerupButton" />
     </engine:VisualElement>
 </engine:UXML>

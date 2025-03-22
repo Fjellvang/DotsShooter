@@ -38,3 +38,9 @@
 .button:active {
     scale: 0.98 0.98;
 }
+
+.button:disabled {
+    opacity: 0.5; /* Makes the button appear greyed out */
+    transition-duration: 0.1s;
+    scale: 1 1; /* Reset any scaling effects */
+}

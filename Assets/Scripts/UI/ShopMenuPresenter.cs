@@ -1,4 +1,6 @@
 ﻿using DotsShooter.Metaplay;
+using Game.Logic;
+using Game.Logic.GameConfigs;
 using Game.Logic.PlayerActions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -54,13 +56,27 @@ namespace DotsShooter.UI
         }
         public void UpdateLabels()
         {
-            var playerStats = MetaplayClient.PlayerModel.GameStats;
-            _radiusPowerupButton.Value = playerStats.ExplosionRadius.Float;
-            _moveSpeedPowerupButton.Value = playerStats.MoveSpeed.Float;
-            _damagePowerupButton.Value = playerStats.Damage.Float;
-            _attackSpeedPowerupButton.Value = playerStats.Cooldown.Float;
-            _rangePowerupButton.Value = playerStats.Range.Float;
-            _extraProjectilePowerupButton.Value = playerStats.ExtraProjectiles;
+            UpdateButtonValues(_radiusPowerupButton, PlayerStat.ExplosionRadius);
+            UpdateButtonValues(_moveSpeedPowerupButton, PlayerStat.MoveSpeed);
+            UpdateButtonValues(_damagePowerupButton, PlayerStat.Damage);
+            UpdateButtonValues(_attackSpeedPowerupButton, PlayerStat.Cooldown);
+            UpdateButtonValues(_rangePowerupButton, PlayerStat.Range);
+            UpdateButtonValues(_extraProjectilePowerupButton, PlayerStat.ExtraProjectile);
+        }
+        
+        private int GetUpgradeCost(PlayerStat stat)
+        {
+            return MetaplayClient.PlayerModel.GameConfig.ShopConfiguration[ShopStatId.FromString(stat.ToString())].UpgradeCost;
+        }
+        
+        private void UpdateButtonValues(PowerUpButtonWithText button, PlayerStat stat)
+        {
+            var playerGold = MetaplayClient.PlayerModel.Gold;
+            var statAsFloat = MetaplayClient.PlayerModel.GameStats.GetStatAsFloat(stat);
+            var upgradeCost = GetUpgradeCost(stat);
+            button.CostValue = upgradeCost;
+            button.Value = statAsFloat;
+            button.Button.SetEnabled(playerGold >= upgradeCost);
         }
 
         private void OnRangePowerupButtonClicked()
