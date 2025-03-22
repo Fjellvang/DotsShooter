@@ -1,34 +1,41 @@
 using System;
 using DotsShooter.Common;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DotsShooter
 {
-    public struct EnemyPrefabs : IBufferElementData
+    public struct WaveData : IBufferElementData
+    {
+        public Entity PrefabsBufferEntity;
+        public float SpawnTime;
+    }
+    public struct EnemyPrefabData : IBufferElementData
     {
         public Entity Prefab;
         public int Weight;
+    }
+
+    [Serializable]
+    public class EnemyData
+    {
+        public GameObject Prefab;
+        public int Weight; 
     }
     
     public struct SpawnEnemyData : IComponentData
     {
         public int MaxX;
         public int MaxY;
-        public float SpawnTime;
         public float SpawnTimer;
     }
     
     [RequireComponent(typeof(EntityRandomAuthoring))]
     public class SpawnEnemyDataAuthoring : MonoBehaviour
     {
-        [Serializable]
-        public class EnemyData {
-            public GameObject Prefab;
-            public int Weight;
-        }
-        public EnemyData[] Enemies;
-        public float SpawnTime;
+        [FormerlySerializedAs("Enemies")] public WaveDataAsset[] WaveData;
         public int MaxX = 20;
         public int MaxY = 20;
 
@@ -36,23 +43,33 @@ namespace DotsShooter
         {
             public override void Bake(SpawnEnemyDataAuthoring authoring)
             {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
-                var enemyPrefabs = AddBuffer<EnemyPrefabs>(entity);
+                Debug.Log("Baking spawn data");
+                var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity,
                     new SpawnEnemyData
                     {
                         MaxX = authoring.MaxX,
                         MaxY = authoring.MaxY,
-                        SpawnTime = authoring.SpawnTime,
                         SpawnTimer = 0,
                     });
-                foreach (var enemyPrefab in authoring.Enemies)
+                var waveEntityBuffer = AddBuffer<WaveData>(entity);
+                foreach (var waveData in authoring.WaveData)
                 {
-                    enemyPrefabs.Add(new EnemyPrefabs
+                    var waveEntity = CreateAdditionalEntity(TransformUsageFlags.None);
+                    waveEntityBuffer.Add(new WaveData
                     {
-                        Prefab = GetEntity(enemyPrefab.Prefab, TransformUsageFlags.Dynamic),
-                        Weight = enemyPrefab.Weight
+                        PrefabsBufferEntity = waveEntity,
+                        SpawnTime = waveData.SpawnTime
                     });
+                    var enemyPrefabsBuffer = AddBuffer<EnemyPrefabData>(waveEntity);
+                    foreach (var enemyPrefab in waveData.Enemies)
+                    {
+                        enemyPrefabsBuffer.Add(new EnemyPrefabData
+                        {
+                            Prefab = GetEntity(enemyPrefab.Prefab, TransformUsageFlags.Dynamic),
+                            Weight = enemyPrefab.Weight
+                        });
+                    }
                 }
             }
         }

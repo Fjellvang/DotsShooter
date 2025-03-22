@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5617444228752030023}
   - component: {fileID: 1100538569082061793}
   - component: {fileID: 4027191241803160189}
+  - component: {fileID: 4509484505248010089}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -46,15 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - Prefab: {fileID: 1580659186050169693, guid: d92492f7007900043a619ad71ff68f00, type: 3}
-    Weight: 70
-  - Prefab: {fileID: 4838184950576053998, guid: 50a155f118058954bb3664cfd272ee6f, type: 3}
-    Weight: 20
-  - Prefab: {fileID: 1990579540387780508, guid: 8a24c78fadf26404daf53bf0e185b2d2, type: 3}
-    Weight: 10
-  SpawnTime: 5
+  - {fileID: 11400000, guid: e46e16fafd7d99344a7c5245f90f8319, type: 2}
+  - {fileID: 11400000, guid: b64de8e0b4152ba45b85bb05e1ad54b9, type: 2}
+  - {fileID: 11400000, guid: f0897f561a703384d87e0ccc6c00443b, type: 2}
   MaxX: 50
-  MaxY: 50
+  MaxY: 30
 --- !u!114 &4027191241803160189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,3 +65,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6842532865595319397, guid: e8cfae783a11461429f1e5fd9d67bc34, type: 3}
+--- !u!114 &4509484505248010089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5424449439806532156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e8b939d900496984863154a153a3c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RandomInitializationType: 2
+  ManualOverrideValue: 0
