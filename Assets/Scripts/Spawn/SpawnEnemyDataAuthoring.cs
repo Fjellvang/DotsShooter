@@ -73,5 +73,22 @@ namespace DotsShooter
                 }
             }
         }
+        
+        private void OnDrawGizmosSelected()
+        {
+            // Set the gizmo color 
+            Gizmos.color = new Color(0.2f, 0.8f, 0.2f, 0.3f); // Semi-transparent green
+    
+            // Center position at origin (0,0,0)
+            Vector3 center = Vector3.zero;
+    
+            // Draw a wire cube to show the boundaries
+            // The size needs to be doubled since the range is from -MaxX to +MaxX, -MaxY to +MaxY
+            Gizmos.DrawWireCube(center, new Vector3(MaxX * 2, MaxY * 2, 0.1f));
+    
+            // Draw a solid cube with transparency to visualize the area
+            Gizmos.color = new Color(0.2f, 0.8f, 0.2f, 0.1f); // More transparent for the solid part
+            Gizmos.DrawCube(center, new Vector3(MaxX * 2, MaxY * 2, 0.1f));
+        }
     }
 }
