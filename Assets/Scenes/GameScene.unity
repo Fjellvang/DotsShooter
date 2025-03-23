@@ -11371,7 +11371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052c2a14bd8040a4a95c1c0715c4cf72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 7186429317514178746, guid: f0497b2af0dc29b488b72ad3daba15dc, type: 3}
+  objectToSpawn: {fileID: 7186429317514178746, guid: f0497b2af0dc29b488b72ad3daba15dc, type: 3}
 --- !u!4 &1339899095
 Transform:
   m_ObjectHideFlags: 0

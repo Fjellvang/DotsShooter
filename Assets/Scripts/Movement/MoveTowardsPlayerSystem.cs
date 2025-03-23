@@ -9,7 +9,7 @@ namespace DotsShooter
 {
     [UpdateBefore(typeof(MovementSystem))]
     [BurstCompile]
-    public partial struct TrackPlayerSystem : ISystem
+    public partial struct MoveTowardsPlayerSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
@@ -33,13 +33,14 @@ namespace DotsShooter
     }
 
     [BurstCompile]
+    [WithAll(typeof(MoveTowardsPlayerFlag))]
     public partial struct TrackPlayerJob : IJobEntity
     {
         [ReadOnly] 
         public float3 PlayerPosition;
 
         [BurstCompile]
-        public void Execute(ref MovementDirectionComponent movement, in LocalTransform transform, in MoveTowardsPlayerFlag moveTowardsPlayer)
+        public void Execute(ref MovementDirectionComponent movement, in LocalTransform transform)
         {
             var direction = PlayerPosition - transform.Position;
             var distance = math.length(direction);
