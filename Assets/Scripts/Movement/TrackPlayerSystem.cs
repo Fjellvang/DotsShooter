@@ -15,7 +15,7 @@ namespace DotsShooter
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PlayerTag>();
-            state.RequireForUpdate<TrackPlayerComponent>();
+            state.RequireForUpdate<MoveTowardsPlayerFlag>();
         }
 
         [BurstCompile]
@@ -39,7 +39,7 @@ namespace DotsShooter
         public float3 PlayerPosition;
 
         [BurstCompile]
-        public void Execute(ref MovementDirectionComponent movement, in LocalTransform transform, in TrackPlayerComponent trackPlayer)
+        public void Execute(ref MovementDirectionComponent movement, in LocalTransform transform, in MoveTowardsPlayerFlag moveTowardsPlayer)
         {
             var direction = PlayerPosition - transform.Position;
             var distance = math.length(direction);
