@@ -6,12 +6,10 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Random = Unity.Mathematics.Random;
 
 namespace DotsShooter
 {
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
-    // [BurstCompile]
     public partial struct SpawnEnemySystem : ISystem
     {
         private EntityQuery _potentialSpawnPointsQuery;
@@ -26,7 +24,7 @@ namespace DotsShooter
             state.RequireForUpdate<GameStateInitializedComponent>();
         }
         
-        // [BurstCompile]
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var gameStateComponent = SystemAPI.GetSingleton<GameStateComponent>();
@@ -35,12 +33,12 @@ namespace DotsShooter
                 return; //TODO: Probably not the cleanest, we could consider disabling this system when game is ended
             }
             var enemyDataEntity = SystemAPI.GetSingletonEntity<SpawnEnemyData>();
-            var random = SystemAPI.GetComponent<EntityRandom>(enemyDataEntity);
+            var random = SystemAPI.GetComponentRW<EntityRandom>(enemyDataEntity);
             
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
             
             var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
-            var round = gameStateComponent.Round;
+            var round = gameStateComponent.Round - 1;
             var waveDataBuffer = SystemAPI.GetSingletonBuffer<WaveData>();
             var currentWaveData = waveDataBuffer[math.min(round, waveDataBuffer.Length - 1)];
             
@@ -63,7 +61,7 @@ namespace DotsShooter
             // Create a job to both generate data and spawn entities in parallel
             var spawnEnemiesJob = new SpawnEnemiesParallelJob
             {
-                Random = random.Value,
+                RandomSeed = random.ValueRW.Value.NextUInt(),
                 MaxX = spawnEnemyData.ValueRO.MaxX,
                 MaxY = spawnEnemyData.ValueRO.MaxY,
                 EnemyPrefabs = currentEnemyBuffer,
@@ -72,9 +70,6 @@ namespace DotsShooter
             };
             
             spawnEnemiesJob.Schedule(enemiesToSpawn, 32).Complete();
-            
-            // Update the random state for next frame
-            random.Value = spawnEnemiesJob.Random;
             
             // Reset the spawn timer
             spawnEnemyData.ValueRW.SpawnTimer = currentWaveData.SpawnTime;
@@ -93,7 +88,7 @@ namespace DotsShooter
         }
     }
     
-    // [BurstCompile]
+    [BurstCompile]
     public struct SpawnEnemiesParallelJob : IJobParallelFor
     {
         [ReadOnly] public DynamicBuffer<EnemyPrefabData> EnemyPrefabs;
@@ -102,13 +97,13 @@ namespace DotsShooter
         [ReadOnly] public int TotalWeight;
         
         public EntityCommandBuffer.ParallelWriter CommandBuffer;
-        public Random Random;
+        public uint RandomSeed;
         
-        // [BurstCompile]
+        [BurstCompile]
         public void Execute(int index)
         {
             // Create a new random state for each parallel job to avoid thread safety issues
-            var localRandom = Random.CreateFromIndex((uint)(index + Random.NextUInt()));
+            var localRandom = Random.CreateFromIndex((uint)index + RandomSeed);
             
             // Generate random position
             var x = localRandom.NextFloat(-MaxX, MaxX);
