@@ -17,7 +17,16 @@ namespace DotsShooter
                     {
                         Prefab = GetEntity(authoring.Prefab, TransformUsageFlags.Dynamic)
                     });
+                AddComponent<DisableSpawnOnDeathFlag>(entity);
+                SetComponentEnabled<DisableSpawnOnDeathFlag>(entity, false);
             }
         }
+    }
+    /// <summary>
+    /// Flag to indicate whether an entity should spawn a prefab when it dies.
+    /// useful when we're clearing the map, then we want to disable spawning rewards.
+    /// </summary>
+    public struct DisableSpawnOnDeathFlag : IComponentData, IEnableableComponent
+    {
     }
 }

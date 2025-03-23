@@ -21,6 +21,7 @@ namespace DotsShooter
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             foreach (var (spawnEnemyOnDeath, transform) in 
                      SystemAPI.Query<RefRO<SpawnOnDeathComponent>, RefRO<LocalTransform>>()
+                         .WithNone<DisableSpawnOnDeathFlag>()
                          .WithAll<DestroyNextFrameTag>())
             {
                 var enemy = ecb.Instantiate(spawnEnemyOnDeath.ValueRO.Prefab);

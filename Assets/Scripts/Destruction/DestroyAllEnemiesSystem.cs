@@ -19,8 +19,13 @@ namespace DotsShooter.Destruction
         {
             var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
                 .CreateCommandBuffer(state.WorldUnmanaged);
-            foreach (var (_, entity) in SystemAPI.Query<RefRO<EnemyTag>>().WithEntityAccess())
+            foreach (var (spawnOnDeathFlag, entity) in SystemAPI.Query<EnabledRefRW<DisableSpawnOnDeathFlag>>()
+                         .WithEntityAccess()
+                         .WithAll<EnemyTag>()
+                         .WithOptions(EntityQueryOptions.IgnoreComponentEnabledState)
+                     )
             {
+                spawnOnDeathFlag.ValueRW = true;
                 ecb.SetComponentEnabled<DestroyNextFrameTag>(entity, true);
             }
         }
