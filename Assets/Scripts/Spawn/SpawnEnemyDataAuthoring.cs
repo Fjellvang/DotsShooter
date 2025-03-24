@@ -2,6 +2,7 @@ using System;
 using DotsShooter.Common;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,9 +19,25 @@ namespace DotsShooter
         public int Weight;
     }
     
-    public struct WaveEventData : IComponentData
+    public struct FormationBaseData : IComponentData 
     {
         public float SpawnAfterSeconds;
+        public Entity Prefab;
+        public int Count;
+        public float Spacing;
+        public float2 InitialPosition;
+    }
+    public struct LineFormationComponent : IComponentData
+    {
+        public Direction MovementDirection;
+        public Direction AlignmentDirection;
+    }
+
+    public struct CircleFormationComponent : IComponentData
+    {
+        public AngularDirection MovementDirection;
+        public float Width;
+        public float Height;
     }
 
     public struct SpawnEnemyData : IComponentData
@@ -29,11 +46,21 @@ namespace DotsShooter
         public int MaxY;
         public float SpawnTimer;
     }
+
+    [Serializable]
+    public class SpawnEvent
+    {
+        public GameObject Prefab;
+        [Tooltip("Time in seconds after which the enemy will spawn")]
+        public float SpawnAfterElapsedSeconds;
+        public SpawnFormationAsset Formation;
+    }
     
     [RequireComponent(typeof(EntityRandomAuthoring))]
     public class SpawnEnemyDataAuthoring : MonoBehaviour
     {
         [FormerlySerializedAs("Enemies")] public WaveDataAsset[] WaveData;
+        public SpawnEvent[] SpawnEvents;
         public int MaxX = 20;
         public int MaxY = 20;
 
