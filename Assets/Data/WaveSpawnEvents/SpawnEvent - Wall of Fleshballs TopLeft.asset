@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bccde49798b84fbaad54b9c39579c53a, type: 3}
-  m_Name: SpawnEvent - Circle Of Goons
+  m_Name: SpawnEvent - Wall of Fleshballs TopLeft
   m_EditorClassIdentifier: 
   Prefab: {fileID: 0}
-  Formation: 0
+  Formation: 1
   SpawnTime: 0
-  Count: 90
+  Count: 30
   Spacing: 1
-  InitialSpawnX: 0
-  InitialSpawnY: 0
+  InitialSpawnX: -70
+  InitialSpawnY: 36
   FormationData:
-    rid: 9082084199275954448
+    rid: 9082084199275954444
   references:
     version: 2
     RefIds:
-    - rid: 9082084199275954448
-      type: {class: CircleFormationData, ns: DotsShooter, asm: Assembly-CSharp}
+    - rid: 9082084199275954444
+      type: {class: LineFormationData, ns: DotsShooter, asm: Assembly-CSharp}
       data:
-        MovementDirection: 0
-        Width: 50
-        Height: 30
+        MovementDirection: 3
+        AlignmentDirection: 1

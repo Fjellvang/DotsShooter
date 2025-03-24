@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DotsShooter
 {
@@ -6,6 +8,15 @@ namespace DotsShooter
     public class WaveDataAsset : ScriptableObject
     {
         public EnemyData[] Enemies;
-        public float SpawnTime;
+        [FormerlySerializedAs("SpawnTime")] 
+        public float TimeBetweenWaves;
+        public WaveSpawnEventAsset[] WaveSpawnEvents;
+    }
+    
+    [Serializable]
+    public class EnemyData
+    {
+        public GameObject Prefab;
+        public int Weight; 
     }
 }

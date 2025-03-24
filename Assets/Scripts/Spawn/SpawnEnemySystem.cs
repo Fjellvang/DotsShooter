@@ -72,7 +72,7 @@ namespace DotsShooter
             spawnEnemiesJob.Schedule(enemiesToSpawn, 32).Complete();
             
             // Reset the spawn timer
-            spawnEnemyData.ValueRW.SpawnTimer = currentWaveData.SpawnTime;
+            spawnEnemyData.ValueRW.SpawnTimer = currentWaveData.TimeBetweenWaves;
             SystemAPI.SetSingleton(spawnEnemyData.ValueRO);
         }
         

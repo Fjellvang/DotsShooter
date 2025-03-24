@@ -10,21 +10,19 @@ namespace DotsShooter
     public struct WaveData : IBufferElementData
     {
         public Entity PrefabsBufferEntity;
-        public float SpawnTime;
+        public float TimeBetweenWaves;
     }
     public struct EnemyPrefabData : IBufferElementData
     {
         public Entity Prefab;
         public int Weight;
     }
-
-    [Serializable]
-    public class EnemyData
-    {
-        public GameObject Prefab;
-        public int Weight; 
-    }
     
+    public struct WaveEventData : IComponentData
+    {
+        public float SpawnAfterSeconds;
+    }
+
     public struct SpawnEnemyData : IComponentData
     {
         public int MaxX;
@@ -43,7 +41,6 @@ namespace DotsShooter
         {
             public override void Bake(SpawnEnemyDataAuthoring authoring)
             {
-                Debug.Log("Baking spawn data");
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity,
                     new SpawnEnemyData
@@ -59,7 +56,7 @@ namespace DotsShooter
                     waveEntityBuffer.Add(new WaveData
                     {
                         PrefabsBufferEntity = waveEntity,
-                        SpawnTime = waveData.SpawnTime
+                        TimeBetweenWaves = waveData.TimeBetweenWaves
                     });
                     var enemyPrefabsBuffer = AddBuffer<EnemyPrefabData>(waveEntity);
                     foreach (var enemyPrefab in waveData.Enemies)

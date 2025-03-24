@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bccde49798b84fbaad54b9c39579c53a, type: 3}
-  m_Name: SpawnEvent - Wall of Fleshballs
+  m_Name: SpawnEvent - Wall of Fleshballs TopLeft 1
   m_EditorClassIdentifier: 
   Prefab: {fileID: 0}
   Formation: 1
   SpawnTime: 0
   Count: 30
   Spacing: 1
-  InitialSpawnX: -68.89
-  InitialSpawnY: 35.5
+  InitialSpawnX: 70
+  InitialSpawnY: -36
   FormationData:
     rid: 9082084199275954444
   references:
@@ -27,5 +27,5 @@ MonoBehaviour:
     - rid: 9082084199275954444
       type: {class: LineFormationData, ns: DotsShooter, asm: Assembly-CSharp}
       data:
-        MovementDirection: 1
-        AlignmentDirection: 1
+        MovementDirection: 2
+        AlignmentDirection: 0
