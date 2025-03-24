@@ -1,14 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DotsShooter
 {
     /// <summary>
     /// Asset Describing a spawn event, which is a determinictic event that spawns a wave of enemies at a specific time.
     /// </summary>
-    [CreateAssetMenu(fileName = "WaveSpawnEventData", menuName = "DotsShooter/WaveSpawnData")]
-    public class WaveSpawnEventAsset : ScriptableObject
+    [CreateAssetMenu(fileName = "SpawnFormationAsset", menuName = "DotsShooter/SpawnFormationAsset")]
+    public class SpawnFormationAsset : ScriptableObject
     {
         public SpawnFormation Formation;
         [Tooltip("Number of enemies to spawn.")]

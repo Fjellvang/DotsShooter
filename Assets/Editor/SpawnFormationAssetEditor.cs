@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace DotsShooter
 {
-    [CustomEditor(typeof(WaveSpawnEventAsset))]
-    public class WaveSpawnEventAssetEditor : Editor
+    [CustomEditor(typeof(SpawnFormationAsset))]
+    public class SpawnFormationAssetEditor : Editor
     {
         private SerializedProperty formationProperty;
         
@@ -48,7 +48,7 @@ namespace DotsShooter
         
         private void SwitchEventTypeBasedOnFormation(SpawnFormation formation)
         {
-            var waveData = (WaveSpawnEventAsset)target;
+            var waveData = (SpawnFormationAsset)target;
 
             switch (formation)
             {
@@ -77,7 +77,7 @@ namespace DotsShooter
         }
         private void DrawMyGizmos(SceneView sceneView)
         {
-            var waveData = (WaveSpawnEventAsset)target;
+            var waveData = (SpawnFormationAsset)target;
             switch (waveData.Formation)
             {
                 case SpawnFormation.Circle:
@@ -90,9 +90,9 @@ namespace DotsShooter
             Handles.DrawWireCube(Vector3.zero, Vector3.one * 2f);
         }
         
-        private void DrawCircleFormation(WaveSpawnEventAsset waveData)
+        private void DrawCircleFormation(SpawnFormationAsset data)
         {
-            if (waveData.FormationData is not CircleFormationData circleData)
+            if (data.FormationData is not CircleFormationData circleData)
             {
                 Debug.Log("Circle formation data is null");
                 return;
@@ -102,24 +102,24 @@ namespace DotsShooter
             var direction = circleData.MovementDirection == AngularDirection.Inwards ? -1 : 1;
             
             Handles.color = Color.red;
-            Handles.DrawLine(new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY + circleData.Height, 0),
-                new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY + circleData.Height + direction * 5f, 0));
+            Handles.DrawLine(new Vector3(data.InitialSpawnX, data.InitialSpawnY + circleData.Height, 0),
+                new Vector3(data.InitialSpawnX, data.InitialSpawnY + circleData.Height + direction * 5f, 0));
             Handles.color = Color.green;
             // Draw each enemy position
-            for (int i = 0; i < waveData.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
-                var angle = (i * 2 * Mathf.PI) / waveData.Count;
+                var angle = (i * 2 * Mathf.PI) / data.Count;
                 var position = new Vector3(
-                    waveData.InitialSpawnX + circleData.Width * Mathf.Cos(angle),
-                    waveData.InitialSpawnY + circleData.Height * Mathf.Sin(angle),
+                    data.InitialSpawnX + circleData.Width * Mathf.Cos(angle),
+                    data.InitialSpawnY + circleData.Height * Mathf.Sin(angle),
                     0
                 );
                 Handles.DrawWireCube(position, Vector3.one);
             }
         }
-        private void DrawLineFormation(WaveSpawnEventAsset waveData)
+        private void DrawLineFormation(SpawnFormationAsset data)
         {
-            if (waveData.FormationData is not LineFormationData lineData)
+            if (data.FormationData is not LineFormationData lineData)
             {
                 Debug.Log("Line formation data is null");
                 return;
@@ -129,27 +129,27 @@ namespace DotsShooter
             Handles.color = Color.red;
             var movementDirection = lineData.MovementDirection switch
             {
-                Direction.Up => new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY, 0),
-                Direction.Down => new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY - 5f, 0),
-                Direction.Left => new Vector3(waveData.InitialSpawnX - 5f, waveData.InitialSpawnY, 0),
-                Direction.Right => new Vector3(waveData.InitialSpawnX + 5f, waveData.InitialSpawnY, 0),
+                Direction.Up => new Vector3(data.InitialSpawnX, data.InitialSpawnY, 0),
+                Direction.Down => new Vector3(data.InitialSpawnX, data.InitialSpawnY - 5f, 0),
+                Direction.Left => new Vector3(data.InitialSpawnX - 5f, data.InitialSpawnY, 0),
+                Direction.Right => new Vector3(data.InitialSpawnX + 5f, data.InitialSpawnY, 0),
                 _ => Vector3.zero
             };
-            Handles.DrawLine(new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY, 0), movementDirection);
+            Handles.DrawLine(new Vector3(data.InitialSpawnX, data.InitialSpawnY, 0), movementDirection);
             
             Handles.color = Color.green;
-            for (int i = 0; i < waveData.Count; i++)
+            for (int i = 0; i < data.Count; i++)
             {
                 var position = lineData.AlignmentDirection switch
                 {
-                    Direction.Up => new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY + i * waveData.Spacing,
+                    Direction.Up => new Vector3(data.InitialSpawnX, data.InitialSpawnY + i * data.Spacing,
                         0),
-                    Direction.Down => new Vector3(waveData.InitialSpawnX, waveData.InitialSpawnY - i * waveData.Spacing,
+                    Direction.Down => new Vector3(data.InitialSpawnX, data.InitialSpawnY - i * data.Spacing,
                         0),
-                    Direction.Left => new Vector3(waveData.InitialSpawnX - i * waveData.Spacing, waveData.InitialSpawnY,
+                    Direction.Left => new Vector3(data.InitialSpawnX - i * data.Spacing, data.InitialSpawnY,
                         0),
-                    Direction.Right => new Vector3(waveData.InitialSpawnX + i * waveData.Spacing,
-                        waveData.InitialSpawnY, 0),
+                    Direction.Right => new Vector3(data.InitialSpawnX + i * data.Spacing,
+                        data.InitialSpawnY, 0),
                     _ => Vector3.zero
                 };
                 Handles.DrawWireCube(position, Vector3.one);
