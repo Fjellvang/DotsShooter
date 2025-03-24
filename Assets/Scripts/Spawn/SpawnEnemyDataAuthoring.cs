@@ -74,7 +74,7 @@ namespace DotsShooter
             }
         }
         
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             // Set the gizmo color 
             Gizmos.color = new Color(0.2f, 0.8f, 0.2f, 0.3f); // Semi-transparent green

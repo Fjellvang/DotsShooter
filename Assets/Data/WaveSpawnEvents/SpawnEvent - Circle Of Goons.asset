@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccde49798b84fbaad54b9c39579c53a, type: 3}
+  m_Name: SpawnEvent - Circle Of Goons
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 0}
+  Formation: 1
+  SpawnTime: 0
+  Count: 30
+  Spacing: 1
+  InitialSpawnX: -68.89
+  InitialSpawnY: 35.5
+  FormationData:
+    rid: 9082084199275954444
+  references:
+    version: 2
+    RefIds:
+    - rid: 9082084199275954444
+      type: {class: LineFormationData, ns: DotsShooter, asm: Assembly-CSharp}
+      data:
+        MovementDirection: 1
+        AlignmentDirection: 1

@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43f6e993f8444699675798a21678039, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
+  WaveData:
   - {fileID: 11400000, guid: e46e16fafd7d99344a7c5245f90f8319, type: 2}
   - {fileID: 11400000, guid: b64de8e0b4152ba45b85bb05e1ad54b9, type: 2}
   - {fileID: 11400000, guid: f0897f561a703384d87e0ccc6c00443b, type: 2}
-  MaxX: 50
-  MaxY: 30
+  MaxX: 71
+  MaxY: 37
 --- !u!114 &4027191241803160189
 MonoBehaviour:
   m_ObjectHideFlags: 0
