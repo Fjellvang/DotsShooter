@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DotsShooter
 {
@@ -16,21 +17,21 @@ namespace DotsShooter
         public float Spacing = 1;
         public float InitialSpawnX;
         public float InitialSpawnY;
-        [SerializeReference]
-        public SpawnFormationData FormationData = new CircleFormationData();
+        [FormerlySerializedAs("FormationData")] [SerializeReference]
+        public SpawnFormationAssetData formationAssetData = new CircleFormationAssetData();
     }
 
     [Serializable]
-    public class SpawnFormationData { }
+    public class SpawnFormationAssetData { }
     
     [Serializable]
-    public class LineFormationData : SpawnFormationData
+    public class LineFormationAssetData : SpawnFormationAssetData
     {
         public Direction MovementDirection; 
         public Direction AlignmentDirection;
     }
     [Serializable]
-    public class CircleFormationData : SpawnFormationData
+    public class CircleFormationAssetData : SpawnFormationAssetData
     {
         public AngularDirection MovementDirection;
         public float Width = 5f;

@@ -13,7 +13,7 @@ namespace DotsShooter
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PlayerTag>();
-            state.RequireForUpdate<MoveTowardsPlayerFlag>();
+            state.RequireForUpdate<LinearMovementComponent>();
         }
 
         [BurstCompile]

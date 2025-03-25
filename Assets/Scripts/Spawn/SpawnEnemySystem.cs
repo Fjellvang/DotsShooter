@@ -50,7 +50,8 @@ namespace DotsShooter
                 
                 if (!(simulationTime.ElapsedTime >= spawnEvent.SpawnAfterSeconds) || spawnEvent.IsSpawned) continue;
                 
-                ecb.Instantiate(spawnEvent.FormationEntity);
+                var spawned = ecb.Instantiate(spawnEvent.FormationEntity);
+                ecb.SetComponentEnabled<SpawnFormationFlag>(spawned, true);
                 spawnEvent.IsSpawned = true;
                 
                 spawnEventBuffer[i] = spawnEvent;

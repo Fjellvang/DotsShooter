@@ -54,23 +54,23 @@ namespace DotsShooter
             {
                 // Create the appropriate event type based on formation
                 // If it's already the correct type, no need to change
-                case SpawnFormation.Circle when waveData.FormationData is CircleFormationData:
+                case SpawnFormation.Circle when waveData.formationAssetData is CircleFormationAssetData:
                     return;
                 // Otherwise, replace with the correct type
                 case SpawnFormation.Circle:
                 {
-                    var newEventType = new CircleFormationData();
-                    waveData.FormationData = newEventType;
+                    var newEventType = new CircleFormationAssetData();
+                    waveData.formationAssetData = newEventType;
                     break;
                 }
                 // If it's already the correct type, no need to change
-                case SpawnFormation.Line when waveData.FormationData is LineFormationData:
+                case SpawnFormation.Line when waveData.formationAssetData is LineFormationAssetData:
                     return;
                 // Otherwise, replace with the correct type
                 case SpawnFormation.Line:
                 {
-                    var newEventType = new LineFormationData();
-                    waveData.FormationData = newEventType;
+                    var newEventType = new LineFormationAssetData();
+                    waveData.formationAssetData = newEventType;
                     break;
                 }
             }
@@ -92,7 +92,7 @@ namespace DotsShooter
         
         private void DrawCircleFormation(SpawnFormationAsset data)
         {
-            if (data.FormationData is not CircleFormationData circleData)
+            if (data.formationAssetData is not CircleFormationAssetData circleData)
             {
                 Debug.Log("Circle formation data is null");
                 return;
@@ -119,7 +119,7 @@ namespace DotsShooter
         }
         private void DrawLineFormation(SpawnFormationAsset data)
         {
-            if (data.FormationData is not LineFormationData lineData)
+            if (data.formationAssetData is not LineFormationAssetData lineData)
             {
                 Debug.Log("Line formation data is null");
                 return;

@@ -25,7 +25,9 @@ namespace DotsShooter
         public float SpawnAfterSeconds;
         public bool IsSpawned;
     }
-    
+
+    public struct SpawnFormationFlag : IComponentData, IEnableableComponent { }
+
     public struct FormationBaseData : IComponentData 
     {
         public Entity Prefab;
@@ -117,16 +119,18 @@ namespace DotsShooter
                         InitialPosition = new float2(formation.InitialSpawnX, formation.InitialSpawnY),
                     };
                     AddComponent(spawnEventEntity, formationData);
-                    switch (formation.FormationData)
+                    AddComponent(spawnEventEntity, new SpawnFormationFlag());
+                    SetComponentEnabled<SpawnFormationFlag>(spawnEventEntity, false);
+                    switch (formation.formationAssetData)
                     {
-                        case LineFormationData lineFormationData:
+                        case LineFormationAssetData lineFormationData:
                             AddComponent(spawnEventEntity, new LineFormationComponent
                             {
                                 MovementDirection = lineFormationData.MovementDirection,
                                 AlignmentDirection = lineFormationData.AlignmentDirection
                             });
                             break;
-                        case CircleFormationData circleFormationData:
+                        case CircleFormationAssetData circleFormationData:
                             AddComponent(spawnEventEntity, new CircleFormationComponent
                             {
                                 MovementDirection = circleFormationData.MovementDirection,
