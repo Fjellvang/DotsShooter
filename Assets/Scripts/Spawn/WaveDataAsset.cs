@@ -10,7 +10,16 @@ namespace DotsShooter
         public EnemyData[] Enemies;
         [FormerlySerializedAs("SpawnTime")] 
         public float TimeBetweenWaves;
-        public SpawnFormationAsset[] WaveSpawnEvents;
+        public SpawnEvent[] WaveSpawnEvents;
+    }
+    
+    [Serializable]
+    public class SpawnEvent
+    {
+        public GameObject Prefab;
+        [Tooltip("Time in seconds after which the enemy will spawn")]
+        public float SpawnAfterElapsedSeconds;
+        public SpawnFormationAsset Formation;
     }
     
     [Serializable]

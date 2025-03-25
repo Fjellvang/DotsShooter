@@ -15,4 +15,11 @@ MonoBehaviour:
   Enemies:
   - Prefab: {fileID: 1580659186050169693, guid: d92492f7007900043a619ad71ff68f00, type: 3}
     Weight: 0
-  SpawnTime: 5
+  TimeBetweenWaves: 5
+  WaveSpawnEvents:
+  - Prefab: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+    SpawnAfterElapsedSeconds: 0
+    Formation: {fileID: 11400000, guid: f8a03c00b58e5ec43b67dfae7549c359, type: 2}
+  - Prefab: {fileID: 8321688916429615359, guid: 5b78de69696e41943a6b12be2afc7af9, type: 3}
+    SpawnAfterElapsedSeconds: 0
+    Formation: {fileID: 11400000, guid: 63c641f810a4f854fafd75d2117ef459, type: 2}

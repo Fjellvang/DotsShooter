@@ -23,6 +23,7 @@ namespace DotsShooter
     {
         public Entity FormationEntity;
         public float SpawnAfterSeconds;
+        public bool IsSpawned;
     }
     
     public struct FormationBaseData : IComponentData 
@@ -52,20 +53,12 @@ namespace DotsShooter
         public float SpawnTimer;
     }
 
-    [Serializable]
-    public class SpawnEvent
-    {
-        public GameObject Prefab;
-        [Tooltip("Time in seconds after which the enemy will spawn")]
-        public float SpawnAfterElapsedSeconds;
-        public SpawnFormationAsset Formation;
-    }
+
     
     [RequireComponent(typeof(EntityRandomAuthoring))]
     public class SpawnEnemyDataAuthoring : MonoBehaviour
     {
         [FormerlySerializedAs("Enemies")] public WaveDataAsset[] WaveData;
-        public SpawnEvent[] SpawnEvents;
         public int MaxX = 20;
         public int MaxY = 20;
 
@@ -81,17 +74,41 @@ namespace DotsShooter
                         MaxY = authoring.MaxY,
                         SpawnTimer = 0,
                     });
-                PrepareWaveData(authoring, entity);
-                PrepareSpawnEvents(authoring, entity);
+                BakeWaveData(authoring, entity);
             }
 
-            private void PrepareSpawnEvents(SpawnEnemyDataAuthoring authoring, Entity entity)
+            private void BakeWaveData(SpawnEnemyDataAuthoring authoring, Entity entity)
             {
-                foreach (var spawnEvent in authoring.SpawnEvents)
+                var waveEntityBuffer = AddBuffer<WaveData>(entity);
+                foreach (var waveData in authoring.WaveData)
+                {
+                    var waveEntity = CreateAdditionalEntity(TransformUsageFlags.None);
+                    BakeSpawnEvents(waveData?.WaveSpawnEvents, waveEntity);
+                    waveEntityBuffer.Add(new WaveData
+                    {
+                        PrefabsBufferEntity = waveEntity,
+                        TimeBetweenWaves = waveData.TimeBetweenWaves
+                    });
+                    var enemyPrefabsBuffer = AddBuffer<EnemyPrefabData>(waveEntity);
+                    foreach (var enemyPrefab in waveData.Enemies)
+                    {
+                        enemyPrefabsBuffer.Add(new EnemyPrefabData
+                        {
+                            Prefab = GetEntity(enemyPrefab.Prefab, TransformUsageFlags.Dynamic),
+                            Weight = enemyPrefab.Weight
+                        });
+                    }
+                }
+            }
+            
+            private void BakeSpawnEvents(SpawnEvent[] spawnEvents, Entity waveEntity)
+            {
+                var spawnEventBuffer = AddBuffer<SpawnEventData>(waveEntity);
+                foreach (var spawnEvent in spawnEvents ?? Array.Empty<SpawnEvent>())
                 {
                     var spawnEventEntity = CreateAdditionalEntity(TransformUsageFlags.None);
-                    var spawnEventBuffer = AddBuffer<SpawnEventData>(entity);
                     var formation = spawnEvent.Formation;
+                    // Some of this base formation data might be useful to pack in a blob asset?
                     var formationData = new FormationBaseData()
                     {
                         Prefab = GetEntity(spawnEvent.Prefab, TransformUsageFlags.Dynamic),
@@ -100,7 +117,7 @@ namespace DotsShooter
                         InitialPosition = new float2(formation.InitialSpawnX, formation.InitialSpawnY),
                     };
                     AddComponent(spawnEventEntity, formationData);
-                    switch (spawnEvent.Formation.FormationData)
+                    switch (formation.FormationData)
                     {
                         case LineFormationData lineFormationData:
                             AddComponent(spawnEventEntity, new LineFormationComponent
@@ -121,31 +138,9 @@ namespace DotsShooter
                     spawnEventBuffer.Add(new SpawnEventData
                     {
                         FormationEntity = spawnEventEntity,
-                        SpawnAfterSeconds = spawnEvent.SpawnAfterElapsedSeconds
+                        SpawnAfterSeconds = spawnEvent.SpawnAfterElapsedSeconds,
+                        IsSpawned = false
                     });
-                }
-            }
-
-            private void PrepareWaveData(SpawnEnemyDataAuthoring authoring, Entity entity)
-            {
-                var waveEntityBuffer = AddBuffer<WaveData>(entity);
-                foreach (var waveData in authoring.WaveData)
-                {
-                    var waveEntity = CreateAdditionalEntity(TransformUsageFlags.None);
-                    waveEntityBuffer.Add(new WaveData
-                    {
-                        PrefabsBufferEntity = waveEntity,
-                        TimeBetweenWaves = waveData.TimeBetweenWaves
-                    });
-                    var enemyPrefabsBuffer = AddBuffer<EnemyPrefabData>(waveEntity);
-                    foreach (var enemyPrefab in waveData.Enemies)
-                    {
-                        enemyPrefabsBuffer.Add(new EnemyPrefabData
-                        {
-                            Prefab = GetEntity(enemyPrefab.Prefab, TransformUsageFlags.Dynamic),
-                            Weight = enemyPrefab.Weight
-                        });
-                    }
                 }
             }
         }

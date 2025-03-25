@@ -24,7 +24,7 @@ namespace DotsShooter
             state.RequireForUpdate<GameStateInitializedComponent>();
         }
         
-        [BurstCompile]
+        // [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var gameStateComponent = SystemAPI.GetSingleton<GameStateComponent>();
@@ -34,22 +34,35 @@ namespace DotsShooter
             }
             var enemyDataEntity = SystemAPI.GetSingletonEntity<SpawnEnemyData>();
             var random = SystemAPI.GetComponentRW<EntityRandom>(enemyDataEntity);
-            
             var spawnEnemyData = SystemAPI.GetSingletonRW<SpawnEnemyData>();
-            
             var simulationTime = SystemAPI.GetSingleton<SimulationTime>();
             var round = gameStateComponent.Round - 1;
             var waveDataBuffer = SystemAPI.GetSingletonBuffer<WaveData>();
             var currentWaveData = waveDataBuffer[math.min(round, waveDataBuffer.Length - 1)];
+
+            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             
+            var spawnEventBuffer = SystemAPI.GetBuffer<SpawnEventData>(currentWaveData.PrefabsBufferEntity);
+            for (int i = 0; i < spawnEventBuffer.Length; i++)
+            {
+                var spawnEvent = spawnEventBuffer[i];
+                
+                if (!(simulationTime.ElapsedTime >= spawnEvent.SpawnAfterSeconds) || spawnEvent.IsSpawned) continue;
+                
+                ecb.Instantiate(spawnEvent.FormationEntity);
+                spawnEvent.IsSpawned = true;
+                
+                spawnEventBuffer[i] = spawnEvent;
+            }
+            // HandleSpawnEvents(ref state, currentWaveData.PrefabsBufferEntity, simulationTime, ecb);
+
             spawnEnemyData.ValueRW.SpawnTimer -= SystemAPI.Time.DeltaTime;
             if (spawnEnemyData.ValueRO.SpawnTimer > 0)
             {
                 return;
             }
             
-            var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged);
             var parallelEcb = ecb.AsParallelWriter();
             
             var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2);
@@ -75,7 +88,21 @@ namespace DotsShooter
             spawnEnemyData.ValueRW.SpawnTimer = currentWaveData.TimeBetweenWaves;
             SystemAPI.SetSingleton(spawnEnemyData.ValueRO);
         }
-        
+
+        private void HandleSpawnEvents(ref SystemState state, Entity waveEntity, SimulationTime simulationTime, EntityCommandBuffer ecb)
+        {
+            var spawnEventBuffer = SystemAPI.GetBuffer<SpawnEventData>(waveEntity);
+            for (int i = 0; i < spawnEventBuffer.Length; i++)
+            {
+                var spawnEvent = spawnEventBuffer[i];
+                
+                if (!(simulationTime.ElapsedTime >= spawnEvent.SpawnAfterSeconds) || spawnEvent.IsSpawned) continue;
+                
+                ecb.Instantiate(spawnEvent.FormationEntity);
+                spawnEvent.IsSpawned = true;
+            }
+        }
+
         [BurstCompile]
         private int CalculateTotalWeights(ref DynamicBuffer<EnemyPrefabData> enemies)
         {
