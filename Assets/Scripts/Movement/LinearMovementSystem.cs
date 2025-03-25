@@ -19,7 +19,7 @@ namespace DotsShooter
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            new LinearMovementJob
+            new LinearMovementJob // TODO: in theory this should only be initialized once.
             {
             }.ScheduleParallel();
         }

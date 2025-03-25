@@ -19,9 +19,14 @@ namespace DotsShooter
         public int Weight;
     }
     
+    public struct SpawnEventData : IBufferElementData
+    {
+        public Entity FormationEntity;
+        public float SpawnAfterSeconds;
+    }
+    
     public struct FormationBaseData : IComponentData 
     {
-        public float SpawnAfterSeconds;
         public Entity Prefab;
         public int Count;
         public float Spacing;
@@ -76,6 +81,53 @@ namespace DotsShooter
                         MaxY = authoring.MaxY,
                         SpawnTimer = 0,
                     });
+                PrepareWaveData(authoring, entity);
+                PrepareSpawnEvents(authoring, entity);
+            }
+
+            private void PrepareSpawnEvents(SpawnEnemyDataAuthoring authoring, Entity entity)
+            {
+                foreach (var spawnEvent in authoring.SpawnEvents)
+                {
+                    var spawnEventEntity = CreateAdditionalEntity(TransformUsageFlags.None);
+                    var spawnEventBuffer = AddBuffer<SpawnEventData>(entity);
+                    var formation = spawnEvent.Formation;
+                    var formationData = new FormationBaseData()
+                    {
+                        Prefab = GetEntity(spawnEvent.Prefab, TransformUsageFlags.Dynamic),
+                        Count = formation.Count,
+                        Spacing = formation.Spacing,
+                        InitialPosition = new float2(formation.InitialSpawnX, formation.InitialSpawnY),
+                    };
+                    AddComponent(spawnEventEntity, formationData);
+                    switch (spawnEvent.Formation.FormationData)
+                    {
+                        case LineFormationData lineFormationData:
+                            AddComponent(spawnEventEntity, new LineFormationComponent
+                            {
+                                MovementDirection = lineFormationData.MovementDirection,
+                                AlignmentDirection = lineFormationData.AlignmentDirection
+                            });
+                            break;
+                        case CircleFormationData circleFormationData:
+                            AddComponent(spawnEventEntity, new CircleFormationComponent
+                            {
+                                MovementDirection = circleFormationData.MovementDirection,
+                                Width = circleFormationData.Width,
+                                Height = circleFormationData.Height
+                            });
+                            break;
+                    }
+                    spawnEventBuffer.Add(new SpawnEventData
+                    {
+                        FormationEntity = spawnEventEntity,
+                        SpawnAfterSeconds = spawnEvent.SpawnAfterElapsedSeconds
+                    });
+                }
+            }
+
+            private void PrepareWaveData(SpawnEnemyDataAuthoring authoring, Entity entity)
+            {
                 var waveEntityBuffer = AddBuffer<WaveData>(entity);
                 foreach (var waveData in authoring.WaveData)
                 {
