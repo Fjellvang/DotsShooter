@@ -16,15 +16,13 @@ namespace DotsShooter
         public void OnUpdate(ref SystemState state)
         {
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var beginEcb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
-            var endEcb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
-                .CreateCommandBuffer(state.WorldUnmanaged);
-            var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
+            var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             
-            foreach (var (formationBase, lineData, spawnFormationFlag, entity) in SystemAPI
-                         .Query<RefRO<FormationBaseData>, RefRO<LineFormationComponent>, EnabledRefRW<SpawnFormationFlag>>()
+            foreach (var (formationBase, lineData, entity) in SystemAPI
+                         .Query<RefRO<FormationBaseData>, RefRO<LineFormationComponent>>()
+                         .WithAll<SpawnFormationFlag>()
                          .WithEntityAccess())
-            {
+             {
                 var formationBaseData = formationBase.ValueRO;
                 for(int i =0; i < formationBase.ValueRO.Count; i++)
                 {
@@ -52,12 +50,10 @@ namespace DotsShooter
                     
                     //TODO: this is the weakest part of the code, we dont enforce in the baker that the entity has the component
                     ecb.SetComponent(spawned, new LinearMovementComponent() { Angle = angle });
-                    // SystemAPI.SetComponent(spawned, new LinearMovementComponent() { Angle = angle});
                 }
                 
-                // Destroy the spawner entity
-                spawnFormationFlag.ValueRW = false;
-                // beginEcb.DestroyEntity(entity);
+                // Set the Spawn flag to false
+                SystemAPI.SetComponentEnabled<SpawnFormationFlag>(entity,false);
             }
         }
     }
