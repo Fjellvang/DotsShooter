@@ -6,6 +6,8 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
+using Random = Unity.Mathematics.Random;
 
 namespace DotsShooter
 {
@@ -24,7 +26,7 @@ namespace DotsShooter
             state.RequireForUpdate<GameStateInitializedComponent>();
         }
         
-        // [BurstCompile]
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var gameStateComponent = SystemAPI.GetSingleton<GameStateComponent>();
@@ -49,7 +51,7 @@ namespace DotsShooter
                 var spawnEvent = spawnEventBuffer[i];
                 
                 if (!(simulationTime.ElapsedTime >= spawnEvent.SpawnAfterSeconds) || spawnEvent.IsSpawned) continue;
-                
+                Debug.Log("spawn");
                 var spawned = ecb.Instantiate(spawnEvent.FormationEntity);
                 ecb.SetComponentEnabled<SpawnFormationFlag>(spawned, true);
                 spawnEvent.IsSpawned = true;

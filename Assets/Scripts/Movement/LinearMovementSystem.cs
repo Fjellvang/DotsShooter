@@ -29,7 +29,9 @@ namespace DotsShooter
     public partial struct LinearMovementJob : IJobEntity
     {
         [BurstCompile]
-        public void Execute(ref MovementDirectionComponent movement, in LinearMovementComponent linearMovement)
+        public void Execute(
+            ref MovementDirectionComponent movement, 
+            in LinearMovementComponent linearMovement)
         {
             movement.Direction = new float3(math.cos(linearMovement.Angle), math.sin(linearMovement.Angle), 0);
         }
