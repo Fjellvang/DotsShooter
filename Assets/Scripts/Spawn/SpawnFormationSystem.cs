@@ -18,11 +18,10 @@ namespace DotsShooter
             var ecbSystem = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecb = ecbSystem.CreateCommandBuffer(state.WorldUnmanaged); 
             
-            foreach (var (formationBase, lineData, entity) in SystemAPI
-                         .Query<RefRO<FormationBaseData>, RefRO<LineFormationComponent>>()
-                         .WithAll<SpawnFormationFlag>()
+            foreach (var (formationBase, lineData,enabledFlag, entity) in SystemAPI
+                         .Query<RefRO<FormationBaseData>, RefRO<LineFormationComponent>, EnabledRefRW<SpawnFormationFlag>>()
                          .WithEntityAccess())
-             {
+            {
                 var formationBaseData = formationBase.ValueRO;
                 for(int i =0; i < formationBase.ValueRO.Count; i++)
                 {
@@ -53,7 +52,7 @@ namespace DotsShooter
                 }
                 
                 // Set the Spawn flag to false
-                SystemAPI.SetComponentEnabled<SpawnFormationFlag>(entity,false);
+                enabledFlag.ValueRW = false;
             }
         }
     }
