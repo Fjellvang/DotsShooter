@@ -7,6 +7,7 @@ namespace DotsShooter
     {
         public float Angle;
     }
+    public struct SetLinearMovementFlag : IComponentData, IEnableableComponent { }
     public class LinearMovementComponentAuthoring : MonoBehaviour
     {
         public float Angle;
@@ -17,6 +18,7 @@ namespace DotsShooter
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new LinearMovementComponent { Angle = authoring.Angle });
+                AddComponent<SetLinearMovementFlag>(entity);
             }
         }
     }

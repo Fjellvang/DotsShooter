@@ -31,9 +31,11 @@ namespace DotsShooter
         [BurstCompile]
         public void Execute(
             ref MovementDirectionComponent movement, 
-            in LinearMovementComponent linearMovement)
+            in LinearMovementComponent linearMovement,
+            EnabledRefRW<SetLinearMovementFlag> setLinearMovementFlag)
         {
             movement.Direction = new float3(math.cos(linearMovement.Angle), math.sin(linearMovement.Angle), 0);
+            setLinearMovementFlag.ValueRW = false;
         }
     }
 }
