@@ -36,7 +36,7 @@ namespace DotsShooter
                     Direction = authoring.initialDirection
                 });
                 AddComponent(entity, data);
-                AddComponent(entity, new PhysicsGraphicalSmoothing{ ApplySmoothing = 1});
+                // AddComponent(entity, new PhysicsGraphicalSmoothing{ ApplySmoothing = 1});
             }
         }
     }

@@ -18,7 +18,7 @@ MonoBehaviour:
   TimeBetweenWaves: 5
   WaveSpawnEvents:
   - Prefab: {fileID: 7077511124143625382, guid: 5a728e1914cb8e543b0bb7e3a9ef3e04, type: 3}
-    SpawnAfterElapsedSeconds: 20
+    SpawnAfterElapsedSeconds: 0
     Formation: {fileID: 11400000, guid: f8a03c00b58e5ec43b67dfae7549c359, type: 2}
   - Prefab: {fileID: 7077511124143625382, guid: 5a728e1914cb8e543b0bb7e3a9ef3e04, type: 3}
     SpawnAfterElapsedSeconds: 20
