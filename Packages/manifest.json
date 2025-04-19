@@ -17,6 +17,7 @@
     }
   ],
   "dependencies": {
+    "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.unity-atoms.unity-atoms-base-atoms": "4.5.0",
     "com.unity-atoms.unity-atoms-core": "4.5.0",
     "com.unity.2d.sprite": "1.0.0",

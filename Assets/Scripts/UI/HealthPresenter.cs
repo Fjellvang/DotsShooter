@@ -3,6 +3,7 @@ using DotsShooter;
 using DotsShooter.Health;
 using DotsShooter.Player;
 using DotsShooter.UI;
+using PrimeTween;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class HealthPresenter : MonoBehaviour
     private ProgressBar _healthBar;
 
     private VisualElement _progressBar;
-
+    private Tween _existingTween;
 
     private IEnumerator Start()
     {
@@ -76,12 +77,20 @@ public class HealthPresenter : MonoBehaviour
 
     private void UpdateUI(float health, float maxHealth)
     {
+        if(_existingTween.isAlive)
+        {
+            _existingTween.Complete();
+        }
         // Calculate percentage health
-        float healthRatio = (float)health / maxHealth;
+        float healthRatio = health / maxHealth;
 
         // Interpolate color
         Color healthColor = Color.Lerp(Color.red, Color.green, healthRatio);
 
+        _existingTween = Tween.Custom(_healthBar.value, healthRatio * 100f, 0.1f, (x) =>
+        {
+            _healthBar.value = x;
+        }, Ease.OutSine);
         // Update health bar value
         _healthBar.value = healthRatio * 100f;
 
