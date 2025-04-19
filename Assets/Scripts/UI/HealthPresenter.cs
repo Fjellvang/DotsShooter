@@ -21,7 +21,6 @@ public class HealthPresenter : MonoBehaviour
     private ProgressBar _healthBar;
 
     private VisualElement _progressBar;
-    private Tween _existingTween;
 
     private IEnumerator Start()
     {
@@ -77,17 +76,13 @@ public class HealthPresenter : MonoBehaviour
 
     private void UpdateUI(float health, float maxHealth)
     {
-        if(_existingTween.isAlive)
-        {
-            _existingTween.Complete();
-        }
         // Calculate percentage health
         float healthRatio = health / maxHealth;
 
         // Interpolate color
         Color healthColor = Color.Lerp(Color.red, Color.green, healthRatio);
 
-        _existingTween = Tween.Custom(_healthBar.value, healthRatio * 100f, 0.1f, (x) =>
+        Tween.Custom(_healthBar.value, healthRatio * 100f, 0.1f, (x) =>
         {
             _healthBar.value = x;
         }, Ease.OutSine);

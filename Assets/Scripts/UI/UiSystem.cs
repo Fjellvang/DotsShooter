@@ -1,4 +1,5 @@
 ﻿using System;
+using DotsShooter.Common;
 using DotsShooter.Damage;
 using DotsShooter.Health;
 using DotsShooter.Player;
@@ -13,7 +14,7 @@ namespace DotsShooter.UI
         public float MaxHealth;
     }
     
-    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    [UpdateInGroup(typeof(EffectsSystemGroup))]
     public partial class UiSystem : SystemBase
     {
         public event Action<HealthEventDetails> PlayerWasDamaged;
