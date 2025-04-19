@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4038331825587981048}
   - component: {fileID: 3333427279248913323}
   - component: {fileID: 6132239010366156266}
+  - component: {fileID: 7729702898727972548}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -184,6 +185,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LifeTime: 1
   StartEnabled: 0
+--- !u!114 &7729702898727972548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6992375793007815026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd406c68736e49e38402af4f9c6fca12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: {r: 1, g: 0, b: 0, a: 1}
+  FlashTime: 0.15
 --- !u!1 &8321688916429615359
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  DamageCooldown: 0.5
 --- !u!114 &8595309834285277119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0761de101ffd47e19e5d5885817d8e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 20
   DestroyOnCollision: 0
 --- !u!114 &4568269927197874877
 MonoBehaviour:

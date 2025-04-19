@@ -1,4 +1,5 @@
 using DotsShooter.Destruction;
+using DotsShooter.Health;
 using DotsShooter.SimpleCollision;
 using Unity.Burst;
 using Unity.Collections;
@@ -11,6 +12,7 @@ namespace DotsShooter.Damage
     public partial struct DamageOnCollisionSystem : ISystem
     {
         private BufferLookup<DamageData> _bufferLookup;
+        private BufferLookup<DamageSourceCooldown> _damageCooldownLookup;
         // private EntityQuery _damageQuery;
 
         public void OnCreate(ref SystemState state)
@@ -18,21 +20,17 @@ namespace DotsShooter.Damage
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
 
             _bufferLookup = state.GetBufferLookup<DamageData>();
-
-            var builder = new EntityQueryBuilder(Allocator.Temp)
-                    .WithAllRW<DamageOnCollision>()
-                    .WithAll<SimpleCollisionEvent>() // Add this line
-                ;
-
-            // _damageQuery = state.GetEntityQuery(builder);
+            _damageCooldownLookup = state.GetBufferLookup<DamageSourceCooldown>();
         }
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             _bufferLookup.Update(ref state);
+            _damageCooldownLookup.Update(ref state);
             var markedForDestructionLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
             var enemyTagLookup = SystemAPI.GetComponentLookup<EnemyTag>();
+            var healthLookup = SystemAPI.GetComponentLookup<DamageCooldownComponent>();
 
             foreach (var (damage, simpleCollisionBuffer, entity) in 
                      SystemAPI.Query<RefRO<DamageOnCollision>, DynamicBuffer<SimpleCollisionEvent>>()
@@ -50,7 +48,31 @@ namespace DotsShooter.Damage
                     }
                     
                     if (_bufferLookup.HasBuffer(other)) {
-                        _bufferLookup[other].Add(new DamageData() { Damage = damage.ValueRO.Damage });
+                        // Check if the damage cooldown is active
+                        bool canTakeDamage = true;
+                        if (_damageCooldownLookup.HasBuffer(other))
+                        {
+                            var cooldownBuffer = _damageCooldownLookup[other];
+                            canTakeDamage = !IsSourceInCooldown(cooldownBuffer, entity);
+                            if (canTakeDamage)
+                            {
+                                // Add the cooldown to the buffer
+                                cooldownBuffer.Add(new DamageSourceCooldown()
+                                {
+                                    Source = entity,
+                                    CooldownTimer = healthLookup[other].CooldownTime
+                                });
+                            }
+                        }
+
+                        if (canTakeDamage)
+                        {
+                            _bufferLookup[other].Add(new DamageData()
+                            {
+                                Damage = damage.ValueRO.Damage,
+                                Source = entity,
+                            });
+                        }
                     }
 
                     if (damage.ValueRO.DestroyOnCollision)
@@ -61,38 +83,17 @@ namespace DotsShooter.Damage
             }
         }
 
-
-        [BurstCompile]
-        public partial struct HandleDamageJob : IJobEntity
+        // Helper method to check if a source is in cooldown
+        private static bool IsSourceInCooldown(in DynamicBuffer<DamageSourceCooldown> cooldownBuffer, Entity source)
         {
-            public EntityCommandBuffer.ParallelWriter ECB;
-
-            [ReadOnly, NativeDisableParallelForRestriction]
-            public BufferLookup<DamageData> BufferLookup;
-
-            void Execute(
-                Entity entity,
-                [ReadOnly] in DamageOnCollision damage,
-                [ReadOnly] in DynamicBuffer<SimpleCollisionEvent> collisionBuffer,
-                [ChunkIndexInQuery] int sortKey)
+            for (int i = 0; i < cooldownBuffer.Length; i++)
             {
-                for (int i = 0; i < collisionBuffer.Length; i++)
+                if (cooldownBuffer[i].Source == source)
                 {
-                    var simpleCollisionEvent = collisionBuffer[i];
-                    var other = simpleCollisionEvent.GetOtherEntity(entity);
-
-                    if (BufferLookup.HasBuffer(other))
-                    {
-                        ECB.AppendToBuffer(sortKey, other, new DamageData() { Damage = damage.Damage });
-                    }
-
-                    if (damage.DestroyOnCollision)
-                    {
-                        ECB.DestroyEntity(sortKey, entity);
-                        break;
-                    }
+                    return true;
                 }
             }
+            return false;
         }
     }
 }

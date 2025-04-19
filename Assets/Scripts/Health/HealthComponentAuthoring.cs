@@ -16,6 +16,8 @@ namespace DotsShooter.Health
     {
         [SerializeField] 
         private float health = 100;
+        [SerializeField, Tooltip("Cooldown time between damage events, especially useful for melee attacks")]
+        private float DamageCooldown = 0.5f;
         public class HealthComponentBaker : Baker<HealthComponentAuthoring>
         {
             public override void Bake(HealthComponentAuthoring authoring)
@@ -27,6 +29,11 @@ namespace DotsShooter.Health
                     MaxHealth = authoring.health
                 });
                 AddBuffer<DamageData>(entity);
+                AddBuffer<DamageSourceCooldown>(entity);
+                AddComponent(entity, new DamageCooldownComponent()
+                {
+                    CooldownTime = authoring.DamageCooldown
+                });
             }
         }
     }

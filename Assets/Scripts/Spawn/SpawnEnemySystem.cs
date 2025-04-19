@@ -68,7 +68,7 @@ namespace DotsShooter
             
             var parallelEcb = ecb.AsParallelWriter();
             
-            var enemiesToSpawn = round * round + (int)(simulationTime.ElapsedTime / 2);
+            var enemiesToSpawn = 5 + round * round + (int)(simulationTime.ElapsedTime / 2);
             
             // Prepare enemy weights for random selection
             var currentEnemyBuffer = SystemAPI.GetBuffer<EnemyPrefabData>(currentWaveData.PrefabsBufferEntity);

@@ -3,9 +3,11 @@ using DotsShooter.Damage;
 using DotsShooter.Destruction;
 using DotsShooter.Player;
 using DotsShooter.SimpleCollision;
+using DotsShooter.VFX;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Rendering;
 using Unity.Transforms;
 
 namespace DotsShooter.Health
@@ -28,12 +30,19 @@ namespace DotsShooter.Health
         {
             var bufferLookup = SystemAPI.GetBufferLookup<DamageData>();
             var destroyNextFrameLookup = SystemAPI.GetComponentLookup<DestroyNextFrameTag>();
+            var graphicsEntityDataLookup = SystemAPI.GetComponentLookup<GraphicsEntityData>();
+            var flashColorOnDamageDataLookup = SystemAPI.GetComponentLookup<FlashColorOnDamageData>();
+            var flashColorOnDamageTimerLookup = SystemAPI.GetComponentLookup<FlashColorOnDamageTimer>();
+            var flashColorOnDamageData = SystemAPI.GetComponentLookup<FlashColorOnDamageData>();
             
             // TODO: Refactor this to parallel jobs?
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
                          .WithEntityAccess().WithNone<PlayerTag>())
             {
-                HandleDamage(ref state, entity, health, ref destroyNextFrameLookup, ref bufferLookup);
+                if (HandleDamage(ref state, entity, health, ref destroyNextFrameLookup, ref bufferLookup))
+                {
+                    HandleFlash(entity, graphicsEntityDataLookup, flashColorOnDamageDataLookup, flashColorOnDamageTimerLookup, flashColorOnDamageData);
+                }
             }
             
             foreach (var (health, entity) in SystemAPI.Query<RefRW<HealthComponent>>()
@@ -42,8 +51,25 @@ namespace DotsShooter.Health
                 if (HandleDamage(ref state, entity, health, ref destroyNextFrameLookup, ref bufferLookup))
                 {
                     SystemAPI.SetComponentEnabled<PlayerWasDamaged>(entity, true);
+                    HandleFlash(entity, graphicsEntityDataLookup, flashColorOnDamageDataLookup, flashColorOnDamageTimerLookup, flashColorOnDamageData);
                 }
             }
+        }
+
+        //TODO: refactor this to use a different system. Maybe a EntityWasDamaged System we can fire event off of
+        private static void HandleFlash(Entity entity, 
+            ComponentLookup<GraphicsEntityData> graphicsEntityDataLookup,
+            ComponentLookup<FlashColorOnDamageData> flashColorOnDamageDataLookup, 
+            ComponentLookup<FlashColorOnDamageTimer> flashColorOnDamageTimerLookup,
+            ComponentLookup<FlashColorOnDamageData> flashColorOnDamageData)
+        {
+            if (!graphicsEntityDataLookup.HasComponent(entity)) return;
+            
+            var graphicsEntity = graphicsEntityDataLookup.GetRefRO(entity).ValueRO.Entity;
+            flashColorOnDamageDataLookup.SetComponentEnabled(graphicsEntity, true);
+            var flashColorOnDamageTimer = flashColorOnDamageTimerLookup.GetRefRW(graphicsEntity);
+            var flashTime = flashColorOnDamageData.GetRefRO(graphicsEntity).ValueRO.FlashTime;
+            flashColorOnDamageTimer.ValueRW.Value = flashTime;
         }
 
         /// <summary>
@@ -63,14 +89,15 @@ namespace DotsShooter.Health
             ref BufferLookup<DamageData> damageBufferFromEntity
             )
         {
-            if (!damageBufferFromEntity.HasBuffer(entity))
+            if (!damageBufferFromEntity.HasBuffer(entity) || damageBufferFromEntity[entity].IsEmpty)
             {
                 return false;
             }
                 
             var didDamage = false;
             var damage = damageBufferFromEntity[entity];
-            
+
+
             for (int i = 0; i < damage.Length; i++)
             {
                 var damageComponent = damage[i];
